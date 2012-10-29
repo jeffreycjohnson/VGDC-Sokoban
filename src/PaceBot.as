@@ -20,7 +20,7 @@ package
 		
 		public function clone():PaceBot
 		{
-			return new PaceBot(x, y, tickspeed, visiontype, visionradius, type);
+			return new PaceBot(x, y, tickSpeed, visionType, visionRadius, type);
 		}
 		
 		override protected function tick():void

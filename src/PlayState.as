@@ -44,18 +44,18 @@ package
 		/* COUNTS */
 		
 		// which level we're currently on
-		private var levelindex:int;
+		private var levelIndex:int;
 		
 		// how many moves the player has done
-		private var movecount:int;
+		private var moveCount:int;
 		
 		// Counts of "goals": places where you have to try to move the blocks to
-		private var goalnumber:int; // total number of goals
-		private var goalcount:int  // goals achieved so far
+		private var goalNumber:int; // total number of goals
+		private var goalCount:int  // goals achieved so far
 		
 		// texts that display information
-		private var goaltext:FlxText;
-		private var movetext:FlxText;
+		private var goalText:FlxText;
+		private var moveText:FlxText;
 		
 		override public function create():void
 		{
@@ -108,8 +108,8 @@ package
 					level[x_next][y_next] = 1;
 					px += xo;
 					py += yo;
-					movecount++;
-					updatemovetext();
+					moveCount++;
+					updateMoveText();
 				}
 				
 				// case 2 - pushing block
@@ -124,19 +124,19 @@ package
 					entities[x_next2][y_next2] = entities[x_next][y_next];
 					px += xo;
 					py += yo;
-					movecount++;
-					updatemovetext();
+					moveCount++;
+					updateMoveText();
 					
 					// now we change the goal count if necessary
 					if (floor[x_next][y_next] == 0 && floor[x_next2][y_next2] == 1)
 					{
-						goalcount++;
-						updategoaltext();
+						goalCount++;
+						updateGoalText();
 					}
 					else if (floor[x_next][y_next] == 1 && floor[x_next2][y_next2] == 0)
 					{
-						goalcount--;
-						updategoaltext();
+						goalCount--;
+						updateGoalText();
 					}
 				}
 				// TODO: other cases (?)
@@ -151,11 +151,11 @@ package
 			// if PgDown or PgUp is pressed, switch levels
 			if (FlxG.keys.justPressed("PAGEUP"))
 			{
-				if (levelindex < LevelStorage.levels.length - 1) loadLevel(levelindex + 1);
+				if (levelIndex < LevelStorage.levels.length - 1) loadLevel(levelIndex + 1);
 			}
 			else if (FlxG.keys.justPressed("PAGEDOWN"))
 			{
-				if (levelindex > 0) loadLevel(levelindex - 1);
+				if (levelIndex > 0) loadLevel(levelIndex - 1);
 			}
 			
 			// finally, update all objects we have added to our FlxState.
@@ -165,25 +165,25 @@ package
 		private function loadLevel(index:int):void
 		{
 			// standard stuff.
-			levelindex = index;
-			var thislevel:Level = LevelStorage.levels[levelindex];
+			levelIndex = index;
+			var thisLevel:Level = LevelStorage.levels[levelIndex];
 			clear();
-			goalnumber = goalcount = 0;
-			movecount = 0;
+			goalNumber = goalCount = 0;
+			moveCount = 0;
 			var i:int = 0;
 			var j:int = 0;			
 			
 			// load data from the Level thislevel.
-			for (i = 0; i < thislevel.width; i++) {
+			for (i = 0; i < thisLevel.width; i++) {
 				level[i] = [];
 				floor[i] = [];
-				for (j = 0; j < thislevel.height; j++) {
-					level[i][j] = thislevel.levelArray[i][j];
-					floor[i][j] = thislevel.floorArray[i][j];
+				for (j = 0; j < thisLevel.height; j++) {
+					level[i][j] = thisLevel.levelArray[i][j];
+					floor[i][j] = thisLevel.floorArray[i][j];
 				}
 			}
-			px = thislevel.playerx;
-			py = thislevel.playery;
+			px = thisLevel.playerX;
+			py = thisLevel.playerY;
 			
 			// add wall and floor graphics
 			for (i = 0; i < level.length; i++)
@@ -196,7 +196,7 @@ package
 					// add goal floor graphics
 					else if (floor[i][j] == 1) {
 						add( new Goal(i * TILESIZE, j * TILESIZE));
-						goalnumber++;
+						goalNumber++;
 					}
 					
 					// add empty floor graphics
@@ -230,11 +230,11 @@ package
 			
 			
 			// load entities from EntityLayer
-			for (i = 0; i < thislevel.entitiesArray.length; i++)
+			for (i = 0; i < thisLevel.entitiesArray.length; i++)
 			{
-				if (thislevel.entitiesArray[i] is PaceBot)
+				if (thisLevel.entitiesArray[i] is PaceBot)
 				{
-					add( (PaceBot)(thislevel.entitiesArray[i]).clone() )
+					add( (PaceBot)(thisLevel.entitiesArray[i]).clone() )
 					// TODO: set array value when adding patrolbot. also add it to entities[][]?
 				}
 			}
@@ -246,26 +246,26 @@ package
 			
 			// create texts
 			// NOTE: Text isn't related to making the level, put in own function
-			goaltext = new FlxText(180, 5, 150, "");
-			add(goaltext);
-			updategoaltext();
-			movetext = new FlxText(10, 200, 100, "");
-			add(movetext);
-			updatemovetext();
-			add(new FlxText(180, 25, 150, "Level " + levelindex));
-			add(new FlxText(180, 45, 150, "Name: " + thislevel.name));
+			goalText = new FlxText(180, 5, 150, "");
+			add(goalText);
+			updateGoalText();
+			moveText = new FlxText(10, 200, 100, "");
+			add(moveText);
+			updateMoveText();
+			add(new FlxText(180, 25, 150, "Level " + levelIndex));
+			add(new FlxText(180, 45, 150, "Name: " + thisLevel.name));
 			add(new FlxText(180, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch levels"));
 		}
 		
-		private function updategoaltext():void
+		private function updateGoalText():void
 		{
-			goaltext.text = "Blocks: " + goalcount + " / " + goalnumber;
-			if (goalcount == goalnumber) goaltext.text = goaltext.text + "\nCongrats!";
+			goalText.text = "Blocks: " + goalCount + " / " + goalNumber;
+			if (goalCount == goalNumber) goalText.text = goalText.text + "\nCongrats!";
 		}
 		
-		private function updatemovetext():void
+		private function updateMoveText():void
 		{
-			movetext.text = "Moves: " + movecount;
+			moveText.text = "Moves: " + moveCount;
 		}
 		
 		private function getLevelString(index:int):String

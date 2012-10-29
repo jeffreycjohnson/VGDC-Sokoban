@@ -1,7 +1,6 @@
 package  
 {
 	
-	
 	import org.flixel.*;
 	
 	public class Block extends MovingSprite

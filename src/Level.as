@@ -5,8 +5,8 @@ package
 	public class Level 
 	{
 		public var name:String;
-		public var playerx:int;
-		public var playery:int;
+		public var playerX:int;
+		public var playerY:int;
 		public var width:int;
 		public var height:int;
 		
@@ -57,8 +57,8 @@ package
 				else if (id == 4)
 				{
 					levelArray[x][y] = 0;
-					playerx = x;
-					playery = y;
+					playerX = x;
+					playerY = y;
 				}
 			}
 			
@@ -66,17 +66,20 @@ package
 			for each (node in xml.EntityLayer.PatrolBot)
 			{
 				var b:String = node.@Behavior;
+				
+				// This set of x,y might still exist in the scope of the prior foreach loop
+				// Might explain the warning FlashDevelop gives
 				var x:int = node.@x;
 				var y:int = node.@y;
 				var ts:int = node.@Movespeed;
 				var vt:String = node.@VisionType;
 				var vr:int = node.@VisionRadius;
 				
-				var addme:PatrolBot;
+				var addMe:PatrolBot;
 				
-				if (b == "pace horizontal") addme = new PaceBot(x, y, ts, vt, vr, "horizontal");
-				else if (b == "pace vertical") addme = new PaceBot(x, y, ts, vt, vr, "vertical");
-				entitiesArray.push( addme );
+				if (b == "pace horizontal") addMe = new PaceBot(x, y, ts, vt, vr, "horizontal");
+				else if (b == "pace vertical") addMe = new PaceBot(x, y, ts, vt, vr, "vertical");
+				entitiesArray.push( addMe );
 			}
 			
 		}
