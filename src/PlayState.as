@@ -18,7 +18,7 @@ package
 		 * 1 = wall
 		 * 2 = block
 		 * 4 = player
-		 * 5 = bot
+		 * 5 = patrolbot
 		 */
 		public static var level:Array = [];
 		
@@ -142,10 +142,10 @@ package
 				// TODO: other cases (?)
 			}
 			
-			// if R keys is pressed, reset
+			// if R key is pressed, reset
 			if (FlxG.keys.justPressed("R"))
 			{
-				create();
+				loadLevel(levelIndex);
 			}
 			
 			// if PgDown or PgUp is pressed, switch levels
@@ -166,76 +166,66 @@ package
 		{
 			// standard stuff.
 			levelIndex = index;
-			var thisLevel:Level = LevelStorage.levels[levelIndex];
 			clear();
+			level = [];
+			floor = [];
+			entities = [];
 			goalNumber = goalCount = 0;
 			moveCount = 0;
 			var i:int = 0;
-			var j:int = 0;			
+			var j:int = 0;
 			
-			// load data from the Level thislevel.
-			for (i = 0; i < thisLevel.width; i++) {
-				level[i] = [];
-				floor[i] = [];
-				for (j = 0; j < thisLevel.height; j++) {
-					level[i][j] = thisLevel.levelArray[i][j];
-					floor[i][j] = thisLevel.floorArray[i][j];
-				}
-			}
+			var thisLevel:Level = LevelStorage.levels[levelIndex];
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
 			
-			// add wall and floor graphics
-			for (i = 0; i < level.length; i++)
+			
+			// cycle through the level data.
+			for (i = 0; i < thisLevel.width; i++)
 			{
-				for (j = 0; j < level[0].length; j++)
+				level[i] = [];
+				floor[i] = [];
+				entities[i] = [];
+				for (j = 0; j < thisLevel.height; j++)
 				{
-					// add wall graphics
-					if (level[i][j] == 1) add( new Wall(i * TILESIZE, j * TILESIZE));
+					// 1 - load data from thislevel into our level, floor, and entity arrays.
 					
-					// add goal floor graphics
+					level[i][j] = thisLevel.levelArray[i][j];
+					floor[i][j] = thisLevel.floorArray[i][j];
+					
+					// 2 - add the necessary static graphics objects.
+					
+					// wall
+					if (level[i][j] == 1) add( new Wall(i * TILESIZE, j * TILESIZE));
+					// goal-floor
 					else if (floor[i][j] == 1) {
 						add( new Goal(i * TILESIZE, j * TILESIZE));
 						goalNumber++;
 					}
-					
-					// add empty floor graphics
+					// empty-floor
 					else add( new Floor(i * TILESIZE, j * TILESIZE));
-				}
-			}
-			
-			/*
-			NOTE: Lotta looping over the same data, perhaps combine?
-			*/
-			
-			// initialize entities[][]
-			for (i = 0; i < level.length; i++)
-			{
-				entities[i] = [];
-			}
-			
-			
-			// add blocks, etc. to entities[][]
-			for (i = 0; i < level.length; i++)
-			{
-				for (j = 0; j < level.length; j++)
-				{
+					
+					// 3 - add blocks ON TOP OF the graphics objects.
 					if (level[i][j] == 2) {
 						entities[i][j] = new Block(i * TILESIZE, j * TILESIZE);
 						add(entities[i][j]);
 					}
-					// TODO: add different kinds of entities here. (that are loaded from MainLayer)
+					
 				}
 			}
 			
 			
-			// load entities from EntityLayer
+			// cycle through the entity data.
 			for (i = 0; i < thisLevel.entitiesArray.length; i++)
 			{
+				var x:int = (FlxSprite)(thisLevel.entitiesArray[i]).x/TILESIZE;
+				var y:int = (FlxSprite)(thisLevel.entitiesArray[i]).y/TILESIZE;
 				if (thisLevel.entitiesArray[i] is PaceBot)
 				{
-					add( (PaceBot)(thisLevel.entitiesArray[i]).clone() )
-					// TODO: set array value when adding patrolbot. also add it to entities[][]?
+					var newguy:PaceBot = (PaceBot)(thisLevel.entitiesArray[i]).clone()
+					add(newguy);
+					entities[x][y] = newguy;
+					level[x][y] = 5;
 				}
 			}
 			
@@ -244,8 +234,12 @@ package
 			add(player);
 			
 			
-			// create texts
-			// NOTE: Text isn't related to making the level, put in own function
+			// create various GUI-entities
+			loadGUI(thisLevel);
+		}
+		
+		private function loadGUI(thisLevel:Level):void
+		{
 			goalText = new FlxText(180, 5, 150, "");
 			add(goalText);
 			updateGoalText();

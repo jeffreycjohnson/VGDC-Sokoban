@@ -1,6 +1,6 @@
 package  
 {
-	import org.flixel.FlxGame;
+	import org.flixel.*;
 	
 	[SWF(width="640", height="480", backgroundColor="#000000")]
 	

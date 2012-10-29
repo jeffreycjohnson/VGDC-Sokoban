@@ -45,7 +45,7 @@ package
 		protected function turnTo(newdir:String):void
 		{
 			// TODO: take half of movespeed to turn.
-			trace("turning to " + newdir);
+			//trace("turning to " + newdir);
 			direction = newdir;
 		}
 		
