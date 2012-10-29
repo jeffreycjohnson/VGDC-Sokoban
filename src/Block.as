@@ -12,6 +12,11 @@ package
 			loadGraphic(Assets.BLOCK, false, true, 16, 16);
 		}
 		
+		public function clone():Block
+		{
+			return new Block(x, y);
+		}
+		
 		override public function update():void
 		{
 			super.update();

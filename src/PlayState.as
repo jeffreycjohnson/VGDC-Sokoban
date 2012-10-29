@@ -105,7 +105,7 @@ package
 				{
 					player.move(xo, yo);
 					level[px][py] = 0;
-					level[x_next][y_next] = 1;
+					level[x_next][y_next] = 4;
 					px += xo;
 					py += yo;
 					moveCount++;
@@ -119,7 +119,7 @@ package
 					player.move(xo, yo);
 					
 					level[px][py] = 0;
-					level[x_next][y_next] = 1;
+					level[x_next][y_next] = 4;
 					level[x_next2][y_next2] = 2;
 					entities[x_next2][y_next2] = entities[x_next][y_next];
 					px += xo;
@@ -160,6 +160,20 @@ package
 			
 			// finally, update all objects we have added to our FlxState.
 			super.update();
+			
+			
+			// trace array (for debugging)
+			/*
+			for (var y:int = 0; y < level[0].length; y++) {
+				var s:String = "";
+				for (var x:int = 0; x < level.length; x++) {
+					s += level[x][y] + " ";
+				}
+				trace(s);
+			}
+			trace();
+			*/
+			
 		}
 		
 		private function loadLevel(index:int):void
@@ -188,7 +202,7 @@ package
 				entities[i] = [];
 				for (j = 0; j < thisLevel.height; j++)
 				{
-					// 1 - load data from thislevel into our level, floor, and entity arrays.
+					// 1 - load data from thislevel into our level and floor arrays
 					
 					level[i][j] = thisLevel.levelArray[i][j];
 					floor[i][j] = thisLevel.floorArray[i][j];
@@ -205,12 +219,6 @@ package
 					// empty-floor
 					else add( new Floor(i * TILESIZE, j * TILESIZE));
 					
-					// 3 - add blocks ON TOP OF the graphics objects.
-					if (level[i][j] == 2) {
-						entities[i][j] = new Block(i * TILESIZE, j * TILESIZE);
-						add(entities[i][j]);
-					}
-					
 				}
 			}
 			
@@ -218,16 +226,25 @@ package
 			// cycle through the entity data.
 			for (i = 0; i < thisLevel.entitiesArray.length; i++)
 			{
-				var x:int = (FlxSprite)(thisLevel.entitiesArray[i]).x/TILESIZE;
-				var y:int = (FlxSprite)(thisLevel.entitiesArray[i]).y/TILESIZE;
-				if (thisLevel.entitiesArray[i] is PaceBot)
+				var newGuy:FlxSprite = (FlxSprite)(thisLevel.entitiesArray[i]);
+				var x:int = newGuy.x / TILESIZE;
+				var y:int = newGuy.y / TILESIZE;
+				var specificGuy:FlxSprite;
+				
+				if (newGuy is Block)
 				{
-					var newguy:PaceBot = (PaceBot)(thisLevel.entitiesArray[i]).clone()
-					add(newguy);
-					entities[x][y] = newguy;
-					level[x][y] = 5;
+					specificGuy = (Block)(newGuy).clone();
 				}
+				else if (newGuy is PaceBot)
+				{
+					specificGuy = (PaceBot)(newGuy).clone();
+				}
+				
+				// add each entity to the FlxState, and also to it's place in the entitites array.
+				add(specificGuy);
+				entities[x][y] = specificGuy;
 			}
+			
 			
 			// create player
 			player = new Player(px * TILESIZE, py * TILESIZE);
@@ -243,9 +260,11 @@ package
 			goalText = new FlxText(180, 5, 150, "");
 			add(goalText);
 			updateGoalText();
+			
 			moveText = new FlxText(10, 200, 100, "");
 			add(moveText);
 			updateMoveText();
+			
 			add(new FlxText(180, 25, 150, "Level " + levelIndex));
 			add(new FlxText(180, 45, 150, "Name: " + thisLevel.name));
 			add(new FlxText(180, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch levels"));
