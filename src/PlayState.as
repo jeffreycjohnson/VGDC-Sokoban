@@ -1,47 +1,56 @@
 package  
 {
-	//The class which contains the game loop and major stuff.
 		
 	import org.flixel.*;
 	import mx.collections.ListCollectionView;
 	import mx.utils.ObjectUtil;
 	
+	/**
+	 * The class which contains the game loop and stores important data.
+	 */
 	public class PlayState extends FlxState
 	{
 		// width of a tile in pixels
 		public static const TILESIZE:int = 16;
 		
-		/* GENERAL STUFF */
-		
 		// holds the values of what kind of stuff we have at each grid space
+		public static var level:Array = [];
 		/* 0 = empty
 		 * 1 = wall
 		 * 2 = block
 		 * 4 = player
 		 * 5 = patrolbot
 		 */
-		public static var level:Array = [];
 		
-		/* holds what type of floor there is at each grid space.
-		 * 0 = plain floor
+		// holds what type of floor there is at each grid space.
+		private var floor:Array = [];
+		/* 0 = plain floor
 		 * 1 = goal
 		 */
-		private var floor:Array = []; //NOTE: Why can't this be combined with level array? Just make floors a penetratable block
+		
+		//NOTE: Why can't this be combined with level array? Just make floors a penetratable block
+		// answer: At first, I just had level[][] and not floor[][]. But the problem was that when, for example,
+		// the player walked over a goal tile, and then walked off of it, the game would not remember there
+		// was ever a goal tile there, since it overwrote the value of the goaltile (used to be 3) to 4.
+		// So I created floor[][] to forever remember if there was a goal at that space or not.
+		
+		// One work-around I implemented but then scrapped was to save special values, like for example "4 = player standing on goal"
+		// and "5 = block standing on goal" but that wouldn't take kindly to many types of possible array values.
+		// (I'm not sure how to communicate about this kind of thing via github, so you can delete this when you've read it.)
 		
 		// holds MovingSprites we need to access by their position in the array.
 		private var entities:Array = [];
 		
 		// store the player and his coordinates for ease of access.
 		private var player:Player;
-
-		/*
-		NOTE: Better if player vars kept in Player class?
-		*/
-
 		private var px:int;
 		private var py:int;
 		
-		/* COUNTS */
+		/*
+		NOTE: Better if player vars kept in Player class?
+		*/
+		// Answer: I guess we could, but I like this way better, since Player is never going to use px or py.
+		// We're only going to use and modify those values in PlayState.
 		
 		// which level we're currently on
 		private var levelIndex:int;
@@ -84,13 +93,7 @@ package
 			if (FlxG.keys.justPressed("UP")) yo = -1;
 			
 			var next:int = level[px + xo][py + yo]; // the tile right in front of player
-
-			/*
-			NOTE: could be simplified to next2:int = next != 1 ? level[px + 2 * xo][py + 2 * yo] : 0;
-			Either way if next == 1, then next2 isn't explicitly initialized, which you should avoid happening
-			*/			
-			var next2:int;
-			if (next != 1) next2 = level[px + 2 * xo][py + 2 * yo]; // the tile 2 blocks in front of player
+			var next2:int = next != 1 ? level[px + 2 * xo][py + 2 * yo] : 0; // the tile 2 blocks in front of player
 			
 			var x_next:int = px + xo;
 			var y_next:int = py + yo;
@@ -268,6 +271,11 @@ package
 			add(new FlxText(180, 25, 150, "Level " + levelIndex));
 			add(new FlxText(180, 45, 150, "Name: " + thisLevel.name));
 			add(new FlxText(180, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch levels"));
+		}
+		
+		public static function updateDetected():void
+		{
+			// this is a tough problem.
 		}
 		
 		private function updateGoalText():void

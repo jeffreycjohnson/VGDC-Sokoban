@@ -3,6 +3,9 @@ package
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	
+	/**
+	 * Stores the levels for access by PlayState in begin().
+	 */
 	public class LevelStorage 
 	{
 		[Embed(source = "../levels/level_00.oel", mimeType = "application/octet-stream")] public static const level_00:Class;

@@ -1,7 +1,10 @@
 package  
 {
 	import org.flixel.*;
-		
+	
+	/**
+	 * A robot that patrols around the level and has a vision radius the player must avoid. Patterns defined in subclasses.
+	 */
 	public class PatrolBot extends MovingSprite
 	{
 		protected var tickSpeed:int;
@@ -37,7 +40,11 @@ package
 				tickCount = 0;
 				tick();
 			}
+			
 			super.update();
+			
+			// if we moved last tick, update
+			if (moving) PlayState.updateDetected();
 		}
 		
 		protected function tick():void { }

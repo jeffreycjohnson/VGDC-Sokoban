@@ -4,6 +4,9 @@ package
 	
 	[SWF(width="640", height="480", backgroundColor="#000000")]
 	
+	/**
+	 * Entry point into the game.
+	 */
 	public class Main extends FlxGame
 	{
 		public static const pixel:int = 2;

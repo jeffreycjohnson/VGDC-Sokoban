@@ -2,6 +2,9 @@ package
 {
 	import org.flixel.*;
 	
+	/**
+	 * Sprite for a block goal.
+	 */
 	public class Goal extends FlxSprite
 	{
 		

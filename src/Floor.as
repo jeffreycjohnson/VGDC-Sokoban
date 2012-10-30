@@ -2,6 +2,9 @@ package
 {
 	import org.flixel.*;
 	
+	/**
+	 * Sprite for the floor.
+	 */
 	public class Floor extends FlxSprite
 	{
 		

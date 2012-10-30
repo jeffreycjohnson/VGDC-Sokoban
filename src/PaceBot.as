@@ -1,5 +1,8 @@
 package  
 {
+	/**
+	 * PatrolBot that goes in a straight horizontal or vertical line, turning around at walls.
+	 */
 	public class PaceBot extends PatrolBot
 	{
 		private var type:String; // "horizontal" or "vertical"

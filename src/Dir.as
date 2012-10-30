@@ -1,7 +1,8 @@
 package  
 {
-	//Direction ENUM
-	
+	/**
+	 * Direction "enum".
+	 */
 	public class Dir
 	{
 		

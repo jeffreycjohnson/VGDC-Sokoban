@@ -2,6 +2,9 @@ package
 {
 	import flash.utils.ByteArray;
 	
+	/**
+	 * Holds data for a level.
+	 */
 	public class Level 
 	{
 		public var name:String;
@@ -78,9 +81,6 @@ package
 			for each (node in xml.EntityLayer.PatrolBot)
 			{
 				var b:String = node.@Behavior;
-				
-				// This set of x,y might still exist in the scope of the prior foreach loop
-				// Might explain the warning FlashDevelop gives
 				x = node.@x;
 				y = node.@y;
 				var ts:int = node.@Movespeed;

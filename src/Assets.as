@@ -1,6 +1,8 @@
 package  
 {
-	
+	/**
+	 * Stores all the art and music assets for public access.
+	 */
 	public class Assets 
 	{
 		[Embed(source = "../assets/wall.png")] public static var WALL:Class;

@@ -2,16 +2,19 @@ package
 {
 	import org.flixel.*;
 	
+	/**
+	 * A FlxSprite that can be told to move up, down, left, or right.
+	 */
 	public class MovingSprite extends FlxSprite
 	{
 		protected const moveSpeed:Number = 3; // how many pixels per update we go.
 		protected const moveTime:Number = PlayState.TILESIZE / moveSpeed; // how many updates we go through to move one tile.
-		private const tileSize:int = PlayState.TILESIZE;
+		protected const tileSize:int = PlayState.TILESIZE;
 		
-		private var moving:Boolean;
-		private var move_xo:int; // direction of movement
-		private var move_yo:int; // direction of movement
-		private var moveCount:int;
+		protected var moving:Boolean;
+		protected var move_xo:int; // direction of movement
+		protected var move_yo:int; // direction of movement
+		protected var moveCount:int;
 		
 		public function MovingSprite(x:int, y:int) 
 		{

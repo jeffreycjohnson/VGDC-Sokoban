@@ -1,6 +1,8 @@
 package  
 {
-	
+	/**
+	 * A block pushable by the player.
+	 */
 	import org.flixel.*;
 	
 	public class Block extends MovingSprite
