@@ -14,7 +14,7 @@ package
 		public static const TILESIZE:int = 16;
 		
 		// holds the values of what kind of stuff we have at each grid space
-		public var level:Array = [];
+		public var level:Array;
 		/* 0 = empty
 		 * 1 = wall
 		 * 2 = block
@@ -23,7 +23,7 @@ package
 		 */
 		
 		// holds what type of floor there is at each grid space.
-		private var floor:Array = [];
+		private var floor:Array;
 		/* 0 = plain floor
 		 * 1 = goal
 		 */
@@ -39,7 +39,11 @@ package
 		// (I'm not sure how to communicate about this kind of thing via github, so you can delete this when you've read it.)
 		
 		// holds MovingSprites we need to access by their position in the array.
-		private var entities:Array = [];
+		private var entities:Array;
+		
+		// holds all entities we need to test for Detected updates.
+		private var patrollers:Vector.<PatrolBot>;
+		private var detected:Array;
 		
 		// store the player and his coordinates for ease of access.
 		private var player:Player;
@@ -187,6 +191,8 @@ package
 			level = [];
 			floor = [];
 			entities = [];
+			detected = [];
+			patrollers = new Vector.<PatrolBot>;
 			goalNumber = goalCount = 0;
 			moveCount = 0;
 			var i:int = 0;
@@ -203,6 +209,8 @@ package
 				level[i] = [];
 				floor[i] = [];
 				entities[i] = [];
+				detected[i] = [];
+				
 				for (j = 0; j < thisLevel.height; j++)
 				{
 					// 1 - load data from thislevel into our level and floor arrays
@@ -241,6 +249,12 @@ package
 				else if (newGuy is PaceBot)
 				{
 					specificGuy = (PaceBot)(newGuy).clone();
+					patrollers.push(specificGuy);
+				}
+				else if (newGuy is PatrolBot)
+				{
+					specificGuy = (PatrolBot)(newGuy).clonePatrolBot();
+					patrollers.push(specificGuy);
 				}
 				
 				// add each entity to the FlxState, and also to it's place in the entitites array.
@@ -252,6 +266,17 @@ package
 			// create player
 			player = new Player(px * TILESIZE, py * TILESIZE);
 			add(player);
+			
+			// cycle through detected here to add them on top of everything
+			for (i = 0; i < level.length; i++) {
+				for (j = 0; j < level.length; j++) {
+					detected[i][j] = new Detected(i * TILESIZE, j * TILESIZE);
+					add(detected[i][j]);
+				}
+			}
+			
+			// update Detecteds for the first time
+			updateDetected();
 			
 			
 			// create various GUI-entities
@@ -275,7 +300,54 @@ package
 		
 		public function updateDetected():void
 		{
-			// this is a tough problem.
+			var i:int = 0;
+			var x:int = 0;
+			var y:int = 0;
+			
+			// first, blank out our array of Detecteds.
+			for (x = 0; x < detected.length; x++) {
+				for (y = 0; y < detected[0].length; y++) {
+					(Detected)(detected[x][y]).kill();
+				}
+			}
+			
+			// now cycle through our patrollers, reviving any Detecteds they see.
+			for (i = 0; i < patrollers.length; i++)
+			{
+				var guy:PatrolBot = patrollers[i];
+				var sourceX:int = guy.x + guy.width / 2;
+				var sourceY:int = guy.y + guy.height / 2;
+				var radius:int = guy.visionRadius;
+				//trace(sourceX, sourceY);
+				
+				// test case: circle
+				if (guy.visionType == "circle")
+				{
+					for (x = 0; x < detected.length; x++) {
+						for (y = 0; y < detected[0].length; y++) {
+							var det:Detected = detected[x][y];
+							var detX:int = det.x + TILESIZE / 2;
+							var detY:int = det.y + TILESIZE / 2;
+							if (SokoMath.distance(sourceX, sourceY, detX, detY) <= radius) det.revive();
+						}
+					}
+				}
+				// real case: cone of vision.
+				// to do the for next commit:
+				
+				// re-do ogmo project, Level, and PatrolBot to take different ctor args:
+				// used to be:  x, y, tickspeed, visionType, visionRadius
+				// new args:    x, y, tickspeed, visionAngle, visionRadius, visionType(for testing purposes)
+				// also alter PaceBot to reflect this.
+				
+				// the meat: the following code to see if a tile is both inside the cone of vision, AND not blocked by a wall.
+				// I have an idea for how this would work, it's pretty complex, so I'm not sure if it will run very fast, but we'll see.
+				else if (guy.visionType == "cone")
+				{
+					
+				}
+				
+			}
 		}
 		
 		private function updateGoalText():void

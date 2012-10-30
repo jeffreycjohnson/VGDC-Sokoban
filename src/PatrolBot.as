@@ -10,29 +10,36 @@ package
 		protected var tickSpeed:int;
 		
 		protected var tickCount:int = 0;
-		protected var visionType:String;
-		protected var visionRadius:int;
-		
-     // public var angle:Number;    // This actually exists! It's defined in FlxObject.
+		protected var _visionType:String;
+		protected var _visionRadius:int;
+		protected var _theta:Number;
 		protected var direction:String;
-				
+		
+		public function get visionType():String { return _visionType; }
+		public function get visionRadius():int { return _visionRadius; };
+		public function get theta():int { return _theta; };
+		public function get visionAngle():int { return Math.PI / 3 };
+		
 		public function PatrolBot(x:int, y:int, tickSpeed:int, visionType:String, visionRadius:int ) 
 		{
 			super(x, y);
 			this.tickSpeed = tickSpeed;
 			if (tickSpeed < moveTime) tickSpeed = moveTime + 2; // just in case ... ?
-			this.visionType = visionType;
-			this.visionRadius = visionRadius;			
+			_visionType = visionType;
+			_visionRadius = visionRadius;
+			_theta = 0;
 			loadGraphic(Assets.PATROL, false, true, 16, 16);
 		}
-		/*
-		public function clone():PatrolBot
+		
+		public function clonePatrolBot():PatrolBot
 		{
-			return new PatrolBot(x, y, tickspeed, visiontype, visionradius);
+			return new PatrolBot(x, y, tickSpeed, visionType, visionRadius);
 		}
-		*/
+		
 		override public function update():void
 		{
+			super.update();
+			
 			tickCount++;
 			if (tickCount == tickSpeed)
 			{
@@ -40,10 +47,12 @@ package
 				tick();
 			}
 			
-			super.update();
-			
 			// if we moved last tick, update
-			if (moving) (FlxG.state as PlayState).updateDetected();
+			if (movedLast)
+			{
+				(FlxG.state as PlayState).updateDetected();
+				movedLast = false;
+			}
 		}
 		
 		protected function tick():void { }
@@ -51,6 +60,7 @@ package
 		protected function turnTo(newdir:String):void
 		{
 			// TODO: take half of movespeed to turn.
+			// TODO: call updateDetected while turning.
 			//trace("turning to " + newdir);
 			direction = newdir;
 		}

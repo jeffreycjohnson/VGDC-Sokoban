@@ -90,6 +90,7 @@ package
 				var addMe:PatrolBot;
 				if (b == "pace horizontal") addMe = new PaceBot(x, y, ts, vt, vr, "horizontal");
 				else if (b == "pace vertical") addMe = new PaceBot(x, y, ts, vt, vr, "vertical");
+				else if (b == "no behavior") addMe = new PatrolBot(x, y, ts, vt, vr);
 				entitiesArray.push( addMe );
 				
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;

@@ -12,6 +12,7 @@ package
 		protected const tileSize:int = PlayState.TILESIZE;
 		
 		protected var moving:Boolean;
+		protected var movedLast:Boolean; // used in PatrolBot.update()
 		protected var move_xo:int; // direction of movement
 		protected var move_yo:int; // direction of movement
 		protected var moveCount:int;
@@ -30,6 +31,7 @@ package
 				x += move_xo * moveSpeed;
 				y += move_yo * moveSpeed;
 				moveCount++;
+				movedLast = true;
 				// if we are done moving, then stop moving and snap to the nearest tile.
 				if (moveCount >= moveTime)
 				{
