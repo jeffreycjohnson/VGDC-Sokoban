@@ -3,6 +3,9 @@ package
 	/**
 	 * PatrolBot that goes in a straight horizontal or vertical line, turning around at walls.
 	 */
+	
+	import org.flixel.*;
+	 
 	public class PaceBot extends PatrolBot
 	{
 		private var type:String; // "horizontal" or "vertical"
@@ -38,11 +41,11 @@ package
 			var x:int = x / PlayState.TILESIZE;
 			var y:int = y / PlayState.TILESIZE;
 			
-			if (PlayState.level[x + xo][y + yo] == 0)
+			if ((FlxG.state as PlayState).level[x + xo][y + yo] == 0)
 			{
 				move(xo, yo);
-				PlayState.level[x][y] = 0;
-				PlayState.level[x + xo][y + yo] = 5;
+				(FlxG.state as PlayState).level[x][y] = 0;
+				(FlxG.state as PlayState).level[x + xo][y + yo] = 5;
 			}
 			else
 			{

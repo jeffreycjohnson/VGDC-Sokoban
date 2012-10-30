@@ -14,7 +14,7 @@ package
 		public static const TILESIZE:int = 16;
 		
 		// holds the values of what kind of stuff we have at each grid space
-		public static var level:Array = [];
+		public var level:Array = [];
 		/* 0 = empty
 		 * 1 = wall
 		 * 2 = block
@@ -273,7 +273,7 @@ package
 			add(new FlxText(180, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch levels"));
 		}
 		
-		public static function updateDetected():void
+		public function updateDetected():void
 		{
 			// this is a tough problem.
 		}

@@ -15,15 +15,14 @@ package
 		
      // public var angle:Number;    // This actually exists! It's defined in FlxObject.
 		protected var direction:String;
-		
-		
+				
 		public function PatrolBot(x:int, y:int, tickSpeed:int, visionType:String, visionRadius:int ) 
 		{
+			super(x, y);
 			this.tickSpeed = tickSpeed;
 			if (tickSpeed < moveTime) tickSpeed = moveTime + 2; // just in case ... ?
 			this.visionType = visionType;
-			this.visionRadius = visionRadius;
-			super(x, y);
+			this.visionRadius = visionRadius;			
 			loadGraphic(Assets.PATROL, false, true, 16, 16);
 		}
 		/*
@@ -44,7 +43,7 @@ package
 			super.update();
 			
 			// if we moved last tick, update
-			if (moving) PlayState.updateDetected();
+			if (moving) (FlxG.state as PlayState).updateDetected();
 		}
 		
 		protected function tick():void { }

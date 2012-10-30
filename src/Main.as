@@ -9,13 +9,13 @@ package
 	 */
 	public class Main extends FlxGame
 	{
-		public static const pixel:int = 2;
-		public static const w:int = 640/pixel;
-		public static const h:int = 480/pixel;
+		public static const PIXEL:int = 2;
+		public static const WIDTH:int = 640/PIXEL;
+		public static const HEIGHT:int = 480/PIXEL;
 		
 		public function Main()
 		{
-			super(w, h, PlayState, pixel, 60, 60);
+			super(WIDTH, HEIGHT, PlayState, PIXEL, 60, 60);
 			forceDebugger = true;
 		}
 	}
