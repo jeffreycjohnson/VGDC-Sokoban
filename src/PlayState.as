@@ -4,14 +4,16 @@ package
 	import org.flixel.*;
 	import mx.collections.ListCollectionView;
 	import mx.utils.ObjectUtil;
+	import flash.system.System;
 	
 	/**
 	 * The class which contains the game loop and stores important data.
 	 */
 	public class PlayState extends FlxState
-	{
-		// width of a tile in pixels
-		public static const TILESIZE:int = 16;
+	{	
+		
+		
+		/* Data structures */
 		
 		// holds the values of what kind of stuff we have at each grid space
 		public var level:Array;
@@ -28,33 +30,28 @@ package
 		 * 1 = goal
 		 */
 		
-		//NOTE: Why can't this be combined with level array? Just make floors a penetratable block
-		// answer: At first, I just had level[][] and not floor[][]. But the problem was that when, for example,
-		// the player walked over a goal tile, and then walked off of it, the game would not remember there
-		// was ever a goal tile there, since it overwrote the value of the goaltile (used to be 3) to 4.
-		// So I created floor[][] to forever remember if there was a goal at that space or not.
-		
-		// One work-around I implemented but then scrapped was to save special values, like for example "4 = player standing on goal"
-		// and "5 = block standing on goal" but that wouldn't take kindly to many types of possible array values.
-		// (I'm not sure how to communicate about this kind of thing via github, so you can delete this when you've read it.)
-		
 		// holds MovingSprites we need to access by their position in the array.
 		private var entities:Array;
 		
-		// holds all entities we need to test for Detected updates.
+		// holds all entities with vision that affects which squares are "detected".
 		private var patrollers:Vector.<PatrolBot>;
+		
+		// holds the highlightable squares that appear when something is detected by a patroller.
 		private var detected:Array;
+		
+		// TODO: refactor the name "detected" to something more intuitive?
+		
+		
+		
+		/* Single values */
+		
+		// width of a tile in pixels
+		public static const TILESIZE:int = 16;
 		
 		// store the player and his coordinates for ease of access.
 		private var player:Player;
 		private var px:int;
 		private var py:int;
-		
-		/*
-		NOTE: Better if player vars kept in Player class?
-		*/
-		// Answer: I guess we could, but I like this way better, since Player is never going to use px or py.
-		// We're only going to use and modify those values in PlayState.
 		
 		// which level we're currently on
 		private var levelIndex:int;
@@ -110,11 +107,13 @@ package
 				// case 1 - moving forward into empty space
 				if (next == 0)
 				{
-					player.move(xo, yo);
 					level[px][py] = 0;
 					level[x_next][y_next] = 4;
 					px += xo;
 					py += yo;
+					
+					player.move(xo, yo);
+					
 					moveCount++;
 					updateMoveText();
 				}
@@ -122,8 +121,6 @@ package
 				// case 2 - pushing block
 				else if (next == 2 && next2 == 0)
 				{
-					entities[x_next][y_next].move(xo, yo);
-					player.move(xo, yo);
 					
 					level[px][py] = 0;
 					level[x_next][y_next] = 4;
@@ -131,6 +128,10 @@ package
 					entities[x_next2][y_next2] = entities[x_next][y_next];
 					px += xo;
 					py += yo;
+					
+					entities[x_next][y_next].move(xo, yo);
+					player.move(xo, yo);
+					
 					moveCount++;
 					updateMoveText();
 					
@@ -219,6 +220,7 @@ package
 					floor[i][j] = thisLevel.floorArray[i][j];
 					
 					// 2 - add the necessary static graphics objects.
+					// TODO: in the future when we have graphics for the edges, corners, etc, add them here. I've done this before, it's not too complex.
 					
 					// wall
 					if (level[i][j] == 1) add( new Wall(i * TILESIZE, j * TILESIZE));
@@ -285,21 +287,23 @@ package
 		
 		private function loadGUI(thisLevel:Level):void
 		{
-			goalText = new FlxText(180, 5, 150, "");
+			goalText = new FlxText(220, 5, 150, "");
 			add(goalText);
 			updateGoalText();
 			
-			moveText = new FlxText(10, 200, 100, "");
+			moveText = new FlxText(10, 230, 100, "");
 			add(moveText);
 			updateMoveText();
 			
-			add(new FlxText(180, 25, 150, "Level " + levelIndex));
-			add(new FlxText(180, 45, 150, "Name: " + thisLevel.name));
-			add(new FlxText(180, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch levels"));
+			add(new FlxText(220, 25, 150, "Level " + levelIndex));
+			add(new FlxText(220, 45, 150, "Name: " + thisLevel.name));
+			add(new FlxText(220, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch\nlevels"));
 		}
 		
 		public function updateDetected():void
 		{
+			// TODO: reformat this method to make it more understandable / readable?
+			
 			var i:int = 0;
 			var x:int = 0;
 			var y:int = 0;
@@ -318,35 +322,73 @@ package
 				var sourceX:int = guy.x + guy.width / 2;
 				var sourceY:int = guy.y + guy.height / 2;
 				var radius:int = guy.visionRadius;
-				//trace(sourceX, sourceY);
 				
-				// test case: circle
+				var minTheta:Number = guy.theta - guy.visionAngle / 2;
+				var maxTheta:Number = guy.theta + guy.visionAngle / 2;
+				
+				var det:Detected;
+				var detX:int;
+				var detY:int;
+				
+				// circle x-ray vision (only for testing purposes)
 				if (guy.visionType == "circle")
 				{
 					for (x = 0; x < detected.length; x++) {
 						for (y = 0; y < detected[0].length; y++) {
-							var det:Detected = detected[x][y];
-							var detX:int = det.x + TILESIZE / 2;
-							var detY:int = det.y + TILESIZE / 2;
+							det = detected[x][y];
+							detX = det.x + TILESIZE / 2;
+							detY = det.y + TILESIZE / 2;
 							if (SokoMath.distance(sourceX, sourceY, detX, detY) <= radius) det.revive();
 						}
 					}
 				}
-				// real case: cone of vision.
-				// to do the for next commit:
 				
-				// re-do ogmo project, Level, and PatrolBot to take different ctor args:
-				// used to be:  x, y, tickspeed, visionType, visionRadius
-				// new args:    x, y, tickspeed, visionAngle, visionRadius, visionType(for testing purposes)
-				// also alter PaceBot to reflect this.
-				
-				// the meat: the following code to see if a tile is both inside the cone of vision, AND not blocked by a wall.
-				// I have an idea for how this would work, it's pretty complex, so I'm not sure if it will run very fast, but we'll see.
+				// cone vision (the basic type we should mostly use)
 				else if (guy.visionType == "cone")
 				{
+					// TODO: calculate lineNum and pointNum based on values given for theta and radius.
+					var lineNum:int = 10; // number of lines to draw
+					var pointNum:int = 20; // number of points to test on each line
+					var theta:Number = minTheta;
+					var deltaTheta:Number = (maxTheta - minTheta) / lineNum;
 					
+					// cycle through all lines
+					for (var lc:int = 0; lc <= lineNum; lc++)
+					{
+						if (lc > 0) theta += deltaTheta;
+						
+						// calculate slope
+						var hyp:Number = radius / pointNum;
+						var run:Number = hyp * Math.cos(theta);
+						var rise:Number = hyp * Math.sin(theta);
+						
+						var absX:Number = sourceX;
+						var absY:Number = sourceY;
+						// TODO: start a few points ahead, outside of the starting square?
+						
+						var valid:Boolean = true;
+						
+						// cycle through all points
+						for (var pc:int = 0; pc < pointNum; pc++)
+						{
+							absX += rise;
+							absY += run;
+							var gridX:int = (int)(absX / TILESIZE);
+							var gridY:int = (int)(absY / TILESIZE);
+							
+							// break if out of bounds
+							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) valid = false;					
+							
+							// break if tile is solid
+							// TODO: this is the line to change to make it harder to see around corners. see paper.
+							// TODO: something else I forgot before I wrote it down.
+							if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5) ) valid = false;
+							
+							// else, revive the tile.
+							if (valid) detected[gridX][gridY].revive();
+						}
+					}
 				}
-				
 			}
 		}
 		

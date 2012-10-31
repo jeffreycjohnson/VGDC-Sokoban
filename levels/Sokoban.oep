@@ -78,9 +78,10 @@
       </ImageDefinition>
       <ValueDefinitions>
         <ValueDefinition xsi:type="StringValueDefinition" Name="Behavior" Default="no behavior" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="IntValueDefinition" Name="Movespeed" Default="30" Min="1" Max="300" ShowSlider="true" />
-        <ValueDefinition xsi:type="StringValueDefinition" Name="VisionType" Default="Straight" MaxChars="-1" MultiLine="false" />
-        <ValueDefinition xsi:type="IntValueDefinition" Name="VisionRadius" Default="0" Min="0" Max="100" ShowSlider="false" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="MoveSpeed" Default="30" Min="1" Max="300" ShowSlider="true" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="VisionAngle" Default="1.05" Min="0" Max="6.28" Round="0.01" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="VisionRadius" Default="32" Min="0" Max="100" ShowSlider="false" />
+        <ValueDefinition xsi:type="StringValueDefinition" Name="VisionType" Default="no vision" MaxChars="-1" MultiLine="false" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

@@ -1,4 +1,4 @@
-<level width="160" height="160" Name="Pace Bot Test">
+<level width="240" height="240" Name="Cone testing area">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />
@@ -10,6 +10,11 @@
     <tile x="0" y="7" id="1" />
     <tile x="0" y="8" id="1" />
     <tile x="0" y="9" id="1" />
+    <tile x="0" y="10" id="1" />
+    <tile x="0" y="11" id="1" />
+    <tile x="0" y="12" id="1" />
+    <tile x="0" y="13" id="1" />
+    <tile x="0" y="14" id="1" />
     <tile x="1" y="0" id="1" />
     <tile x="1" y="1" id="0" />
     <tile x="1" y="2" id="0" />
@@ -19,7 +24,12 @@
     <tile x="1" y="6" id="0" />
     <tile x="1" y="7" id="0" />
     <tile x="1" y="8" id="0" />
-    <tile x="1" y="9" id="1" />
+    <tile x="1" y="9" id="0" />
+    <tile x="1" y="10" id="0" />
+    <tile x="1" y="11" id="0" />
+    <tile x="1" y="12" id="0" />
+    <tile x="1" y="13" id="0" />
+    <tile x="1" y="14" id="1" />
     <tile x="2" y="0" id="1" />
     <tile x="2" y="1" id="0" />
     <tile x="2" y="2" id="0" />
@@ -27,9 +37,14 @@
     <tile x="2" y="4" id="0" />
     <tile x="2" y="5" id="0" />
     <tile x="2" y="6" id="0" />
-    <tile x="2" y="7" id="4" />
+    <tile x="2" y="7" id="0" />
     <tile x="2" y="8" id="0" />
-    <tile x="2" y="9" id="1" />
+    <tile x="2" y="9" id="0" />
+    <tile x="2" y="10" id="0" />
+    <tile x="2" y="11" id="0" />
+    <tile x="2" y="12" id="0" />
+    <tile x="2" y="13" id="0" />
+    <tile x="2" y="14" id="1" />
     <tile x="3" y="0" id="1" />
     <tile x="3" y="1" id="0" />
     <tile x="3" y="2" id="0" />
@@ -37,9 +52,14 @@
     <tile x="3" y="4" id="0" />
     <tile x="3" y="5" id="0" />
     <tile x="3" y="6" id="0" />
-    <tile x="3" y="7" id="2" />
+    <tile x="3" y="7" id="0" />
     <tile x="3" y="8" id="0" />
-    <tile x="3" y="9" id="1" />
+    <tile x="3" y="9" id="0" />
+    <tile x="3" y="10" id="0" />
+    <tile x="3" y="11" id="0" />
+    <tile x="3" y="12" id="0" />
+    <tile x="3" y="13" id="0" />
+    <tile x="3" y="14" id="1" />
     <tile x="4" y="0" id="1" />
     <tile x="4" y="1" id="0" />
     <tile x="4" y="2" id="0" />
@@ -49,7 +69,12 @@
     <tile x="4" y="6" id="0" />
     <tile x="4" y="7" id="0" />
     <tile x="4" y="8" id="0" />
-    <tile x="4" y="9" id="1" />
+    <tile x="4" y="9" id="0" />
+    <tile x="4" y="10" id="0" />
+    <tile x="4" y="11" id="0" />
+    <tile x="4" y="12" id="0" />
+    <tile x="4" y="13" id="0" />
+    <tile x="4" y="14" id="1" />
     <tile x="5" y="0" id="1" />
     <tile x="5" y="1" id="0" />
     <tile x="5" y="2" id="0" />
@@ -59,50 +84,150 @@
     <tile x="5" y="6" id="0" />
     <tile x="5" y="7" id="0" />
     <tile x="5" y="8" id="0" />
-    <tile x="5" y="9" id="1" />
+    <tile x="5" y="9" id="0" />
+    <tile x="5" y="10" id="0" />
+    <tile x="5" y="11" id="0" />
+    <tile x="5" y="12" id="0" />
+    <tile x="5" y="13" id="0" />
+    <tile x="5" y="14" id="1" />
     <tile x="6" y="0" id="1" />
     <tile x="6" y="1" id="0" />
     <tile x="6" y="2" id="0" />
     <tile x="6" y="3" id="0" />
     <tile x="6" y="4" id="0" />
-    <tile x="6" y="5" id="0" />
+    <tile x="6" y="5" id="4" />
     <tile x="6" y="6" id="0" />
     <tile x="6" y="7" id="0" />
     <tile x="6" y="8" id="0" />
-    <tile x="6" y="9" id="1" />
+    <tile x="6" y="9" id="0" />
+    <tile x="6" y="10" id="0" />
+    <tile x="6" y="11" id="0" />
+    <tile x="6" y="12" id="0" />
+    <tile x="6" y="13" id="0" />
+    <tile x="6" y="14" id="1" />
     <tile x="7" y="0" id="1" />
     <tile x="7" y="1" id="0" />
     <tile x="7" y="2" id="0" />
-    <tile x="7" y="3" id="0" />
+    <tile x="7" y="3" id="2" />
     <tile x="7" y="4" id="0" />
     <tile x="7" y="5" id="0" />
     <tile x="7" y="6" id="0" />
     <tile x="7" y="7" id="0" />
     <tile x="7" y="8" id="0" />
-    <tile x="7" y="9" id="1" />
+    <tile x="7" y="9" id="0" />
+    <tile x="7" y="10" id="0" />
+    <tile x="7" y="11" id="0" />
+    <tile x="7" y="12" id="0" />
+    <tile x="7" y="13" id="0" />
+    <tile x="7" y="14" id="1" />
     <tile x="8" y="0" id="1" />
-    <tile x="8" y="1" id="3" />
+    <tile x="8" y="1" id="0" />
     <tile x="8" y="2" id="0" />
-    <tile x="8" y="3" id="0" />
+    <tile x="8" y="3" id="2" />
     <tile x="8" y="4" id="0" />
     <tile x="8" y="5" id="0" />
     <tile x="8" y="6" id="0" />
     <tile x="8" y="7" id="0" />
     <tile x="8" y="8" id="0" />
-    <tile x="8" y="9" id="1" />
+    <tile x="8" y="9" id="0" />
+    <tile x="8" y="10" id="0" />
+    <tile x="8" y="11" id="0" />
+    <tile x="8" y="12" id="0" />
+    <tile x="8" y="13" id="0" />
+    <tile x="8" y="14" id="1" />
     <tile x="9" y="0" id="1" />
-    <tile x="9" y="1" id="1" />
-    <tile x="9" y="2" id="1" />
-    <tile x="9" y="3" id="1" />
-    <tile x="9" y="4" id="1" />
-    <tile x="9" y="5" id="1" />
-    <tile x="9" y="6" id="1" />
-    <tile x="9" y="7" id="1" />
-    <tile x="9" y="8" id="1" />
-    <tile x="9" y="9" id="1" />
+    <tile x="9" y="1" id="0" />
+    <tile x="9" y="2" id="0" />
+    <tile x="9" y="3" id="2" />
+    <tile x="9" y="4" id="0" />
+    <tile x="9" y="5" id="0" />
+    <tile x="9" y="6" id="0" />
+    <tile x="9" y="7" id="0" />
+    <tile x="9" y="8" id="0" />
+    <tile x="9" y="9" id="0" />
+    <tile x="9" y="10" id="0" />
+    <tile x="9" y="11" id="0" />
+    <tile x="9" y="12" id="0" />
+    <tile x="9" y="13" id="0" />
+    <tile x="9" y="14" id="1" />
+    <tile x="10" y="0" id="1" />
+    <tile x="10" y="1" id="0" />
+    <tile x="10" y="2" id="0" />
+    <tile x="10" y="3" id="2" />
+    <tile x="10" y="4" id="0" />
+    <tile x="10" y="5" id="0" />
+    <tile x="10" y="6" id="0" />
+    <tile x="10" y="7" id="0" />
+    <tile x="10" y="8" id="0" />
+    <tile x="10" y="9" id="0" />
+    <tile x="10" y="10" id="0" />
+    <tile x="10" y="11" id="0" />
+    <tile x="10" y="12" id="0" />
+    <tile x="10" y="13" id="0" />
+    <tile x="10" y="14" id="1" />
+    <tile x="11" y="0" id="1" />
+    <tile x="11" y="1" id="0" />
+    <tile x="11" y="2" id="0" />
+    <tile x="11" y="3" id="0" />
+    <tile x="11" y="4" id="0" />
+    <tile x="11" y="5" id="0" />
+    <tile x="11" y="6" id="0" />
+    <tile x="11" y="7" id="0" />
+    <tile x="11" y="8" id="0" />
+    <tile x="11" y="9" id="0" />
+    <tile x="11" y="10" id="0" />
+    <tile x="11" y="11" id="0" />
+    <tile x="11" y="12" id="0" />
+    <tile x="11" y="13" id="0" />
+    <tile x="11" y="14" id="1" />
+    <tile x="12" y="0" id="1" />
+    <tile x="12" y="1" id="0" />
+    <tile x="12" y="2" id="0" />
+    <tile x="12" y="3" id="0" />
+    <tile x="12" y="4" id="0" />
+    <tile x="12" y="5" id="2" />
+    <tile x="12" y="6" id="2" />
+    <tile x="12" y="7" id="2" />
+    <tile x="12" y="8" id="2" />
+    <tile x="12" y="9" id="0" />
+    <tile x="12" y="10" id="0" />
+    <tile x="12" y="11" id="0" />
+    <tile x="12" y="12" id="0" />
+    <tile x="12" y="13" id="0" />
+    <tile x="12" y="14" id="1" />
+    <tile x="13" y="0" id="1" />
+    <tile x="13" y="1" id="0" />
+    <tile x="13" y="2" id="0" />
+    <tile x="13" y="3" id="0" />
+    <tile x="13" y="4" id="0" />
+    <tile x="13" y="5" id="0" />
+    <tile x="13" y="6" id="0" />
+    <tile x="13" y="7" id="0" />
+    <tile x="13" y="8" id="0" />
+    <tile x="13" y="9" id="0" />
+    <tile x="13" y="10" id="0" />
+    <tile x="13" y="11" id="0" />
+    <tile x="13" y="12" id="0" />
+    <tile x="13" y="13" id="0" />
+    <tile x="13" y="14" id="1" />
+    <tile x="14" y="0" id="1" />
+    <tile x="14" y="1" id="1" />
+    <tile x="14" y="2" id="1" />
+    <tile x="14" y="3" id="1" />
+    <tile x="14" y="4" id="1" />
+    <tile x="14" y="5" id="1" />
+    <tile x="14" y="6" id="1" />
+    <tile x="14" y="7" id="1" />
+    <tile x="14" y="8" id="1" />
+    <tile x="14" y="9" id="1" />
+    <tile x="14" y="10" id="1" />
+    <tile x="14" y="11" id="1" />
+    <tile x="14" y="12" id="1" />
+    <tile x="14" y="13" id="1" />
+    <tile x="14" y="14" id="1" />
   </MainLayer>
   <EntityLayer>
-    <PatrolBot id="0" x="80" y="64" Behavior="pace vertical" Movespeed="30" VisionType="circle" VisionRadius="33" />
-    <PatrolBot id="1" x="64" y="80" Behavior="pace horizontal" Movespeed="18" VisionType="circle" VisionRadius="33" />
+    <PatrolBot id="0" x="48" y="112" Behavior="pace horizontal" MoveSpeed="20" VisionAngle="1.5" VisionRadius="80" VisionType="cone" />
+    <PatrolBot id="1" x="112" y="176" Behavior="pace vertical" MoveSpeed="20" VisionAngle="1.5" VisionRadius="80" VisionType="cone" />
   </EntityLayer>
 </level>

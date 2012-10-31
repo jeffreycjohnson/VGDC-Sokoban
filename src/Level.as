@@ -80,17 +80,18 @@ package
 			// Load data from EntityLayer
 			for each (node in xml.EntityLayer.PatrolBot)
 			{
-				var b:String = node.@Behavior;
 				x = node.@x;
 				y = node.@y;
-				var ts:int = node.@Movespeed;
-				var vt:String = node.@VisionType;
+				var b:String = node.@Behavior;
+				var ts:int = node.@MoveSpeed;
+				var va:Number = node.@VisionAngle;
 				var vr:int = node.@VisionRadius;
+				var vt:String = node.@VisionType;
 				
 				var addMe:PatrolBot;
-				if (b == "pace horizontal") addMe = new PaceBot(x, y, ts, vt, vr, "horizontal");
-				else if (b == "pace vertical") addMe = new PaceBot(x, y, ts, vt, vr, "vertical");
-				else if (b == "no behavior") addMe = new PatrolBot(x, y, ts, vt, vr);
+				if (b == "pace horizontal") addMe = new PaceBot(x, y, ts, va, vr, vt, "horizontal");
+				else if (b == "pace vertical") addMe = new PaceBot(x, y, ts, va, vr, vt, "vertical");
+				else if (b == "no behavior") addMe = new PatrolBot(x, y, ts, va, vr, vt);
 				entitiesArray.push( addMe );
 				
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;

@@ -8,32 +8,33 @@ package
 	public class PatrolBot extends MovingSprite
 	{
 		protected var tickSpeed:int;
-		
 		protected var tickCount:int = 0;
-		protected var _visionType:String;
+		
+		protected var _visionAngle:Number;
 		protected var _visionRadius:int;
-		protected var _theta:Number;
-		protected var direction:String;
+		protected var _visionType:String;
 		
-		public function get visionType():String { return _visionType; }
+		public function get visionAngle():Number { return _visionAngle; };
 		public function get visionRadius():int { return _visionRadius; };
-		public function get theta():int { return _theta; };
-		public function get visionAngle():int { return Math.PI / 3 };
+		public function get visionType():String { return _visionType; }
+		public function get theta():Number { return _theta; };
 		
-		public function PatrolBot(x:int, y:int, tickSpeed:int, visionType:String, visionRadius:int ) 
+		public function PatrolBot(x:int, y:int, tickSpeed:int, visionAngle:Number, visionRadius:int, visionType:String ) 
 		{
 			super(x, y);
 			this.tickSpeed = tickSpeed;
-			if (tickSpeed < moveTime) tickSpeed = moveTime + 2; // just in case ... ?
+			if (tickSpeed < moveTime) tickSpeed = moveTime;
+			if (tickSpeed < turnTime) tickSpeed = turnTime;
+			_visionAngle = visionAngle;
+			_visionRadius = visionRadius+1;
 			_visionType = visionType;
-			_visionRadius = visionRadius;
-			_theta = 0;
+			_theta = 0 + Math.PI / 2;
 			loadGraphic(Assets.PATROL, false, true, 16, 16);
 		}
 		
 		public function clonePatrolBot():PatrolBot
 		{
-			return new PatrolBot(x, y, tickSpeed, visionType, visionRadius);
+			return new PatrolBot(x, y, tickSpeed, _visionAngle, _visionRadius, _visionType);
 		}
 		
 		override public function update():void
@@ -47,31 +48,22 @@ package
 				tick();
 			}
 			
-			// if we moved last tick, update
+			// if we moved or turned last tick, update detected.
 			if (movedLast)
 			{
 				(FlxG.state as PlayState).updateDetected();
 				movedLast = false;
 			}
+			if (turnedLast)
+			{
+				(FlxG.state as PlayState).updateDetected();
+				turnedLast = false;
+			}
+			
 		}
 		
 		protected function tick():void { }
 		
-		protected function turnTo(newdir:String):void
-		{
-			// TODO: take half of movespeed to turn.
-			// TODO: call updateDetected while turning.
-			//trace("turning to " + newdir);
-			direction = newdir;
-		}
-		
-		protected function turnAround():void
-		{
-			if (direction == Dir.NORTH) turnTo(Dir.SOUTH);
-			else if (direction == Dir.SOUTH) turnTo(Dir.NORTH);
-			else if (direction == Dir.EAST) turnTo(Dir.WEST);
-			else if (direction == Dir.WEST) turnTo(Dir.EAST);
-		}
 		
 	}
 
