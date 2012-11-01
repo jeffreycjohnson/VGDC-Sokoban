@@ -45,27 +45,33 @@ package
 		
 		/* Single values */
 		
-		// width of a tile in pixels
-		public static const TILESIZE:int = 16;
+		public static const TILESIZE:int = 16; // width of a tile in pixels
+		public static var XOFFSET:int;
+		public static var YOFFSET:int;
 		
-		// store the player and his coordinates for ease of access.
-		private var player:Player;
-		private var px:int;
-		private var py:int;
+		private var locked:Boolean = false;
+		private const fadeRateConst:Number = 1 / 20; // 1 divided by how many ticks the fade is
+		private var fadeRate:Number;
+		private var fadeOverlay:FlxSprite;
 		
-		// which level we're currently on
-		private var levelIndex:int;
+		private var levelIndex:int; // which level we're currently on
+		private var moveCount:int; // how many moves the player has done
 		
-		// how many moves the player has done
-		private var moveCount:int;
-		
-		// Counts of "goals": places where you have to try to move the blocks to
 		private var goalNumber:int; // total number of goals
 		private var goalCount:int  // goals achieved so far
 		
-		// texts that display information
+		private var player:Player;
+		private var px:int; // player x
+		private var py:int; // player y
+		
 		private var goalText:FlxText;
 		private var moveText:FlxText;
+		
+		// whether or not we should update detected at the end of the tick
+		private var _updateDetectedNext:Boolean;
+		public function set updateDetectedNext(b:Boolean):void { _updateDetectedNext = b; };
+		
+		
 		
 		override public function create():void
 		{
@@ -77,12 +83,40 @@ package
 				i++;
 			}
 			
+			// create fade overlay object
+			fadeOverlay = new FlxSprite(0, 0);
+			fadeOverlay.makeGraphic(Main.WIDTH, Main.HEIGHT, 0xff000000);
+			fadeOverlay.alpha = 0;
+			add(fadeOverlay);
+			
 			// to start us off, let's load level 0.
-			loadLevel(0);
+			fadeOverlay.alpha = 1;
+			switchLevel(0);
 		}
 		
 		override public function update():void
 		{
+			
+			// if we're fading in or out between levels
+			if (locked)
+			{
+				fadeOverlay.alpha += fadeRate;
+				if (fadeOverlay.alpha == 1)
+				{
+					fadeRate *= -1;
+					loadLevel(levelIndex);
+					add(fadeOverlay);
+				}
+				else if (fadeOverlay.alpha == 0)
+				{
+					locked = false;
+					fadeRate = 0;
+				}
+				return;
+			}
+			
+			
+			
 			// calculate movement values
 			
 			var xo:int = 0; // x offset (1 or -1)
@@ -153,21 +187,28 @@ package
 			// if R key is pressed, reset
 			if (FlxG.keys.justPressed("R"))
 			{
-				loadLevel(levelIndex);
+				switchLevel(levelIndex);
 			}
 			
 			// if PgDown or PgUp is pressed, switch levels
 			if (FlxG.keys.justPressed("PAGEUP"))
 			{
-				if (levelIndex < LevelStorage.levels.length - 1) loadLevel(levelIndex + 1);
+				if (levelIndex < LevelStorage.levels.length - 1) switchLevel(levelIndex + 1);
 			}
 			else if (FlxG.keys.justPressed("PAGEDOWN"))
 			{
-				if (levelIndex > 0) loadLevel(levelIndex - 1);
+				if (levelIndex > 0) switchLevel(levelIndex - 1);
 			}
 			
 			// finally, update all objects we have added to our FlxState.
 			super.update();
+			
+			// if we should update the detecteds this tick, then do so.
+			if (_updateDetectedNext) 
+			{
+				updateDetected();
+				_updateDetectedNext = false;
+			}
 			
 			
 			// trace array (for debugging)
@@ -182,6 +223,14 @@ package
 			trace();
 			*/
 			
+			
+		}
+		
+		private function switchLevel(index:int):void
+		{
+			locked = true;
+			fadeRate = fadeRateConst;
+			levelIndex = index;
 		}
 		
 		private function loadLevel(index:int):void
@@ -203,6 +252,8 @@ package
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
 			
+			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
+			YOFFSET = (Main.HEIGHT - TILESIZE * thisLevel.height) / 2;
 			
 			// cycle through the level data.
 			for (i = 0; i < thisLevel.width; i++)
@@ -222,15 +273,20 @@ package
 					// 2 - add the necessary static graphics objects.
 					// TODO: in the future when we have graphics for the edges, corners, etc, add them here. I've done this before, it's not too complex.
 					
+					var xAbs:int = i * TILESIZE + XOFFSET;
+					var yAbs:int = j * TILESIZE + YOFFSET;
+					//xAbs -= XOFFSET;
+					//yAbs -= YOFFSET;
+					
 					// wall
-					if (level[i][j] == 1) add( new Wall(i * TILESIZE, j * TILESIZE));
+					if (level[i][j] == 1) add( new Wall(xAbs, yAbs));
 					// goal-floor
 					else if (floor[i][j] == 1) {
-						add( new Goal(i * TILESIZE, j * TILESIZE));
+						add( new Goal(xAbs, yAbs));
 						goalNumber++;
 					}
 					// empty-floor
-					else add( new Floor(i * TILESIZE, j * TILESIZE));
+					else add( new Floor(xAbs, yAbs));
 					
 				}
 			}
@@ -259,6 +315,10 @@ package
 					patrollers.push(specificGuy);
 				}
 				
+				specificGuy.x += XOFFSET;
+				specificGuy.y += YOFFSET;
+				((MovingSprite)(specificGuy)).updateGridValues();
+				
 				// add each entity to the FlxState, and also to it's place in the entitites array.
 				add(specificGuy);
 				entities[x][y] = specificGuy;
@@ -266,13 +326,13 @@ package
 			
 			
 			// create player
-			player = new Player(px * TILESIZE, py * TILESIZE);
+			player = new Player(px * TILESIZE + XOFFSET, py * TILESIZE + YOFFSET);
 			add(player);
 			
 			// cycle through detected here to add them on top of everything
 			for (i = 0; i < level.length; i++) {
 				for (j = 0; j < level.length; j++) {
-					detected[i][j] = new Detected(i * TILESIZE, j * TILESIZE);
+					detected[i][j] = new Detected(i * TILESIZE + XOFFSET, j * TILESIZE + YOFFSET);
 					add(detected[i][j]);
 				}
 			}
@@ -287,20 +347,20 @@ package
 		
 		private function loadGUI(thisLevel:Level):void
 		{
-			goalText = new FlxText(220, 5, 150, "");
+			goalText = new FlxText(5, 5, 150, "");
 			add(goalText);
 			updateGoalText();
 			
-			moveText = new FlxText(10, 230, 100, "");
+			moveText = new FlxText(5, Main.HEIGHT-15, 100, "");
 			add(moveText);
 			updateMoveText();
 			
-			add(new FlxText(220, 25, 150, "Level " + levelIndex));
-			add(new FlxText(220, 45, 150, "Name: " + thisLevel.name));
-			add(new FlxText(220, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDown/Up = switch\nlevels"));
+			add(new FlxText(5, 25, 150, "Level " + levelIndex));
+			add(new FlxText(5, 45, 150, "Name: " + thisLevel.name));
+			add(new FlxText(5, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
 		}
 		
-		public function updateDetected():void
+		private function updateDetected():void
 		{
 			// TODO: reformat this method to make it more understandable / readable?
 			
@@ -321,7 +381,7 @@ package
 				var guy:PatrolBot = patrollers[i];
 				var sourceX:int = guy.x + guy.width / 2;
 				var sourceY:int = guy.y + guy.height / 2;
-				var radius:int = guy.visionRadius;
+				var radius:Number = guy.visionRadius;
 				
 				var minTheta:Number = guy.theta - guy.visionAngle / 2;
 				var maxTheta:Number = guy.theta + guy.visionAngle / 2;
@@ -330,25 +390,16 @@ package
 				var detX:int;
 				var detY:int;
 				
-				// circle x-ray vision (only for testing purposes)
-				if (guy.visionType == "circle")
-				{
-					for (x = 0; x < detected.length; x++) {
-						for (y = 0; y < detected[0].length; y++) {
-							det = detected[x][y];
-							detX = det.x + TILESIZE / 2;
-							detY = det.y + TILESIZE / 2;
-							if (SokoMath.distance(sourceX, sourceY, detX, detY) <= radius) det.revive();
-						}
-					}
-				}
 				
-				// cone vision (the basic type we should mostly use)
-				else if (guy.visionType == "cone")
+				// cone vision (the basic type we should mostly use). Could reorganize this section later.
+				if (guy.visionType == "cone")
 				{
-					// TODO: calculate lineNum and pointNum based on values given for theta and radius.
-					var lineNum:int = 10; // number of lines to draw
-					var pointNum:int = 20; // number of points to test on each line
+					var lineAngle:Number = 0.15; // radians between lines
+					var pointDist:Number = 0.5; // distance between points
+					
+					var lineNum:int = (maxTheta - minTheta) / lineAngle; // number of lines to draw
+					var pointNum:int = radius / pointDist; // number of points to test on each line
+					
 					var theta:Number = minTheta;
 					var deltaTheta:Number = (maxTheta - minTheta) / lineNum;
 					
@@ -369,26 +420,27 @@ package
 						var valid:Boolean = true;
 						
 						// cycle through all points
-						for (var pc:int = 0; pc < pointNum; pc++)
+						for (var pc:int = 0; pc < pointNum && valid; pc++)
 						{
 							absX += rise;
 							absY += run;
-							var gridX:int = (int)(absX / TILESIZE);
-							var gridY:int = (int)(absY / TILESIZE);
+							var gridX:int = (int)((absX - XOFFSET) / TILESIZE);
+							var gridY:int = (int)((absY - YOFFSET) / TILESIZE);
 							
 							// break if out of bounds
 							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) valid = false;					
 							
 							// break if tile is solid
-							// TODO: this is the line to change to make it harder to see around corners. see paper.
-							// TODO: something else I forgot before I wrote it down.
 							if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5) ) valid = false;
 							
 							// else, revive the tile.
-							if (valid) detected[gridX][gridY].revive();
+							if (valid) det = detected[gridX][gridY];
+							if (valid && det.significantlyContains(absX, absY)) det.revive();
 						}
 					}
 				}
+				
+				// maybe later add straight-line vision?
 			}
 		}
 		

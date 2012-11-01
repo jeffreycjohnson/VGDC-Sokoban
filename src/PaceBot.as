@@ -40,14 +40,11 @@ package
 			else if (direction == Dir.EAST) xo = 1;
 			else if (direction == Dir.WEST) xo = -1;
 			
-			var x:int = x / PlayState.TILESIZE;
-			var y:int = y / PlayState.TILESIZE;
-			
-			if ((FlxG.state as PlayState).level[x + xo][y + yo] == 0)
+			if ((FlxG.state as PlayState).level[gridX + xo][gridY + yo] == 0)
 			{
+				(FlxG.state as PlayState).level[gridX][gridY] = 0;
+				(FlxG.state as PlayState).level[gridX + xo][gridY + yo] = 5;
 				move(xo, yo);
-				(FlxG.state as PlayState).level[x][y] = 0;
-				(FlxG.state as PlayState).level[x + xo][y + yo] = 5;
 			}
 			else
 			{
