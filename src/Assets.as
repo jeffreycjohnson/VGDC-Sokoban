@@ -12,6 +12,7 @@ package
 		[Embed(source = "../assets/player.png")] public static var PLAYER_SPRITE:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
 		[Embed(source = "../assets/patrol1.png")] public static var PATROL:Class;
+		[Embed(source = "../assets/laser.png")] public static var LASER:Class;
 		[Embed(source = "../assets/patrol2.png")] public static var PATROL_HIGHLIGHT:Class;
 	}
 

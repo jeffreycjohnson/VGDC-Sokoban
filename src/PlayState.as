@@ -22,6 +22,7 @@ package
 		 * 2 = block
 		 * 4 = player
 		 * 5 = patrolbot
+		 * 6 = laser
 		 */
 		
 		// holds what type of floor there is at each grid space.
@@ -309,6 +310,11 @@ package
 					specificGuy = (PaceBot)(newGuy).clone();
 					patrollers.push(specificGuy);
 				}
+				else if (newGuy is Laser)
+				{
+					specificGuy = (Laser)(newGuy).clone();
+					patrollers.push(specificGuy);
+				}
 				else if (newGuy is PatrolBot)
 				{
 					specificGuy = (PatrolBot)(newGuy).clonePatrolBot();
@@ -389,7 +395,19 @@ package
 				var det:Detected;
 				var detX:int;
 				var detY:int;
+					
+				var hyp:Number;
+				var run:Number;
+				var rise:Number;
 				
+				var valid:Boolean;
+				var absX:Number;
+				var absY:Number;
+				
+				var gridX:int;
+				var gridY:int;
+				
+				var pc:int;
 				
 				// cone vision (the basic type we should mostly use). Could reorganize this section later.
 				if (guy.visionType == "cone")
@@ -409,29 +427,29 @@ package
 						if (lc > 0) theta += deltaTheta;
 						
 						// calculate slope
-						var hyp:Number = radius / pointNum;
-						var run:Number = hyp * Math.cos(theta);
-						var rise:Number = hyp * Math.sin(theta);
+						hyp = radius / pointNum;
+						run = hyp * Math.cos(theta);
+						rise = hyp * Math.sin(theta);
 						
-						var absX:Number = sourceX;
-						var absY:Number = sourceY;
+						absX = sourceX;
+						absY = sourceY;
 						// TODO: start a few points ahead, outside of the starting square?
 						
-						var valid:Boolean = true;
+						valid = true;
 						
 						// cycle through all points
-						for (var pc:int = 0; pc < pointNum && valid; pc++)
+						for (pc = 0; pc < pointNum && valid; pc++)
 						{
 							absX += rise;
 							absY += run;
-							var gridX:int = (int)((absX - XOFFSET) / TILESIZE);
-							var gridY:int = (int)((absY - YOFFSET) / TILESIZE);
+							gridX = (int)((absX - XOFFSET) / TILESIZE);
+							gridY = (int)((absY - YOFFSET) / TILESIZE);
 							
 							// break if out of bounds
 							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) valid = false;					
 							
 							// break if tile is solid
-							if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5) ) valid = false;
+							if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6) ) valid = false;
 							
 							// else, revive the tile.
 							if (valid) det = detected[gridX][gridY];
@@ -439,8 +457,36 @@ package
 						}
 					}
 				}
-				
-				// maybe later add straight-line vision?
+				else if (guy.visionType == "straight")
+				{
+					run = radius * Math.cos(guy.theta);
+					rise = radius * Math.sin(guy.theta);
+					
+					valid = true;
+					absX = sourceX;
+					absY = sourceY;
+					
+					// cycle through all points
+					for (pc = 0; pc < pointNum && valid; pc++)
+					{
+						// without the / 2 the points are too spread out for large radius
+						absX += rise / 2;
+						absY += run / 2;
+						gridX = (int)((absX - XOFFSET) / TILESIZE);
+						gridY = (int)((absY - YOFFSET) / TILESIZE);
+						
+						// break if out of bounds
+						if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) valid = false;					
+						
+						// break if tile is solid
+						if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6) ) valid = false;
+						
+						// else, revive the tile.
+						if (valid) det = detected[gridX][gridY];
+						if (valid && det.significantlyContains(absX, absY)) det.revive();
+					}
+					
+				}
 			}
 		}
 		

@@ -78,23 +78,39 @@ package
 			
 			
 			// Load data from EntityLayer
+			var b:String;
+			var addMe:PatrolBot;
 			for each (node in xml.EntityLayer.PatrolBot)
 			{
 				x = node.@x;
 				y = node.@y;
-				var b:String = node.@Behavior;
+				b = node.@Behavior;
 				var ts:int = node.@MoveSpeed;
 				var va:Number = node.@VisionAngle;
 				var vr:int = node.@VisionRadius;
 				var vt:String = node.@VisionType;
 				
-				var addMe:PatrolBot;
 				if (b == "pace horizontal") addMe = new PaceBot(x, y, ts, va, vr, vt, "horizontal");
 				else if (b == "pace vertical") addMe = new PaceBot(x, y, ts, va, vr, vt, "vertical");
 				else if (b == "no behavior") addMe = new PatrolBot(x, y, ts, va, vr, vt);
 				entitiesArray.push( addMe );
 				
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;
+			}
+			
+			for each (node in xml.EntityLayer.Laser)
+			{
+				x = node.@x;
+				y = node.@y;
+				b = node.@Behavior;
+				
+				if (b == "laser left") addMe = new Laser(x, y, "left");
+				else if (b == "laser right") addMe = new Laser(x, y, "right");
+				else if (b == "laser up") addMe = new Laser(x, y, "up");
+				else if (b == "laser down") addMe = new Laser(x, y, "down");
+				entitiesArray.push( addMe );
+				
+				levelArray[x / PlayState.TILESIZE][y / PlayState.TILESIZE] = 6;
 			}
 			// add more entity types here (e.g. laser emitters, keys, etc.
 			
