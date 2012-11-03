@@ -227,7 +227,8 @@
     <tile x="14" y="14" id="1" />
   </MainLayer>
   <EntityLayer>
-    <PatrolBot id="0" x="48" y="112" Behavior="pace horizontal" MoveSpeed="20" VisionAngle="1.5" VisionRadius="80" VisionType="cone" />
-    <PatrolBot id="1" x="112" y="176" Behavior="pace vertical" MoveSpeed="20" VisionAngle="1.5" VisionRadius="80" VisionType="cone" />
+    <Laser id="3" x="128" y="128" Behavior="laser right" />
+    <RotatingBot id="1" x="80" y="176" RotateSpeed="0.05" VisionAngle="1.1" VisionRadius="50" />
+    <PatrolBot id="0" x="160" y="208" Behavior="pace vertical" MoveSpeed="30" VisionAngle="2.0" VisionRadius="64" VisionType="cone" />
   </EntityLayer>
 </level>

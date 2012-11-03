@@ -315,6 +315,11 @@ package
 					specificGuy = (Laser)(newGuy).clone();
 					patrollers.push(specificGuy);
 				}
+				else if (newGuy is RotatingBot)
+				{
+					specificGuy = (RotatingBot)(newGuy).clone();
+					patrollers.push(specificGuy);
+				}
 				else if (newGuy is PatrolBot)
 				{
 					specificGuy = (PatrolBot)(newGuy).clonePatrolBot();
@@ -412,6 +417,7 @@ package
 				// cone vision (the basic type we should mostly use). Could reorganize this section later.
 				if (guy.visionType == "cone")
 				{
+					trace(radius);
 					var lineAngle:Number = 0.15; // radians between lines
 					var pointDist:Number = 0.5; // distance between points
 					

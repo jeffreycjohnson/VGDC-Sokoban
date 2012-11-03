@@ -40,6 +40,8 @@ package
 			_visionType = visionType;
 			_theta = 0 + Math.PI / 2;
 			loadGraphic(Assets.PATROL, false, true, 16, 16);
+			
+			(FlxG.state as PlayState).updateDetectedNext = true;
 		}
 		
 		public function clonePatrolBot():PatrolBot

@@ -229,6 +229,5 @@
   <EntityLayer>
     <PatrolBot id="1" x="112" y="160" Behavior="pace vertical" MoveSpeed="35" VisionAngle="0.9" VisionRadius="60" VisionType="cone" />
     <PatrolBot id="0" x="144" y="112" Behavior="pace horizontal" MoveSpeed="25" VisionAngle="1.5" VisionRadius="36" VisionType="cone" />
-	<Laser id="2" x="112" y="112" Behavior="laser left" />
   </EntityLayer>
 </level>

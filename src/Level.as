@@ -98,6 +98,7 @@ package
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;
 			}
 			
+			
 			for each (node in xml.EntityLayer.Laser)
 			{
 				x = node.@x;
@@ -111,6 +112,19 @@ package
 				entitiesArray.push( addMe );
 				
 				levelArray[x / PlayState.TILESIZE][y / PlayState.TILESIZE] = 6;
+			}
+			
+			for each (node in xml.EntityLayer.RotatingBot)
+			{
+				x = node.@x;
+				y = node.@y;
+				var rs:Number = node.@RotateSpeed;
+				vr = node.@VisionRadius;
+				va = node.@VisionAngle;
+				
+				addMe = new RotatingBot(x, y, rs, va, vr);
+				entitiesArray.push( addMe );
+				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;
 			}
 			// add more entity types here (e.g. laser emitters, keys, etc.
 			

@@ -1,0 +1,85 @@
+
+IDEAS
+------------------
+
+Designs / text on the floor to tell what level / chapter you are on (e.g. "Sector C")
+
+Pitch black level, can only see 2-block radius around your character
+
+Pushing blocks that can't press goal switches
+
+Lots of enemies / open spaces (don't need to restrict movement)
+
+Keys and locks, or groups of goal spaces that activate a certain goal
+
+"Concerning Hobbits" = credits song
+
+
+
+
+Game Engine Features
+----------------------
+
+Revolving Bot
+
+PatrolBot grahpics / rotating
+
+Load all graphics from one image
+
+Wall graphics (tileset)
+
+Door that opens when goals are filled
+
+Level restarts when player is caught (also have god mode toggleable)
+
+Pushable block that doesn't work on goal spaces
+
+
+
+
+Art
+------
+
+PatrolBot facing and walking in 3 directions: up, down, left/right (maybe have 4 if don't want to flip horizontally)
+	- 2 frame walking animation?
+
+RotatingBot
+	one 16x16 graphic. circular-ish-shaped.
+
+Player facing and walking in 3 directions
+	- 2 frame walking animation?
+
+Laser
+
+Wall tileset
+
+Floor graphics
+	16x16 standard floor
+	16x16 goal tile
+	16x16 door tile
+
+
+
+
+
+Audio
+--------
+
+One looping track that plays in the background of the levels
+
+Sound effects:
+	player / bot moving
+	player pushing block
+	player pushing block onto button (goal)
+	door opening
+	player caught
+
+
+
+
+
+Levels
+---------
+
+Groups of levels (10 or so levels each?) that have their own difficulty curve.
+each group should introduce a new mechanic.
