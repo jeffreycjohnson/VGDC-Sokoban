@@ -18,11 +18,13 @@ package
 			{
 				direction = Dir.EAST;
 				_theta = 0 + Math.PI / 2;
+				play("idle_right");
 			}
 			else if (type == "vertical")
 			{
 				direction = Dir.SOUTH;
 				_theta = 3 * Math.PI / 2 + Math.PI / 2;
+				play("idle_down");
 			}
 		}
 		

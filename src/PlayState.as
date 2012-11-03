@@ -276,13 +276,9 @@ package
 					
 					var xAbs:int = i * TILESIZE + XOFFSET;
 					var yAbs:int = j * TILESIZE + YOFFSET;
-					//xAbs -= XOFFSET;
-					//yAbs -= YOFFSET;
 					
-					// wall
-					if (level[i][j] == 1) add( new Wall(xAbs, yAbs));
 					// goal-floor
-					else if (floor[i][j] == 1) {
+					if (floor[i][j] == 1) {
 						add( new Goal(xAbs, yAbs));
 						goalNumber++;
 					}
@@ -291,6 +287,43 @@ package
 					
 				}
 			}
+			
+			
+			// cycle through the small 8x8 tile data.
+			var corners:Array = [];
+			var smallWidth:int = thisLevel.width * 2 + 2;
+			var smallHeight:int = thisLevel.height * 2 + 2;
+			for (i = 0; i < smallWidth; i++) {
+				corners[i] = [];
+				for (j = 0; j < smallHeight; j++) {
+					
+					var lx:int = (int)((i - 1) / 2);
+					var ly:int = (int)((j - 1) / 2);
+					if (i == 0 || i == smallWidth - 1 || j == 0 || j == smallHeight - 1 ) corners[i][j] = true;
+					else corners[i][j] = (level[lx][ly] == 1);
+				}
+			}
+			for (j = 0; j < smallHeight; j++) {
+				var s:String = "";
+				for (i = 0; i < smallWidth; i++) {
+					if (corners[i][j]) s += "1 ";
+					else s += "0 ";
+				}
+				trace(s);
+			}
+			for (i = 1; i < smallWidth-1; i++) {
+				for (j = 1; j < smallHeight - 1; j++) {
+					var xAbs:int = (i - 1)  * TILESIZE / 2 + XOFFSET;
+					var yAbs:int = (j - 1)  * TILESIZE / 2 + YOFFSET;
+					if (corners[i][j])
+					{
+						var guy:Wall = new Wall(xAbs, yAbs);
+						guy.updateSprite(corners, i, j);
+						add(guy);
+					}
+				}
+			}
+			
 			
 			
 			// cycle through the entity data.
@@ -368,7 +401,7 @@ package
 			
 			add(new FlxText(5, 25, 150, "Level " + levelIndex));
 			add(new FlxText(5, 45, 150, "Name: " + thisLevel.name));
-			add(new FlxText(5, 65, 200, "Sokoban Game v0.1\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
+			add(new FlxText(5, 65, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
 		}
 		
 		private function updateDetected():void
@@ -417,7 +450,6 @@ package
 				// cone vision (the basic type we should mostly use). Could reorganize this section later.
 				if (guy.visionType == "cone")
 				{
-					trace(radius);
 					var lineAngle:Number = 0.15; // radians between lines
 					var pointDist:Number = 0.5; // distance between points
 					
@@ -459,7 +491,7 @@ package
 							
 							// else, revive the tile.
 							if (valid) det = detected[gridX][gridY];
-							if (valid && det.significantlyContains(absX, absY)) det.revive();
+							if (valid && det.significantlyContains(absX, absY) && !(level[gridX][gridY] == 5 && !guy.isMoving())) det.revive();
 						}
 					}
 				}

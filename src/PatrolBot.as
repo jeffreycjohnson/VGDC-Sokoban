@@ -29,6 +29,8 @@ package
 		protected var _theta:Number;
 		protected var direction:String;
 		
+		protected var movingLast:Boolean = false; // corresponds to the moving boolean. detects if we need to change idle to walking animation, or vice versa.
+		
 		public function PatrolBot(x:int, y:int, tickSpeed:int, visionAngle:Number, visionRadius:int, visionType:String ) 
 		{
 			super(x, y);
@@ -39,7 +41,8 @@ package
 			_visionRadius = visionRadius+1;
 			_visionType = visionType;
 			_theta = 0 + Math.PI / 2;
-			loadGraphic(Assets.PATROL, false, true, 16, 16);
+			loadGraphic(Assets.PATROLBOT1, true, false, 16, 16);
+			createAnimations();
 			
 			(FlxG.state as PlayState).updateDetectedNext = true;
 		}
@@ -60,7 +63,7 @@ package
 				tick();
 			}
 			
-			while (_theta > 2 * Math.PI) _theta -= 2 * Math.PI;
+			while (_theta >= 2 * Math.PI) _theta -= 2 * Math.PI;
 			while (_theta < 0) _theta += 2 * Math.PI;
 			
 			// if we are supposed to be turning, then turn.
@@ -88,6 +91,41 @@ package
 				turnedLast = false;
 			}
 			
+			// idle and walking animations
+			if (turning)
+			{
+				var adj:Number = _theta - Math.PI / 2;
+				while (adj >= 2 * Math.PI) adj -= 2 * Math.PI;
+				while (adj < 0) adj += 2 * Math.PI;
+				//trace(adj);
+				if (adj > 7 * Math.PI / 4 || adj < Math.PI / 4) direction = Dir.EAST;
+				else if (adj > Math.PI / 4 && adj < 3 * Math.PI / 4) direction = Dir.NORTH;
+				else if (adj > 3 * Math.PI / 4 && adj < 5 * Math.PI / 4) direction = Dir.WEST;
+				else if (adj > 5 * Math.PI / 4 && adj < 7 * Math.PI / 4) direction = Dir.SOUTH;
+				
+			}
+			var dir:String = "_";
+			if (direction == Dir.NORTH) dir += "up";
+			else if (direction == Dir.SOUTH) dir += "down";
+			else if (direction == Dir.EAST) dir += "right";
+			else if (direction == Dir.WEST) dir += "left";
+			
+			if (moving && !movingLast)
+			{
+				movingLast = true;
+				play("walk" + dir);
+				
+			}
+			else if (!moving && movingLast)
+			{
+				movingLast = false;
+				play("idle" + dir);
+			}
+			else if (turning)
+			{
+				play("idle" + dir);
+			}
+			
 		}
 		
 		protected function turn(td:int):void
@@ -100,6 +138,8 @@ package
 			(FlxG.state as PlayState).updateDetectedNext = true;
 			
 			// 2 - set the new direction
+			// outdated - we now set the direction dynamically while turning during update(). maybe we might want to revert to this though, who knows
+			/*
 			var order:Array = [Dir.SOUTH, Dir.WEST, Dir.NORTH, Dir.EAST, Dir.SOUTH, Dir.WEST, Dir.NORTH, Dir.EAST];
 			var index:int;
 			if (direction == Dir.NORTH) index = 2;
@@ -107,9 +147,26 @@ package
 			else if (direction == Dir.SOUTH) index = 4;
 			else if (direction == Dir.WEST) index = 5;
 			direction = order[index + turnDir];
+			*/
+			
 		}
 		
 		protected function tick():void { }
+		
+		private function createAnimations():void
+		{
+			addAnimation("idle_down", [0]);
+			addAnimation("walk_down", [1, 2], 30);
+			
+			addAnimation("idle_up", [3]);
+			addAnimation("walk_up", [4, 5], 30);
+			
+			addAnimation("idle_right", [6]);
+			addAnimation("walk_right", [7, 8], 30);
+			
+			addAnimation("idle_left", [9]);
+			addAnimation("walk_left", [10, 11], 30);
+		}
 		
 		
 	}

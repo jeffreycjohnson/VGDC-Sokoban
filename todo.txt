@@ -20,14 +20,6 @@ Keys and locks, or groups of goal spaces that activate a certain goal
 Game Engine Features
 ----------------------
 
-Revolving Bot
-
-PatrolBot grahpics / rotating
-
-Load all graphics from one image
-
-Wall graphics (tileset)
-
 Door that opens when goals are filled
 
 Level restarts when player is caught (also have god mode toggleable)

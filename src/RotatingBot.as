@@ -13,6 +13,7 @@ package
 		{
 			super(x, y, 50, visionAngle, visionRadius, "cone");
 			this.rotateSpeed = rotateSpeed;
+			loadGraphic(Assets.ROTATINGBOT, false, false, 16, 16);
 		}
 		
 		public function clone():RotatingBot
