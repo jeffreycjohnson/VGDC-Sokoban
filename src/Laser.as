@@ -13,28 +13,35 @@ package
 		public function Laser(x:int, y:int, type:String) 
 		{
 			super(x, y, 100, 0, 20, "straight");
-			// TODO: Give the graphic the correct orientation
-			loadGraphic(Assets.LASER, false, true, 8, 16);
+			
 			this.type = type;
 			if (type == "right")
 			{
+				loadRotatedGraphic(Assets.LASER, 4, 3);
 				direction = Dir.EAST;
 				_theta = 0 + Math.PI / 2;
+				play("aim right");
 			}
 			else if (type == "down")
 			{
+				loadRotatedGraphic(Assets.LASER, 4, 0);
 				direction = Dir.SOUTH;
 				_theta = 3 * Math.PI / 2 + Math.PI / 2;
+				play("aim down");
 			}
 			if (type == "left")
 			{
+				loadRotatedGraphic(Assets.LASER, 4, 1);
 				direction = Dir.WEST;
 				_theta = 0 + 3 * Math.PI / 2;
+				play("aim left");
 			}
 			else if (type == "up")
 			{
+				loadRotatedGraphic(Assets.LASER, 4, 2);
 				direction = Dir.NORTH;
 				_theta = Math.PI / 2 + Math.PI / 2;
+				play("aim up");
 			}
 		}
 		

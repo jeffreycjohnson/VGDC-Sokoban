@@ -153,7 +153,7 @@ package
 		
 		protected function tick():void { }
 		
-		private function createAnimations():void
+		protected function createAnimations():void
 		{
 			addAnimation("idle_down", [0]);
 			addAnimation("walk_down", [1, 2], 30);

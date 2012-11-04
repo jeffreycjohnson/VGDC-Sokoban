@@ -10,7 +10,6 @@ package
 		[Embed(source = "../assets/floor.png")] public static var FLOOR:Class;
 		[Embed(source = "../assets/goal.png")] public static var GOAL:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
-		[Embed(source = "../assets/laser.png")] public static var LASER:Class;
 		[Embed(source = "../assets/patrol2.png")] public static var PATROL_HIGHLIGHT:Class;
 		
 		// new
@@ -19,6 +18,7 @@ package
 		
 		// non-animated new
 		[Embed(source = "../assets/rotatingbot.png")] public static var ROTATINGBOT:Class;
+		[Embed(source = "../assets/laser.png")] public static var LASER:Class;
 	}
 
 }
