@@ -16,7 +16,7 @@
     <Width>960</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\Traynor Traynor\Documents\GitHub\VGDC-Sokoban\levels\Sokoban.oep</Filename>
+  <Filename>C:\Users\Jeffrey\Dropbox\programming\VGDC-Sokoban\levels\Sokoban.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -119,6 +119,21 @@
         <ValueDefinition xsi:type="IntValueDefinition" Name="VisionRadius" Default="40" Min="0" Max="1000" ShowSlider="true" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="VisionAngle" Default="1.1" Min="0" Max="6.28" Round="0.01" />
       </ValueDefinitions>
+      <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
+    </EntityDefinition>
+    <EntityDefinition Name="Door" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+      <Size>
+        <Width>16</Width>
+        <Height>16</Height>
+      </Size>
+      <Origin>
+        <X>0</X>
+        <Y>0</Y>
+      </Origin>
+      <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
+        <RectColor A="255" R="128" G="64" B="0" />
+      </ImageDefinition>
+      <ValueDefinitions />
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
   </EntityDefinitions>

@@ -78,7 +78,7 @@ package
 				}
 			}
 			
-			trace(xx, yy, ref);
+			//trace(xx, yy, ref);
 			play(ref);
 		}
 		

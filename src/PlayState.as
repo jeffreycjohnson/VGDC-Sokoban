@@ -39,6 +39,7 @@ package
 		
 		// holds the highlightable squares that appear when something is detected by a patroller.
 		private var detected:Array;
+		private var previouslyDetected:Array;
 		
 		// TODO: refactor the name "detected" to something more intuitive?
 		
@@ -60,6 +61,8 @@ package
 		
 		private var goalNumber:int; // total number of goals
 		private var goalCount:int  // goals achieved so far
+		private var defeated:Boolean = false;
+		private var godMode:Boolean = false;
 		
 		private var player:Player;
 		private var px:int; // player x
@@ -123,66 +126,77 @@ package
 			var xo:int = 0; // x offset (1 or -1)
 			var yo:int = 0; // y offset (1 or -1)
 			
-			if (FlxG.keys.justPressed("RIGHT")) xo = 1;
-			if (FlxG.keys.justPressed("LEFT")) xo = -1;
-			if (FlxG.keys.justPressed("DOWN")) yo = 1;
-			if (FlxG.keys.justPressed("UP")) yo = -1;
-			
-			var next:int = level[px + xo][py + yo]; // the tile right in front of player
-			var next2:int = next != 1 ? level[px + 2 * xo][py + 2 * yo] : 0; // the tile 2 blocks in front of player
-			
-			var x_next:int = px + xo;
-			var y_next:int = py + yo;
-			var x_next2:int = px + 2 * xo;
-			var y_next2:int = py + 2 * yo;			
-			
-			// consider moving the player if either xo or yo is nonzero, and the player isn't already moving.
-			if (xo != yo && !player.isMoving())
+			//Toggle GodMode
+			if (FlxG.keys.justPressed("G"))
 			{
-				// case 1 - moving forward into empty space
-				if (next == 0)
-				{
-					level[px][py] = 0;
-					level[x_next][y_next] = 4;
-					px += xo;
-					py += yo;
-					
-					player.move(xo, yo);
-					
-					moveCount++;
-					updateMoveText();
-				}
+				if (godMode) godMode = false;
+				else godMode = true;
+			}
+			
+			// dont let the player keep moving if he loses
+			if (!defeated)
+			{
+				if (FlxG.keys.justPressed("RIGHT")) xo = 1;
+				if (FlxG.keys.justPressed("LEFT")) xo = -1;
+				if (FlxG.keys.justPressed("DOWN")) yo = 1;
+				if (FlxG.keys.justPressed("UP")) yo = -1;
 				
-				// case 2 - pushing block
-				else if (next == 2 && next2 == 0)
+				var next:int = level[px + xo][py + yo]; // the tile right in front of player
+				var next2:int = next != 1 ? level[px + 2 * xo][py + 2 * yo] : 0; // the tile 2 blocks in front of player
+				
+				var x_next:int = px + xo;
+				var y_next:int = py + yo;
+				var x_next2:int = px + 2 * xo;
+				var y_next2:int = py + 2 * yo;			
+				
+				// consider moving the player if either xo or yo is nonzero, and the player isn't already moving.
+				if (xo != yo && !player.isMoving())
 				{
-					
-					level[px][py] = 0;
-					level[x_next][y_next] = 4;
-					level[x_next2][y_next2] = 2;
-					entities[x_next2][y_next2] = entities[x_next][y_next];
-					px += xo;
-					py += yo;
-					
-					entities[x_next][y_next].move(xo, yo);
-					player.move(xo, yo);
-					
-					moveCount++;
-					updateMoveText();
-					
-					// now we change the goal count if necessary
-					if (floor[x_next][y_next] == 0 && floor[x_next2][y_next2] == 1)
+					// case 1 - moving forward into empty space
+					if (next == 0)
 					{
-						goalCount++;
-						updateGoalText();
+						level[px][py] = 0;
+						level[x_next][y_next] = 4;
+						px += xo;
+						py += yo;
+						
+						player.move(xo, yo);
+						
+						moveCount++;
+						updateMoveText();
 					}
-					else if (floor[x_next][y_next] == 1 && floor[x_next2][y_next2] == 0)
+					
+					// case 2 - pushing block
+					else if (next == 2 && next2 == 0)
 					{
-						goalCount--;
-						updateGoalText();
+						
+						level[px][py] = 0;
+						level[x_next][y_next] = 4;
+						level[x_next2][y_next2] = 2;
+						entities[x_next2][y_next2] = entities[x_next][y_next];
+						px += xo;
+						py += yo;
+						
+						entities[x_next][y_next].move(xo, yo);
+						player.move(xo, yo);
+						
+						moveCount++;
+						updateMoveText();
+						
+						// now we change the goal count if necessary
+						if (floor[x_next][y_next] == 0 && floor[x_next2][y_next2] == 1)
+						{
+							goalCount++;
+							updateGoalText();
+						}
+						else if (floor[x_next][y_next] == 1 && floor[x_next2][y_next2] == 0)
+						{
+							goalCount--;
+							updateGoalText();
+						}
 					}
+					// TODO: other cases (?)
 				}
-				// TODO: other cases (?)
 			}
 			
 			// if R key is pressed, reset
@@ -201,14 +215,18 @@ package
 				if (levelIndex > 0) switchLevel(levelIndex - 1);
 			}
 			
-			// finally, update all objects we have added to our FlxState.
-			super.update();
-			
-			// if we should update the detecteds this tick, then do so.
-			if (_updateDetectedNext) 
+			// pause when the player loses
+			if (!defeated)
 			{
-				updateDetected();
-				_updateDetectedNext = false;
+				// finally, update all objects we have added to our FlxState.
+				super.update();
+				
+				// if we should update the detecteds this tick, then do so.
+				if (_updateDetectedNext) 
+				{
+					updateDetected();
+					_updateDetectedNext = false;
+				}
 			}
 			
 			
@@ -232,6 +250,7 @@ package
 			locked = true;
 			fadeRate = fadeRateConst;
 			levelIndex = index;
+			defeated = false;
 		}
 		
 		private function loadLevel(index:int):void
@@ -243,6 +262,7 @@ package
 			floor = [];
 			entities = [];
 			detected = [];
+			previouslyDetected = [];
 			patrollers = new Vector.<PatrolBot>;
 			goalNumber = goalCount = 0;
 			moveCount = 0;
@@ -256,6 +276,8 @@ package
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
 			YOFFSET = (Main.HEIGHT - TILESIZE * thisLevel.height) / 2;
 			
+			var xAbs:int;
+			var yAbs:int;
 			// cycle through the level data.
 			for (i = 0; i < thisLevel.width; i++)
 			{
@@ -263,6 +285,7 @@ package
 				floor[i] = [];
 				entities[i] = [];
 				detected[i] = [];
+				previouslyDetected[i] = [];
 				
 				for (j = 0; j < thisLevel.height; j++)
 				{
@@ -274,8 +297,8 @@ package
 					// 2 - add the necessary static graphics objects.
 					// TODO: in the future when we have graphics for the edges, corners, etc, add them here. I've done this before, it's not too complex.
 					
-					var xAbs:int = i * TILESIZE + XOFFSET;
-					var yAbs:int = j * TILESIZE + YOFFSET;
+					xAbs = i * TILESIZE + XOFFSET;
+					yAbs = j * TILESIZE + YOFFSET;
 					
 					// goal-floor
 					if (floor[i][j] == 1) {
@@ -309,12 +332,12 @@ package
 					if (corners[i][j]) s += "1 ";
 					else s += "0 ";
 				}
-				trace(s);
+				//trace(s);
 			}
 			for (i = 1; i < smallWidth-1; i++) {
 				for (j = 1; j < smallHeight - 1; j++) {
-					var xAbs:int = (i - 1)  * TILESIZE / 2 + XOFFSET;
-					var yAbs:int = (j - 1)  * TILESIZE / 2 + YOFFSET;
+					xAbs = (i - 1)  * TILESIZE / 2 + XOFFSET;
+					yAbs = (j - 1)  * TILESIZE / 2 + YOFFSET;
 					if (corners[i][j])
 					{
 						var guy:Wall = new Wall(xAbs, yAbs);
@@ -376,6 +399,7 @@ package
 			// cycle through detected here to add them on top of everything
 			for (i = 0; i < level.length; i++) {
 				for (j = 0; j < level.length; j++) {
+					previouslyDetected[i][j] = 0;
 					detected[i][j] = new Detected(i * TILESIZE + XOFFSET, j * TILESIZE + YOFFSET);
 					add(detected[i][j]);
 				}
@@ -387,6 +411,7 @@ package
 			
 			// create various GUI-entities
 			loadGUI(thisLevel);
+			defeated = false;
 		}
 		
 		private function loadGUI(thisLevel:Level):void
@@ -413,8 +438,13 @@ package
 			var y:int = 0;
 			
 			// first, blank out our array of Detecteds.
-			for (x = 0; x < detected.length; x++) {
-				for (y = 0; y < detected[0].length; y++) {
+			for (x = 0; x < detected.length; x++)
+			{
+				for (y = 0; y < detected[0].length; y++)
+				{
+					// decrement all tiles so that they dont become visible after multiple passes
+					previouslyDetected[x][y] --;
+					if (previouslyDetected[x][y] < 0) previouslyDetected[x][y] = 0;
 					(Detected)(detected[x][y]).kill();
 				}
 			}
@@ -438,7 +468,6 @@ package
 				var run:Number;
 				var rise:Number;
 				
-				var valid:Boolean;
 				var absX:Number;
 				var absY:Number;
 				
@@ -473,25 +502,41 @@ package
 						absY = sourceY;
 						// TODO: start a few points ahead, outside of the starting square?
 						
-						valid = true;
-						
 						// cycle through all points
-						for (pc = 0; pc < pointNum && valid; pc++)
+						for (pc = 0; pc < pointNum; pc++)
 						{
 							absX += rise;
 							absY += run;
 							gridX = (int)((absX - XOFFSET) / TILESIZE);
 							gridY = (int)((absY - YOFFSET) / TILESIZE);
 							
+							// since all tiles are decrements, increments ones in the path twice
+							previouslyDetected[gridX][gridY] += 2;
+							
 							// break if out of bounds
-							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) valid = false;					
+							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0)
+							{
+								break;					
+							}
 							
 							// break if tile is solid
-							if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6) ) valid = false;
+							if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6)
+							{
+								break;					
+							}
+							
+							// only count tiles that are detected 3 times in a row as detected to prevent seeing though corners
+							if (previouslyDetected[gridX][gridY] < 3)
+							{
+								break;
+							}
 							
 							// else, revive the tile.
-							if (valid) det = detected[gridX][gridY];
-							if (valid && det.significantlyContains(absX, absY) && !(level[gridX][gridY] == 5 && !guy.isMoving())) det.revive();
+							det = detected[gridX][gridY];
+							if (det.significantlyContains(absX, absY) && !(level[gridX][gridY] == 5 && !guy.isMoving())) det.revive();
+							
+							// kill the player if he is detected
+							if (gridX == px && gridY == py && !godMode) defeat();
 						}
 					}
 				}
@@ -500,12 +545,11 @@ package
 					run = radius * Math.cos(guy.theta);
 					rise = radius * Math.sin(guy.theta);
 					
-					valid = true;
 					absX = sourceX;
 					absY = sourceY;
 					
 					// cycle through all points
-					for (pc = 0; pc < pointNum && valid; pc++)
+					for (pc = 0; pc < pointNum; pc++)
 					{
 						// without the / 2 the points are too spread out for large radius
 						absX += rise / 2;
@@ -513,19 +557,44 @@ package
 						gridX = (int)((absX - XOFFSET) / TILESIZE);
 						gridY = (int)((absY - YOFFSET) / TILESIZE);
 						
+						// since all tiles are decrements, increments ones in the path twice
+						previouslyDetected[gridX][gridY] += 2;
+						
 						// break if out of bounds
-						if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) valid = false;					
+						if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0)
+						{
+							break;					
+						}				
 						
 						// break if tile is solid
-						if ( valid && (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6) ) valid = false;
+						if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6)
+						{
+							break;					
+						}
+						
+						// only count tiles that are detected 3 times in a row as detected to prevent seeing though corners
+						if (previouslyDetected[gridX][gridY] < 3)
+						{
+							break;
+						}
 						
 						// else, revive the tile.
-						if (valid) det = detected[gridX][gridY];
-						if (valid && det.significantlyContains(absX, absY)) det.revive();
+						det = detected[gridX][gridY];
+						if (det.significantlyContains(absX, absY) && !(level[gridX][gridY] == 5 && !guy.isMoving())) det.revive();
+						
+						// kill the player if he is detected
+						if (gridX == px && gridY == py && !godMode) defeat();
 					}
-					
 				}
 			}
+		}
+		
+		// sets the defeated flag which pauses the game
+		private function defeat():void
+		{
+			defeated = true;
+			add(new FlxText(150, 30, 150, "You Lose!"));
+			add(new FlxText(150, 50, 150, "Press R to Try Again."));
 		}
 		
 		private function updateGoalText():void
