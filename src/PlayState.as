@@ -276,9 +276,24 @@ package
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
 			YOFFSET = (Main.HEIGHT - TILESIZE * thisLevel.height) / 2;
 			
+			
+			
+			// add a repeating background object alligned with the level.
+			
+			var numTilesX:int = (int)(XOFFSET / TILESIZE);
+			if (XOFFSET % TILESIZE != 0) numTilesX++;
+			var numTilesY:int = (int)(YOFFSET / TILESIZE);
+			if (YOFFSET % TILESIZE != 0 ) numTilesY++;
+			var startX:int = XOFFSET - numTilesX * TILESIZE;
+			var startY:int = YOFFSET - numTilesY * TILESIZE;
+			add(new WallBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height));
+			
+			
+			
+			// cycle through the level data.
+			
 			var xAbs:int;
 			var yAbs:int;
-			// cycle through the level data.
 			for (i = 0; i < thisLevel.width; i++)
 			{
 				level[i] = [];
@@ -312,7 +327,9 @@ package
 			}
 			
 			
+			
 			// cycle through the small 8x8 tile data.
+			
 			var corners:Array = [];
 			var smallWidth:int = thisLevel.width * 2 + 2;
 			var smallHeight:int = thisLevel.height * 2 + 2;
@@ -350,6 +367,7 @@ package
 			
 			
 			// cycle through the entity data.
+			
 			for (i = 0; i < thisLevel.entitiesArray.length; i++)
 			{
 				var newGuy:FlxSprite = (FlxSprite)(thisLevel.entitiesArray[i]);

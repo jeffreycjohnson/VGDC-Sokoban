@@ -7,8 +7,8 @@ package
 	
 	public class Wall extends FlxSprite
 	{
-		var xx:int;
-		var yy:int;
+		private var xx:int;
+		private var yy:int;
 		
 		public function Wall(x:int, y:int) 
 		{

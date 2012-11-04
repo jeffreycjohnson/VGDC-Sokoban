@@ -19,6 +19,7 @@ package
 		// non-animated new
 		[Embed(source = "../assets/rotatingbot.png")] public static var ROTATINGBOT:Class;
 		[Embed(source = "../assets/laser.png")] public static var LASER:Class;
+		[Embed(source = "../assets/wallrepeat.png")] public static var WALLREPEAT:Class;
 	}
 
 }
