@@ -70,6 +70,7 @@ package
 		
 		private var goalText:FlxText;
 		private var moveText:FlxText;
+		private var godModeText:FlxText;
 		
 		// whether or not we should update detected at the end of the tick
 		private var _updateDetectedNext:Boolean;
@@ -126,11 +127,11 @@ package
 			var xo:int = 0; // x offset (1 or -1)
 			var yo:int = 0; // y offset (1 or -1)
 			
-			//Toggle GodMode
+			// Toggle GodMode
 			if (FlxG.keys.justPressed("G"))
 			{
-				if (godMode) godMode = false;
-				else godMode = true;
+				godMode = !godMode;
+				updateGodModeText();
 			}
 			
 			// dont let the player keep moving if he loses
@@ -442,6 +443,10 @@ package
 			add(moveText);
 			updateMoveText();
 			
+			godModeText = new FlxText(5, 115, 100, "");
+			add(godModeText);
+			updateGodModeText();
+			
 			add(new FlxText(5, 25, 150, "Level " + levelIndex));
 			add(new FlxText(5, 45, 150, "Name: " + thisLevel.name));
 			add(new FlxText(5, 65, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
@@ -624,6 +629,12 @@ package
 		private function updateMoveText():void
 		{
 			moveText.text = "Moves: " + moveCount;
+		}
+		
+		private function updateGodModeText():void
+		{
+			if (godMode) godModeText.text = "Godmode: ON";
+			else godModeText.text = "Godmode: OFF";
 		}
 		
 		private function getLevelString(index:int):String
