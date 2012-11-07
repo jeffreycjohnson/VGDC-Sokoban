@@ -115,7 +115,7 @@
         <RectColor A="255" R="255" G="0" B="0" />
       </ImageDefinition>
       <ValueDefinitions>
-        <ValueDefinition xsi:type="IntValueDefinition" Name="RotateSpeed" Default="1" Min="-10" Max="10" ShowSlider="true" />
+        <ValueDefinition xsi:type="FloatValueDefinition" Name="RotateSpeed" Default="0" Min="0" Max="100" Round="0.05" />
         <ValueDefinition xsi:type="IntValueDefinition" Name="VisionRadius" Default="40" Min="0" Max="1000" ShowSlider="true" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="VisionAngle" Default="1.1" Min="0" Max="6.28" Round="0.01" />
       </ValueDefinitions>
