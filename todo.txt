@@ -22,8 +22,6 @@ Game Engine Features
 
 Door that opens when goals are filled
 
-Level restarts when player is caught (also have god mode toggleable)
-
 Pushable block that doesn't work on goal spaces
 
 

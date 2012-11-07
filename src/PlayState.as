@@ -572,7 +572,7 @@ package
 					absY = sourceY;
 					
 					// cycle through all points
-					for (pc = 0; pc < pointNum; pc++)
+					for (pc = 0; pc < radius; pc++)
 					{
 						// without the / 2 the points are too spread out for large radius
 						absX += rise / 2;
