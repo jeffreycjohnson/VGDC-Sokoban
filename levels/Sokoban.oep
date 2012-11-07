@@ -118,6 +118,7 @@
         <ValueDefinition xsi:type="FloatValueDefinition" Name="RotateSpeed" Default="0" Min="0" Max="100" Round="0.005" />
         <ValueDefinition xsi:type="IntValueDefinition" Name="VisionRadius" Default="40" Min="0" Max="1000" ShowSlider="true" />
         <ValueDefinition xsi:type="FloatValueDefinition" Name="VisionAngle" Default="1.1" Min="0" Max="6.28" Round="0.01" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="InitialAngle" Default="0" Min="0" Max="360" ShowSlider="true" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

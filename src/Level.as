@@ -121,8 +121,9 @@ package
 				var rs:Number = node.@RotateSpeed;
 				vr = node.@VisionRadius;
 				va = node.@VisionAngle;
+				var ia:Number = node.@InitialAngle;
 				
-				addMe = new RotatingBot(x, y, rs, va, vr);
+				addMe = new RotatingBot(x, y, rs, va, vr, ia);
 				entitiesArray.push( addMe );
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;
 			}

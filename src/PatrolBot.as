@@ -40,7 +40,6 @@ package
 			_visionAngle = visionAngle;
 			_visionRadius = visionRadius+1;
 			_visionType = visionType;
-			_theta = 0 + Math.PI / 2;
 			loadGraphic(Assets.PATROLBOT1, true, false, 16, 16);
 			createAnimations();
 			

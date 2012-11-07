@@ -289,9 +289,7 @@ package
 			var startX:int = XOFFSET - numTilesX * TILESIZE;
 			var startY:int = YOFFSET - numTilesY * TILESIZE;
 			add(new WallBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height));
-			
-			
-			
+								
 			// cycle through the level data.
 			
 			var xAbs:int;
