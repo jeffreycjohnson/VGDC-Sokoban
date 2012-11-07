@@ -75,9 +75,7 @@ package
 		// whether or not we should update detected at the end of the tick
 		private var _updateDetectedNext:Boolean;
 		public function set updateDetectedNext(b:Boolean):void { _updateDetectedNext = b; };
-		
-		
-		
+				
 		override public function create():void
 		{
 			// push all things we "Embed"-ed in LevelStorage to an array levels[].
@@ -153,6 +151,9 @@ package
 				// consider moving the player if either xo or yo is nonzero, and the player isn't already moving.
 				if (xo != yo && !player.isMoving())
 				{
+					// always turn, even if can't walk! it looks better, think any top-down rpg
+					player.turn(xo, yo);					
+					
 					// case 1 - moving forward into empty space
 					if (next == 0)
 					{

@@ -51,7 +51,7 @@ package
 		public function move(xo:int, yo:int):void
 		{
 			gridX += xo;
-			gridY += yo
+			gridY += yo;
 			
 			moving = true;
 			move_xo = xo;
