@@ -15,6 +15,7 @@ package
 		// new
 		[Embed(source = "../assets/player.png")] public static var PLAYER:Class;
 		[Embed(source = "../assets/patrolbot1.png")] public static var PATROLBOT1:Class;
+		[Embed(source = "../assets/background.png")] public static var BG:Class;
 		
 		// non-animated new
 		[Embed(source = "../assets/rotatingbot.png")] public static var ROTATINGBOT:Class;

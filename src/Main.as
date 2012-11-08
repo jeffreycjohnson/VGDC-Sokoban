@@ -15,7 +15,7 @@ package
 		
 		public function Main()
 		{
-			super(WIDTH, HEIGHT, PlayState, PIXEL, 60, 60, true);
+			super(WIDTH, HEIGHT, MainMenu, PIXEL, 60, 60, true);
 			//super(50, 50, PlayState, 2, 60, 60, true);
 			forceDebugger = true;
 		}
