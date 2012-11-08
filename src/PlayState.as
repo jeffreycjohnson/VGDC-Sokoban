@@ -446,9 +446,11 @@ package
 			add(godModeText);
 			updateGodModeText();
 			
+			
 			add(new FlxText(5, 25, 150, "Level " + levelIndex));
 			add(new FlxText(5, 45, 150, "Name: " + thisLevel.name));
 			add(new FlxText(5, 65, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
+			add(new FlxText(5, Main.HEIGHT-30, 250, thisLevel.levelInfo));
 		}
 		
 		private function updateDetected():void

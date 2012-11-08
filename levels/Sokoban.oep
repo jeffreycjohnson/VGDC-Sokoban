@@ -5,8 +5,8 @@
   <BackgroundColor A="255" R="125" G="160" B="255" />
   <GridColor A="255" R="255" G="240" B="90" />
   <LevelDefaultSize>
-    <Width>320</Width>
-    <Height>320</Height>
+    <Width>192</Width>
+    <Height>192</Height>
   </LevelDefaultSize>
   <LevelMinimumSize>
     <Width>80</Width>
@@ -16,7 +16,7 @@
     <Width>960</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\Jason\Documents\AS3\VGDC-Sokoban\levels\Sokoban.oep</Filename>
+  <Filename>C:\Users\Jeffrey\Dropbox\programming\VGDC-Sokoban\levels\Sokoban.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -26,6 +26,7 @@
   <ExportCameraPosition>false</ExportCameraPosition>
   <LevelValueDefinitions>
     <ValueDefinition xsi:type="StringValueDefinition" Name="Name" Default="Unnamed Level" MaxChars="-1" MultiLine="false" />
+    <ValueDefinition xsi:type="StringValueDefinition" Name="Level_Info" Default="" MaxChars="-1" MultiLine="false" />
   </LevelValueDefinitions>
   <LayerDefinitions>
     <LayerDefinition xsi:type="TileLayerDefinition">

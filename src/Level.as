@@ -8,6 +8,7 @@ package
 	public class Level 
 	{
 		public var name:String;
+		public var levelInfo:String;
 		public var playerX:int;
 		public var playerY:int;
 		public var width:int;
@@ -31,6 +32,9 @@ package
 			
 			// Load the level name
 			name = xml.@Name;
+			
+			//Load any ectra level info
+			levelInfo = xml.@Level_Info;
 			
 			// Load width and height
 			width = xml.@width / PlayState.TILESIZE;
