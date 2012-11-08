@@ -591,7 +591,9 @@ package
 						}				
 						
 						// break if tile is solid
-						if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6)
+						// Patrol bots are solid, man!
+						//if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6)
+						if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 6)
 						{
 							break;					
 						}
