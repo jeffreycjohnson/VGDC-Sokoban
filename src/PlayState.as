@@ -1,6 +1,7 @@
 package  
 {
 		
+	import flash.net.SharedObject;
 	import org.flixel.*;
 	import mx.collections.ListCollectionView;
 	import mx.utils.ObjectUtil;
@@ -58,6 +59,7 @@ package
 		
 		private var levelIndex:int; // which level we're currently on
 		private var moveCount:int; // how many moves the player has done
+		private var maxLevel:SharedObject; // tracks th players progress
 		
 		private var goalNumber:int; // total number of goals
 		private var goalCount:int  // goals achieved so far
@@ -92,9 +94,15 @@ package
 			fadeOverlay.alpha = 0;
 			add(fadeOverlay);
 			
+			maxLevel = SharedObject.getLocal("Level");
+			if (maxLevel.data.value == null)
+			{
+				maxLevel.data.value = 0;
+				maxLevel.flush();
+			}
 			// to start us off, let's load level 0.
 			fadeOverlay.alpha = 1;
-			switchLevel(0);
+			switchLevel(maxLevel.data.value);
 		}
 		
 		override public function update():void
@@ -252,6 +260,11 @@ package
 			locked = true;
 			fadeRate = fadeRateConst;
 			levelIndex = index;
+			if (maxLevel.data.value == null || levelIndex > maxLevel.data.value)
+			{
+				maxLevel.data.value = levelIndex;
+				maxLevel.flush();
+			}
 			defeated = false;
 		}
 		
