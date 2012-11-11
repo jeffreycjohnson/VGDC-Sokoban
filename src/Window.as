@@ -1,19 +1,19 @@
 package  
 {
 	/**
-	 * Wall sprite (that doesn't move).
+	 * Window sprite (that doesn't move).
 	 */
 	import org.flixel.*;
 	
-	public class Wall extends FlxSprite
+	public class Window extends FlxSprite
 	{
 		private var xx:int;
 		private var yy:int;
 		
-		public function Wall(x:int, y:int) 
+		public function Window(x:int, y:int) 
 		{
 			super(x, y);
-			loadGraphic(Assets.WALL, false, false, 8, 8);
+			loadGraphic(Assets.WINDOW, false, false, 8, 8);
 			createAnimations();
 			
 			play("center1");
@@ -26,15 +26,15 @@ package
 			
 			var ref:String;
 			
-			var top:Boolean = corners[xx][yy-1] == 1;
-			var bottom:Boolean = corners[xx][yy+1] == 1;
-			var left:Boolean = corners[xx-1][yy] == 1;
-			var right:Boolean = corners[xx+1][yy] == 1;
+			var top:Boolean = corners[xx][yy-1] == 6;
+			var bottom:Boolean = corners[xx][yy+1] == 6;
+			var left:Boolean = corners[xx-1][yy] == 6;
+			var right:Boolean = corners[xx+1][yy] == 6;
 			
-			var topleft:Boolean = corners[xx-1][yy-1] == 1;
-			var topright:Boolean = corners[xx+1][yy-1] == 1;
-			var bottomleft:Boolean = corners[xx-1][yy+1] == 1;
-			var bottomright:Boolean = corners[xx+1][yy+1] == 1;
+			var topleft:Boolean = corners[xx-1][yy-1] == 6;
+			var topright:Boolean = corners[xx+1][yy-1] == 6;
+			var bottomleft:Boolean = corners[xx-1][yy+1] == 6;
+			var bottomright:Boolean = corners[xx+1][yy+1] == 6;
 			
 			// outside corners
 			if (!top && !left) ref = "topleft";

@@ -7,6 +7,7 @@ package
 	{
 		// level layout
 		[Embed(source = "../assets/wall.png")] public static var WALL:Class;
+		[Embed(source = "../assets/window.png")] public static var WINDOW:Class;
 		[Embed(source = "../assets/floor.png")] public static var FLOOR:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
 		
@@ -18,7 +19,11 @@ package
 		[Embed(source = "../assets/patrol2.png")] public static var PATROL_HIGHLIGHT:Class;
 		
 		// technical
+		[Embed(source = "../assets/button.png")] public static var BUTTON:Class;
 		[Embed(source = "../assets/background.png")] public static var BG:Class;
+		
+		// fonts
+		[Embed(source="../assets/visitor.ttf", fontFamily="PIXEL", embedAsCFF="false")] public	static var FONT_VISITOR:String;
 	}
 
 }

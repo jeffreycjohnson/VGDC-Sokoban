@@ -1,6 +1,6 @@
 package  
 {
-		
+	
 	import flash.net.SharedObject;
 	import org.flixel.*;
 	import mx.collections.ListCollectionView;
@@ -23,6 +23,7 @@ package
 		 * 2 = block
 		 * 4 = player
 		 * 5 = patrolbot
+		 * 6 = window
 		 */
 		
 		// holds what type of floor there is at each grid space.
@@ -40,7 +41,7 @@ package
 		// holds the highlightable squares that appear when something is detected by a patroller.
 		private var detected:Array;
 		private var previouslyDetected:Array;
-		private const detectTime:int = 5;
+		private const detectTime:int = 3;
 		
 		// TODO: refactor the name "detected" to something more intuitive?
 		
@@ -57,9 +58,10 @@ package
 		private var fadeRate:Number;
 		private var fadeOverlay:FlxSprite;
 		
+		public static var startLevel:int = 0;
 		private var levelIndex:int; // which level we're currently on
 		private var moveCount:int; // how many moves the player has done
-		private var maxLevel:SharedObject; // tracks th players progress
+		public static var maxLevel:SharedObject; // tracks th players progress
 		
 		private var goalNumber:int; // total number of goals
 		private var goalCount:int  // goals achieved so far
@@ -84,9 +86,9 @@ package
 		{
 			// push all things we "Embed"-ed in LevelStorage to an array levels[].
 			var i:int = 0;
-			while (LevelStorage[getLevelString(i)] != null)
+			while (LevelStorage[LevelStorage.getLevelString(i)] != null)
 			{
-				LevelStorage.levels[i] = new Level(LevelStorage[getLevelString(i)]);
+				LevelStorage.levels[i] = new Level(LevelStorage[LevelStorage.getLevelString(i)]);
 				i++;
 			}
 			
@@ -96,16 +98,9 @@ package
 			fadeOverlay.alpha = 0;
 			add(fadeOverlay);
 			
-			maxLevel = SharedObject.getLocal("Level");
-			if (maxLevel.data.value == null)
-			{
-				maxLevel.data.value = 0;
-				maxLevel.flush();
-			}
 			// to start us off, let's load level 0.
 			fadeOverlay.alpha = 1;
-			//switchLevel(maxLevel.data.value);
-			switchLevel(0);
+			switchLevel(startLevel);
 		}
 		
 		override public function update():void
@@ -365,33 +360,31 @@ package
 					
 					var lx:int = (int)((i - 1) / 2);
 					var ly:int = (int)((j - 1) / 2);
-					if (i == 0 || i == smallWidth - 1 || j == 0 || j == smallHeight - 1 ) corners[i][j] = true;
-					else corners[i][j] = (level[lx][ly] == 1);
+					if (i == 0 || i == smallWidth - 1 || j == 0 || j == smallHeight - 1 ) corners[i][j] = 1;
+					else corners[i][j] = (level[lx][ly]);
 				}
 			}
-			for (j = 0; j < smallHeight; j++) {
-				var s:String = "";
-				for (i = 0; i < smallWidth; i++) {
-					if (corners[i][j]) s += "1 ";
-					else s += "0 ";
-				}
-				//trace(s);
-			}
+			
 			for (i = 1; i < smallWidth-1; i++) {
 				for (j = 1; j < smallHeight - 1; j++) {
 					xAbs = (i - 1)  * TILESIZE / 2 + XOFFSET;
 					yAbs = (j - 1)  * TILESIZE / 2 + YOFFSET;
-					if (corners[i][j])
+					if (corners[i][j] == 1)
 					{
 						var guy:Wall = new Wall(xAbs, yAbs);
 						guy.updateSprite(corners, i, j);
 						add(guy);
 					}
+					else if (corners[i][j] == 6) {
+						var girl:Window = new Window(xAbs, yAbs);
+						girl.updateSprite(corners, i, j);
+						add(girl);					
+						
+						trace("glass");
+					}
 				}
 			}
-			
-			
-			
+						
 			// cycle through the entity data.
 			
 			for (i = 0; i < thisLevel.entitiesArray.length; i++)
@@ -460,10 +453,12 @@ package
 		private function loadGUI(thisLevel:Level):void
 		{
 			goalText = new FlxText(5, 5, 150, "");
+			//goalText.setFormat("PIXEL", 20, 0xffffffff, "left");
 			updateGoalText();
-			//add(goalText);
+			add(goalText);
 			
-			moveText = new FlxText(5, Main.HEIGHT-15, 100, "");
+			moveText = new FlxText(5, Main.HEIGHT - 20, 150, "");
+			moveText.setFormat("PIXEL", 20, 0xffffffff, "left");
 			updateMoveText();
 			add(moveText);
 			
@@ -573,7 +568,7 @@ package
 							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) break;
 							
 							var spared:Boolean = (gridX == sparedX1 && gridY == sparedY1) || (gridX == sparedX2 && gridY == sparedY2);
-							if ( !( level[gridX][gridY] == 0 || level[gridX][gridY] == 4 ) && !spared ) break;
+							if ( !( level[gridX][gridY] == 0 || level[gridX][gridY] == 4 || level[gridX][gridY] == 6 ) && !spared ) break;
 							
 							// if the point is significantly contained and isn't overlapping a patrolbot,
 							det = detected[gridX][gridY];
@@ -670,15 +665,6 @@ package
 		{
 			if (godMode) godModeText.text = "Godmode: ON";
 			else godModeText.text = "Godmode: OFF";
-		}
-		
-		private function getLevelString(index:int):String
-		{
-			var s:String = "level_";
-			if (index < 10) s += "0";
-			s += index.toString();
-			return s;
-			
 		}
 		
 	}

@@ -2,6 +2,7 @@ package
 {
 	import org.flixel.*;
 	import flash.system.System;
+	import flash.net.SharedObject;
 	
 	/**
 	 * The class which contains main menu.
@@ -20,7 +21,15 @@ package
 		// Load the background and all the buttons
 		override public function create():void
 		{
+			PlayState.maxLevel = SharedObject.getLocal("Level");
+			if (PlayState.maxLevel.data.value == null)
+			{
+				PlayState.maxLevel.data.value = 0;
+				PlayState.maxLevel.flush();
+			}
+			
 			add(new FlxSprite(0, 0, Assets.BG));
+			
 			startButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 - 20, "Play", play);
 			add(startButton);
 			controlsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 10, "Controls", controlsHelp);
@@ -66,7 +75,7 @@ package
 		// TODO: switch to the levelsDisplay FlzState
 		private function levelsDisplay():void
 		{
-			FlxG.switchState(new PlayState);
+			FlxG.switchState(new LevelSelect);
 		}
 
 		private function credits():void
