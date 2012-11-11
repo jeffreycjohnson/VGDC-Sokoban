@@ -29,6 +29,11 @@ package
 		protected var _theta:Number;
 		protected var direction:String;
 		
+		protected var _lastXo:int; // used in updateDetected so that the square it was at last doesn't get highlighted.
+		protected var _lastYo:int;
+		public function get lastXo():int { return _lastXo; }
+		public function get lastYo():int { return _lastYo; }
+		
 		protected var movingLast:Boolean = false; // corresponds to the moving boolean. detects if we need to change idle to walking animation, or vice versa.
 		
 		public function PatrolBot(x:int, y:int, tickSpeed:int, visionAngle:Number, visionRadius:int, visionType:String ) 
@@ -71,6 +76,7 @@ package
 				_theta += turnDir * turnSpeed;
 				turnCount++;
 				turnedLast = true;
+				
 				// if we are done turning, then stop turning. (no need to snap, I don't think. it's precice enough.)
 				if (turnCount >= turnTime)
 				{
@@ -90,13 +96,13 @@ package
 				turnedLast = false;
 			}
 			
-			// idle and walking animations
+			// if turning
 			if (turning)
 			{
 				var adj:Number = _theta - Math.PI / 2;
 				while (adj >= 2 * Math.PI) adj -= 2 * Math.PI;
 				while (adj < 0) adj += 2 * Math.PI;
-				//trace(adj);
+				
 				if (adj > 7 * Math.PI / 4 || adj < Math.PI / 4) direction = Dir.EAST;
 				else if (adj > Math.PI / 4 && adj < 3 * Math.PI / 4) direction = Dir.NORTH;
 				else if (adj > 3 * Math.PI / 4 && adj < 5 * Math.PI / 4) direction = Dir.WEST;
@@ -136,6 +142,9 @@ package
 			turnCount = 0;
 			(FlxG.state as PlayState).updateDetectedNext = true;
 			
+			_lastXo = 0;
+			_lastYo = 0;
+			
 			// 2 - set the new direction
 			// outdated - we now set the direction dynamically while turning during update(). maybe we might want to revert to this though, who knows
 			/*
@@ -151,6 +160,13 @@ package
 		}
 		
 		protected function tick():void { }
+		
+		override public function move(xo:int, yo:int):void
+		{
+			super.move(xo, yo);
+			_lastXo = xo;
+			_lastYo = yo;
+		}
 		
 		protected function createAnimations():void
 		{

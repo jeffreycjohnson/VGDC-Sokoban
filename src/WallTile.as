@@ -11,7 +11,9 @@ package
 		public function WallTile() 
 		{
 			super();
-			loadGraphic(Assets.WALLREPEAT, false, false, 16, 16);
+			loadGraphic(Assets.WALL, false, false, 16, 16);
+			addAnimation("default", [7]);
+			play("default");
 		}
 		
 	}

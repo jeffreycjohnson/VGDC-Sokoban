@@ -11,7 +11,9 @@ package
 		public function Block(x:int, y:int) 
 		{
 			super(x, y);
-			loadGraphic(Assets.BLOCK, false, true, 16, 16);
+			loadGraphic(Assets.BLOCK, true, false, 16, 16);
+			createAnimations();
+			play("inactive");
 		}
 		
 		public function clone():Block
@@ -22,6 +24,18 @@ package
 		override public function update():void
 		{
 			super.update();
+		}
+		
+		public function power(b:Boolean):void
+		{
+			if (b) play("active");
+			else play("inactive");
+		}
+		
+		private function createAnimations():void
+		{
+			addAnimation("inactive", [0]);
+			addAnimation("active", [1]);
 		}
 	}
 

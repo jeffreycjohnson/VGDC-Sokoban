@@ -56,7 +56,7 @@ package
 				else ref = "right2";
 			}
 			else if (!left) {
-				if (yy % 2 == 1) ref = "left2";
+				if (yy % 2 == 1) ref = "left1";
 				else ref = "left2";
 			}
 			

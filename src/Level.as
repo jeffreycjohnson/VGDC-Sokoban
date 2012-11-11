@@ -115,7 +115,7 @@ package
 				else if (b == "laser down") addMe = new Laser(x, y, "down");
 				entitiesArray.push( addMe );
 				
-				levelArray[x / PlayState.TILESIZE][y / PlayState.TILESIZE] = 6;
+				levelArray[x / PlayState.TILESIZE][y / PlayState.TILESIZE] = 5;
 			}
 			
 			for each (node in xml.EntityLayer.RotatingBot)

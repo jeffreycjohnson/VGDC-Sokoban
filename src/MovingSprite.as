@@ -11,6 +11,8 @@ package
 		
 		protected var gridX:int; // x index in the level array
 		protected var gridY:int; // y index in the level array
+		public function get getGridX():int { return gridX; };
+		public function get getGridY():int { return gridY; };
 		
 		protected const moveTime:int = 6; // how many ticks it takes to move 1 tile
 		protected const moveSpeed:Number = PlayState.TILESIZE / moveTime;

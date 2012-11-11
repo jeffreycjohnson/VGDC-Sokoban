@@ -226,6 +226,6 @@
     <tile x="14" y="14" id="1" />
   </MainLayer>
   <EntityLayer>
-    <RotatingBot id="0" x="112" y="112" RotateSpeed="0.03" VisionRadius="120" VisionAngle="0.1" InitialAngle="90" />
+    <RotatingBot id="0" x="112" y="112" RotateSpeed="0.03" VisionRadius="120" VisionAngle="0.3" InitialAngle="90" />
   </EntityLayer>
 </level>
