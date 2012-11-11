@@ -7,6 +7,7 @@ package
 	{
 		// level layout
 		[Embed(source = "../assets/wall.png")] public static var WALL:Class;
+		[Embed(source = "../assets/window.png")] public static var WINDOW:Class;
 		[Embed(source = "../assets/floor.png")] public static var FLOOR:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
 		
