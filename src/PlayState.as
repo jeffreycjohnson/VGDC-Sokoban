@@ -23,6 +23,7 @@ package
 		 * 2 = block
 		 * 4 = player
 		 * 5 = patrolbot
+		 * 6 = window
 		 */
 		
 		// holds what type of floor there is at each grid space.
@@ -365,33 +366,31 @@ package
 					
 					var lx:int = (int)((i - 1) / 2);
 					var ly:int = (int)((j - 1) / 2);
-					if (i == 0 || i == smallWidth - 1 || j == 0 || j == smallHeight - 1 ) corners[i][j] = true;
-					else corners[i][j] = (level[lx][ly] == 1);
+					if (i == 0 || i == smallWidth - 1 || j == 0 || j == smallHeight - 1 ) corners[i][j] = 1;
+					else corners[i][j] = (level[lx][ly]);
 				}
 			}
-			for (j = 0; j < smallHeight; j++) {
-				var s:String = "";
-				for (i = 0; i < smallWidth; i++) {
-					if (corners[i][j]) s += "1 ";
-					else s += "0 ";
-				}
-				//trace(s);
-			}
+			
 			for (i = 1; i < smallWidth-1; i++) {
 				for (j = 1; j < smallHeight - 1; j++) {
 					xAbs = (i - 1)  * TILESIZE / 2 + XOFFSET;
 					yAbs = (j - 1)  * TILESIZE / 2 + YOFFSET;
-					if (corners[i][j])
+					if (corners[i][j] == 1)
 					{
 						var guy:Wall = new Wall(xAbs, yAbs);
 						guy.updateSprite(corners, i, j);
 						add(guy);
 					}
+					else if (corners[i][j] == 6) {
+						var girl:Window = new Window(xAbs, yAbs);
+						girl.updateSprite(corners, i, j);
+						add(girl);					
+						
+						trace("glass");
+					}
 				}
 			}
-			
-			
-			
+						
 			// cycle through the entity data.
 			
 			for (i = 0; i < thisLevel.entitiesArray.length; i++)
@@ -573,7 +572,7 @@ package
 							if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0) break;
 							
 							var spared:Boolean = (gridX == sparedX1 && gridY == sparedY1) || (gridX == sparedX2 && gridY == sparedY2);
-							if ( !( level[gridX][gridY] == 0 || level[gridX][gridY] == 4 ) && !spared ) break;
+							if ( !( level[gridX][gridY] == 0 || level[gridX][gridY] == 4 || level[gridX][gridY] == 6 ) && !spared ) break;
 							
 							// if the point is significantly contained and isn't overlapping a patrolbot,
 							det = detected[gridX][gridY];

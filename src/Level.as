@@ -59,8 +59,7 @@ package
 				// by default, load the present value to level and 0 to floor.
 				levelArray[x][y] = id;
 				floorArray[x][y] = 0;
-				
-				
+								
 				// special cases:
 				
 				// block

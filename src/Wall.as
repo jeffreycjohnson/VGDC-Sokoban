@@ -26,15 +26,15 @@ package
 			
 			var ref:String;
 			
-			var top:Boolean = corners[xx][yy-1];
-			var bottom:Boolean = corners[xx][yy+1];
-			var left:Boolean = corners[xx-1][yy];
-			var right:Boolean = corners[xx+1][yy];
+			var top:Boolean = corners[xx][yy-1] == 1;
+			var bottom:Boolean = corners[xx][yy+1] == 1;
+			var left:Boolean = corners[xx-1][yy] == 1;
+			var right:Boolean = corners[xx+1][yy] == 1;
 			
-			var topleft:Boolean = corners[xx-1][yy-1];
-			var topright:Boolean = corners[xx+1][yy-1];
-			var bottomleft:Boolean = corners[xx-1][yy+1];
-			var bottomright:Boolean = corners[xx+1][yy+1];
+			var topleft:Boolean = corners[xx-1][yy-1] == 1;
+			var topright:Boolean = corners[xx+1][yy-1] == 1;
+			var bottomleft:Boolean = corners[xx-1][yy+1] == 1;
+			var bottomright:Boolean = corners[xx+1][yy+1] == 1;
 			
 			// outside corners
 			if (!top && !left) ref = "topleft";
@@ -82,7 +82,7 @@ package
 			play(ref);
 		}
 		
-		private function createAnimations():void
+		protected function createAnimations():void
 		{
 			addAnimation("topleft", [0]);
 			addAnimation("top1", [1]);
