@@ -492,8 +492,8 @@ package
 				for (y = 0; y < detected[0].length; y++)
 				{
 					// decrement all tiles so that they dont become visible after multiple passes
-					//previouslyDetected[x][y] --;
-					//if (previouslyDetected[x][y] < 0) previouslyDetected[x][y] = 0;
+					previouslyDetected[x][y] --;
+					if (previouslyDetected[x][y] < 0) previouslyDetected[x][y] = 0;
 					(Detected)(detected[x][y]).kill();
 				}
 			}
@@ -583,13 +583,11 @@ package
 							( /*spared || */(level[gridX][gridY] != 5 && level[gridX + guy.lastXo][gridY + guy.lastYo] != 5)) )
 							{
 								// consider reviving it: if it's ready, revive it, otherwise wait until it's past detectTime.
-								if (previouslyDetected[gridX][gridY] == detectTime) det.revive();
+								previouslyDetected[gridX][gridY] += 2;
+								if (previouslyDetected[gridX][gridY] >= detectTime) det.revive();
 								else {
-									previouslyDetected[gridX][gridY]++;								}
-							}
-							// at this point we've reached a square possible to be seen, but isn't seen currently, so we set it's count to 0.
-							else {
-								previouslyDetected[gridX][gridY] = 0;
+									break;
+								}
 							}
 							
 							// kill the player if he is detected

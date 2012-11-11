@@ -12,7 +12,7 @@ package
 		
 		public function Laser(x:int, y:int, type:String) 
 		{
-			super(x, y, 5, 0, 200, "cone");
+			super(x, y, 1, 0, 200, "cone");
 			
 			this.type = type;
 			if (type == "right")
