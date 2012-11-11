@@ -41,7 +41,7 @@ package
 		// holds the highlightable squares that appear when something is detected by a patroller.
 		private var detected:Array;
 		private var previouslyDetected:Array;
-		private const detectTime:int = 5;
+		private const detectTime:int = 3;
 		
 		// TODO: refactor the name "detected" to something more intuitive?
 		
@@ -459,10 +459,12 @@ package
 		private function loadGUI(thisLevel:Level):void
 		{
 			goalText = new FlxText(5, 5, 150, "");
+			//goalText.setFormat("PIXEL", 20, 0xffffffff, "left");
 			updateGoalText();
-			//add(goalText);
+			add(goalText);
 			
-			moveText = new FlxText(5, Main.HEIGHT-15, 100, "");
+			moveText = new FlxText(5, Main.HEIGHT - 20, 150, "");
+			moveText.setFormat("PIXEL", 20, 0xffffffff, "left");
 			updateMoveText();
 			add(moveText);
 			

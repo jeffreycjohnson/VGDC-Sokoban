@@ -20,6 +20,9 @@ package
 		
 		// technical
 		[Embed(source = "../assets/background.png")] public static var BG:Class;
+		
+		// fonts
+		[Embed(source="../assets/visitor.ttf", fontFamily="PIXEL", embedAsCFF="false")] public	static var FONT_VISITOR:String;
 	}
 
 }
