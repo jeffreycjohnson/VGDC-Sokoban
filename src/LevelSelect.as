@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.*;
+	import flash.net.SharedObject;
 	
 	/**
 	 * The class which contains the level select.
@@ -89,7 +90,7 @@ package
 			
 			add(new FlxText(140, 160, 200, "Chapter " + chapter.toString() + ": " + LevelStorage.chapterNames[chapter]));
 			
-			for (var j:int = 0; j < 10 && buttonArray[chapter * 10 + j] != null; j++)
+			for (var j:int = 0; j < 10 && buttonArray[chapter * 10 + j] != null && (chapter * 10 + j <= PlayState.maxLevel.data.value || Main.debug); j++)
 			{
 				add(buttonArray[chapter * 10 + j]);
 				x = j % 5 * 64 + 62;

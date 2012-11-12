@@ -144,7 +144,7 @@ package
 			{
 				switchLevel(chapterIndex, levelIndex);
 			}
-			else if (FlxG.keys.justPressed("PAGEUP"))
+			else if (FlxG.keys.justPressed("PAGEUP") && (Main.debug || chapterIndex * 10 + levelIndex > maxLevel.data.value))
 			{
 				// same chapter
 				if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
@@ -170,10 +170,6 @@ package
 			{
 				return;
 			}
-			
-			
-			
-			
 			
 			// calculate movement values
 			
@@ -298,9 +294,9 @@ package
 			chapterIndex = chapter;
 			levelIndex = level;
 			
-			if (maxLevel.data.value == null || levelIndex > maxLevel.data.value)
+			if (maxLevel.data.value == null || levelIndex + chapterIndex * 10 > maxLevel.data.value)
 			{
-				maxLevel.data.value = levelIndex;
+				maxLevel.data.value = levelIndex + chapterIndex * 10;
 				maxLevel.flush();
 			}
 		}

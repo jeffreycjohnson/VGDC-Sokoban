@@ -11,7 +11,8 @@ package
 	{
 		public static const PIXEL:int = 2;
 		public static const WIDTH:int = 800/PIXEL;
-		public static const HEIGHT:int = 600/PIXEL;
+		public static const HEIGHT:int = 600 / PIXEL;
+		public static const debug:Boolean = true;
 		
 		public function Main()
 		{
