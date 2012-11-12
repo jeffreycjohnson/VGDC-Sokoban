@@ -13,13 +13,18 @@ package
 		[Embed(source = "../levels/level_12.oel", mimeType = "application/octet-stream")] public static const level_02:Class;
 		[Embed(source = "../levels/level_13.oel", mimeType = "application/octet-stream")] public static const level_03:Class;
 		[Embed(source = "../levels/level_14.oel", mimeType = "application/octet-stream")] public static const level_04:Class;
-		//[Embed(source = "../levels/level_07.oel", mimeType = "application/octet-stream")] public static const level_04:Class;
-		//[Embed(source = "../levels/level_99.oel", mimeType = "application/octet-stream")] public static const level_05:Class;
-		//[Embed(source = "../levels/level_03.oel", mimeType = "application/octet-stream")] public static const level_06:Class;
-		//[Embed(source = "../levels/level_666.oel", mimeType = "application/octet-stream")] public static const level_07:Class;
+		
+		[Embed(source = "../levels/level_666.oel", mimeType = "application/octet-stream")] public static const level_10:Class;
+		[Embed(source = "../levels/level_99.oel", mimeType = "application/octet-stream")] public static const level_11:Class;
+		
+		public static var chapterLengths:Array = [5, 2]; // as of now, you have to change this manually, but it should be possible to have it dynamically calculated.
+		
+		public static var chapterNames:Array = ["Introduction", "Test Chapter2"]; // can use this in level select
 		
 		public static var levels:Array = [];
 		
+		
+		// TODO: Remove this function and all references to it. Instead, use the one below.
 		public static function getLevelString(index:int):String
 		{
 			var s:String = "level_";
@@ -27,6 +32,11 @@ package
 			s += index.toString();
 			return s;
 			
+		}
+		
+		public static function getLevelString2(x:int, y:int):String
+		{
+			return "level_" + x.toString() + y.toString();
 		}
 	}
 

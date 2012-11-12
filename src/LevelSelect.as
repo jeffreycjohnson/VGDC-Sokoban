@@ -1,7 +1,6 @@
 package  
 {
 	import org.flixel.*;
-	import flash.system.System;
 	
 	/**
 	 * The class which contains the level select.
@@ -24,6 +23,8 @@ package
 			var x:int;
 			var y:int;
 			buttonArray = [];
+			
+			
 			for (i = 0;  LevelStorage[LevelStorage.getLevelString(i * 10)] != null; i++ )
 			{
 				for (j = 0; j < 9 && LevelStorage[LevelStorage.getLevelString(i * 10 + j)] != null; j++)

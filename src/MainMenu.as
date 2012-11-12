@@ -57,12 +57,10 @@ package
 
 		private function controlsHelp():void
 		{
-			//remove all of the buttons
-			remove(startButton);
-			remove(controlsButton);
-			remove(levelsButton);
-			remove(creditsButton);
-			//kinda a kludge and probably inefficient, but just cover everything up with the background instead of deleting the old text since im lazy
+			//remove everything
+			clear();
+			
+			// add background and text objects
 			add(new FlxSprite(0, 0, Assets.BG));
 			
 			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Use the Arrow Keys to Move."));
@@ -80,12 +78,10 @@ package
 
 		private function credits():void
 		{
-			//remove all of the buttons
-			remove(startButton);
-			remove(controlsButton);
-			remove(levelsButton);
-			remove(creditsButton);
-			//kinda a kludge and probably inefficient, but just cover everything up with the background instead of deleting the old text since im lazy
+			//remove everything
+			clear();
+			
+			// add background and text objects
 			add(new FlxSprite(0, 0, Assets.BG));
 			
 			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Patrick Traynor"));

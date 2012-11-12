@@ -58,8 +58,12 @@ package
 		private var fadeRate:Number;
 		private var fadeOverlay:FlxSprite;
 		
+		public static var startChapter:int = 0;
 		public static var startLevel:int = 0;
-		private var levelIndex:int; // which level we're currently on
+		private var chapterIndex:int; // range 0-9
+		private var levelIndex:int; // range 0-9
+		
+		
 		private var moveCount:int; // how many moves the player has done
 		public static var maxLevel:SharedObject; // tracks th players progress
 		
@@ -84,12 +88,19 @@ package
 				
 		override public function create():void
 		{
+			
 			// push all things we "Embed"-ed in LevelStorage to an array levels[].
-			var i:int = 0;
-			while (LevelStorage[LevelStorage.getLevelString(i)] != null)
+			
+			var x:int; // chapter
+			var y:int; // level
+			for (x = 0; x < LevelStorage.chapterLengths.length; x++)
 			{
-				LevelStorage.levels[i] = new Level(LevelStorage[LevelStorage.getLevelString(i)]);
-				i++;
+				LevelStorage.levels[x] = [];
+				for (y = 0; y < LevelStorage.chapterLengths[x]; y++)
+				{
+					LevelStorage.levels[x][y] = new Level(LevelStorage[LevelStorage.getLevelString2(x,y)]);
+					trace("Adding Level: ",x, y);
+				}
 			}
 			
 			// create fade overlay object
@@ -98,21 +109,21 @@ package
 			fadeOverlay.alpha = 0;
 			add(fadeOverlay);
 			
-			// to start us off, let's load level 0.
+			// to start us off, let's load the start level.
 			fadeOverlay.alpha = 1;
-			switchLevel(startLevel);
+			switchLevel(startChapter, startLevel);
 		}
 		
 		override public function update():void
 		{
-			// if we're fading in or out between levels
+			// Fading between levels
 			if (fading)
 			{
 				fadeOverlay.alpha += fadeRate;
 				if (fadeOverlay.alpha == 1)
 				{
 					fadeRate *= -1;
-					loadLevel(levelIndex);
+					loadLevel(chapterIndex, levelIndex);
 					add(fadeOverlay);
 				}
 				else if (fadeOverlay.alpha == 0)
@@ -121,14 +132,41 @@ package
 					fadeRate = 0;
 				}
 				return;
-				trace("fading");
 			}
+			
+			// Switching Levels
+			if (FlxG.keys.justPressed("R"))
+			{
+				switchLevel(chapterIndex, levelIndex);
+			}
+			else if (FlxG.keys.justPressed("PAGEUP"))
+			{
+				// same chapter
+				if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
+					switchLevel(chapterIndex, levelIndex + 1);
+				// swtiching chapters
+				else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
+					switchLevel(chapterIndex + 1, 0);
+				
+			}
+			else if (FlxG.keys.justPressed("PAGEDOWN"))
+			{
+				// same chapter
+				if (levelIndex > 0)
+					switchLevel(chapterIndex, levelIndex - 1);
+				// switching chapters
+				else if (levelIndex == 0 && chapterIndex > 0)
+					switchLevel(chapterIndex - 1, LevelStorage.chapterLengths[chapterIndex - 1] - 1);
+			}
+			else if (FlxG.keys.justPressed("ESCAPE")) FlxG.switchState(new MainMenu);
+			
+			// Locked state (don't do any game logic at all)
 			if (locked)
 			{
-				trace("locked");
-				if (FlxG.keys.justPressed("R")) switchLevel(levelIndex);
 				return;
 			}
+			
+			
 			
 			
 			
@@ -157,8 +195,8 @@ package
 			var x_next2:int = px + 2 * xo;
 			var y_next2:int = py + 2 * yo;			
 			
-			// consider moving the player if either xo or yo is nonzero, and the player isn't already moving.
-			if (xo != yo && !player.isMoving())
+			// consider moving the player if either xo or yo is nonzero, and the player isn't already moving, AND he's not in a detected square, just to be sure.
+			if (xo != yo && !player.isMoving() && !(Detected(detected[px][py]).alive))
 			{
 				// always turn, even if can't walk! it looks better, think any top-down rpg
 				player.turn(xo, yo);					
@@ -212,23 +250,6 @@ package
 				// TODO: other cases (?)
 			}
 			
-			// if R key is pressed, reset
-			if (FlxG.keys.justPressed("R"))
-			{
-				switchLevel(levelIndex);
-			}
-			
-			// if PgDown or PgUp is pressed, switch levels
-			if (FlxG.keys.justPressed("PAGEUP"))
-			{
-				if (levelIndex < LevelStorage.levels.length - 1) switchLevel(levelIndex + 1);
-			}
-			else if (FlxG.keys.justPressed("PAGEDOWN"))
-			{
-				if (levelIndex > 0) switchLevel(levelIndex - 1);
-			}
-			
-			// pause when the player loses
 
 			// finally, update all objects we have added to our FlxState.
 			super.update();
@@ -264,11 +285,14 @@ package
 			
 		}
 		
-		private function switchLevel(index:int):void
+		private function switchLevel(chapter:int, level:int):void
 		{
 			fading = true;
 			fadeRate = fadeRateConst;
-			levelIndex = index;
+			
+			chapterIndex = chapter;
+			levelIndex = level;
+			
 			if (maxLevel.data.value == null || levelIndex > maxLevel.data.value)
 			{
 				maxLevel.data.value = levelIndex;
@@ -276,7 +300,7 @@ package
 			}
 		}
 		
-		private function loadLevel(index:int):void
+		private function loadLevel(chapter:int, index:int):void
 		{
 			// standard stuff.
 			levelIndex = index;
@@ -293,7 +317,9 @@ package
 			var i:int = 0;
 			var j:int = 0;
 			
-			var thisLevel:Level = LevelStorage.levels[levelIndex];
+			//var thisLevel:Level = LevelStorage.levels[levelIndex];
+			//var thisLevel:Level = LevelStorage.levels[index + chapter * 10];
+			var thisLevel:Level = LevelStorage.levels[chapter][index];
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
 			
@@ -379,8 +405,6 @@ package
 						var girl:Window = new Window(xAbs, yAbs);
 						girl.updateSprite(corners, i, j);
 						add(girl);					
-						
-						trace("glass");
 					}
 				}
 			}
@@ -452,8 +476,12 @@ package
 		
 		private function loadGUI(thisLevel:Level):void
 		{
-			goalText = new FlxText(5, 5, 150, "");
-			//goalText.setFormat("PIXEL", 20, 0xffffffff, "left");
+			godModeText = new FlxText(5, 50, 100, "");
+			updateGodModeText();
+			add(godModeText);
+			
+			goalText = new FlxText(5, Main.HEIGHT - 35, 400, "");
+			goalText.setFormat("PIXEL", 20, 0xffffffff, "left");
 			updateGoalText();
 			add(goalText);
 			
@@ -462,15 +490,10 @@ package
 			updateMoveText();
 			add(moveText);
 			
-			godModeText = new FlxText(5, 115, 100, "");
-			updateGodModeText();
-			add(godModeText);
-			
-			
-			add(new FlxText(5, 25, 150, "Level " + levelIndex));
-			add(new FlxText(5, 45, 150, "Name: " + thisLevel.name));
-			add(new FlxText(5, 65, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
-			add(new FlxText(5, Main.HEIGHT-30, 250, thisLevel.levelInfo));
+			add(new FlxText(5, 5, 150, "Level " + +chapterIndex + " - " + levelIndex));
+			add(new FlxText(5, 20, 150, "Name: " + thisLevel.name));
+			add(new FlxText(130, 5, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
+			add(new FlxText(5, 35, 250, thisLevel.levelInfo));
 		}
 		
 		private function updateDetected():void
@@ -646,14 +669,14 @@ package
 		private function defeat():void
 		{
 			locked = true;
-			add(new FlxText(150, 30, 150, "You Lose!"));
-			add(new FlxText(150, 50, 150, "Press R to Try Again."));
+			add(new FlxText(10, 100, 150, "You Lose!"));
+			add(new FlxText(10, 120, 150, "Press R to Try Again."));
 		}
 		
 		private function updateGoalText():void
 		{
 			goalText.text = "Blocks: " + goalCount + " / " + goalNumber;
-			if (goalCount == goalNumber) goalText.text = goalText.text + "\nCongrats!";
+			if (goalCount == goalNumber) goalText.text = goalText.text + "   Congrats!";
 		}
 		
 		private function updateMoveText():void
