@@ -23,18 +23,7 @@ package
 		
 		public static var levels:Array = [];
 		
-		
-		// TODO: Remove this function and all references to it. Instead, use the one below.
-		public static function getLevelString(index:int):String
-		{
-			var s:String = "level_";
-			if (index < 10) s += "0";
-			s += index.toString();
-			return s;
-			
-		}
-		
-		public static function getLevelString2(x:int, y:int):String
+		public static function getLevelString(x:int, y:int):String
 		{
 			return "level_" + x.toString() + y.toString();
 		}

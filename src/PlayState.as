@@ -43,8 +43,6 @@ package
 		private var previouslyDetected:Array;
 		private const detectTime:int = 3;
 		
-		// TODO: refactor the name "detected" to something more intuitive?
-		
 		
 		
 		/* Single values */
@@ -85,7 +83,13 @@ package
 		// whether or not we should update detected at the end of the tick
 		private var _updateDetectedNext:Boolean;
 		public function set updateDetectedNext(b:Boolean):void { _updateDetectedNext = b; };
-				
+		
+		
+		// TODO: possibly add in parameters for which level to start on?
+		public function PlayState()
+		{
+		}
+		
 		override public function create():void
 		{
 			
@@ -93,12 +97,13 @@ package
 			
 			var x:int; // chapter
 			var y:int; // level
+			if (LevelStorage.levels.length == 0)
 			for (x = 0; x < LevelStorage.chapterLengths.length; x++)
 			{
 				LevelStorage.levels[x] = [];
 				for (y = 0; y < LevelStorage.chapterLengths[x]; y++)
 				{
-					LevelStorage.levels[x][y] = new Level(LevelStorage[LevelStorage.getLevelString2(x,y)]);
+					LevelStorage.levels[x][y] = new Level(LevelStorage[LevelStorage.getLevelString(x,y)]);
 					trace("Adding Level: ",x, y);
 				}
 			}

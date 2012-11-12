@@ -43,11 +43,12 @@ package
 		// Just recreate the main menu if they press escape
 		override public function update():void
 		{
+			super.update();
 			if (FlxG.keys.justPressed("ESCAPE"))
 			{
+				recycle();
 				create();
 			}
-			super.update();
 		}
 
 		private function play():void
@@ -58,7 +59,7 @@ package
 		private function controlsHelp():void
 		{
 			//remove everything
-			clear();
+			recycle();
 			
 			// add background and text objects
 			add(new FlxSprite(0, 0, Assets.BG));
@@ -70,7 +71,6 @@ package
 			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
 		}
 		
-		// TODO: switch to the levelsDisplay FlzState
 		private function levelsDisplay():void
 		{
 			FlxG.switchState(new LevelSelect);
@@ -79,7 +79,7 @@ package
 		private function credits():void
 		{
 			//remove everything
-			clear();
+			recycle();
 			
 			// add background and text objects
 			add(new FlxSprite(0, 0, Assets.BG));
