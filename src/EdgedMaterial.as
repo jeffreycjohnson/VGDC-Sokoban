@@ -1,40 +1,39 @@
 package  
 {
-	/**
-	 * Window sprite (that doesn't move).
-	 */
 	import org.flixel.*;
 	
-	public class Window extends FlxSprite
+	/**
+	 * Superclass for Wall and Window, which have edge / corner graphics.
+	 */
+	public class EdgedMaterial extends FlxSprite
 	{
-		private var xx:int;
-		private var yy:int;
+		private var id:int;
+		public static const WALL:int = 1;
+		public static const WINDOW:int = 6;
 		
-		public function Window(x:int, y:int) 
+		public function EdgedMaterial(x:int, y:int, id:int) 
 		{
 			super(x, y);
-			loadGraphic(Assets.WINDOW, false, false, 8, 8);
+			this.id = id;
+			if (id == 1) loadGraphic(Assets.WALL, false, false, 8, 8);
+			else if (id == 6) loadGraphic(Assets.WINDOW, false, false, 8, 8);
 			createAnimations();
-			
 			play("center1");
 		}
 		
-		public function updateSprite(corners:Array, x:int, y:int):void
+		public function updateSprite(corners:Array, xx:int, yy:int):void
 		{
-			var xx:int = x;
-			var yy:int = y;
-			
 			var ref:String;
 			
-			var top:Boolean = corners[xx][yy-1] == 6;
-			var bottom:Boolean = corners[xx][yy+1] == 6;
-			var left:Boolean = corners[xx-1][yy] == 6;
-			var right:Boolean = corners[xx+1][yy] == 6;
+			var top:Boolean = corners[xx][yy-1] == id;
+			var bottom:Boolean = corners[xx][yy+1] == id;
+			var left:Boolean = corners[xx-1][yy] == id;
+			var right:Boolean = corners[xx+1][yy] == id;
 			
-			var topleft:Boolean = corners[xx-1][yy-1] == 6;
-			var topright:Boolean = corners[xx+1][yy-1] == 6;
-			var bottomleft:Boolean = corners[xx-1][yy+1] == 6;
-			var bottomright:Boolean = corners[xx+1][yy+1] == 6;
+			var topleft:Boolean = corners[xx-1][yy-1] == id;
+			var topright:Boolean = corners[xx+1][yy-1] == id;
+			var bottomleft:Boolean = corners[xx-1][yy+1] == id;
+			var bottomright:Boolean = corners[xx+1][yy+1] == id;
 			
 			// outside corners
 			if (!top && !left) ref = "topleft";
@@ -78,7 +77,6 @@ package
 				}
 			}
 			
-			//trace(xx, yy, ref);
 			play(ref);
 		}
 		

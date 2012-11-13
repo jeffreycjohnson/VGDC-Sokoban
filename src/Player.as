@@ -47,19 +47,14 @@ package
 			// e.g. picking up keys
 		}
 		
-		override public function move(xo:int, yo:int):void
+		public function updateDirection(xo:int, yo:int):void 
 		{
-			super.move(xo, yo);
-		}
-		
-		public function turn(xo:int, yo:int):void 
-		{			
+			super.move(0, 0);
+			
 			if (xo == 1) direction = Dir.EAST;
 			else if (xo == -1) direction = Dir.WEST;
 			else if (yo == 1) direction = Dir.SOUTH;
 			else if (yo == -1) direction = Dir.NORTH;
-			
-			super.move(0, 0);
 		}
 		
 		private function createAnimations():void

@@ -200,7 +200,7 @@ package
 			if (xo != yo && !player.isMoving() && !(Detected(detected[px][py]).alive))
 			{
 				// always turn, even if can't walk! it looks better, think any top-down rpg
-				player.turn(xo, yo);					
+				player.updateDirection(xo, yo);					
 				
 				// case 1 - moving forward into empty space
 				if (next == 0)
@@ -398,12 +398,12 @@ package
 					yAbs = (j - 1)  * TILESIZE / 2 + YOFFSET;
 					if (corners[i][j] == 1)
 					{
-						var guy:Wall = new Wall(xAbs, yAbs);
+						var guy:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WALL);
 						guy.updateSprite(corners, i, j);
 						add(guy);
 					}
 					else if (corners[i][j] == 6) {
-						var girl:Window = new Window(xAbs, yAbs);
+						var girl:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
 						girl.updateSprite(corners, i, j);
 						add(girl);					
 					}

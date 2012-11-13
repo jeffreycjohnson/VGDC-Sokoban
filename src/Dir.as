@@ -11,14 +11,6 @@ package
 		public static const SOUTH:String = "south";
 		public static const WEST:String = "west";
 		
-		
-		/*
-		public static const NORTH:Dir;
-		public static const EAST:Dir;
-		public static const SOUTH:Dir;
-		public static const WEST:Dir;
-		*/
-		
 	}
 
 }

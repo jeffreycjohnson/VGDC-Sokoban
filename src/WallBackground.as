@@ -4,7 +4,7 @@ package
 	
 	/**
 	 * large FlxSprite consisting of a repeating background. It fills up the screen-space outside of the level itself.
-	 * I did it this way because adding a shitton of FlxSprites to the state makes it lag a lot.
+	 * I did it this way because adding a ton of FlxSprites to the state makes it lag a lot.
 	 */
 	public class WallBackground extends FlxSprite
 	{
