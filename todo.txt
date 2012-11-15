@@ -15,15 +15,12 @@ Keys and locks, or groups of goal spaces that activate a certain goal
 "Concerning Hobbits" = credits song
 
 
-
 Game Engine Features
 ----------------------
 
 Door that opens when goals are filled
 
 Pushable block that doesn't work on goal spaces
-
-
 
 
 Art
@@ -48,9 +45,6 @@ Floor graphics
 	16x16 door tile
 
 
-
-
-
 Audio
 --------
 
@@ -62,9 +56,6 @@ Sound effects:
 	player pushing block onto button (goal)
 	door opening
 	player caught
-
-
-
 
 
 Levels

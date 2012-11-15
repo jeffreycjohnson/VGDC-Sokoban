@@ -197,7 +197,7 @@ package
 			var y_next2:int = py + 2 * yo;			
 			
 			// consider moving the player if either xo or yo is nonzero, and the player isn't already moving, AND he's not in a detected square, just to be sure.
-			if (xo != yo && !player.isMoving() && !(Detected(detected[px][py]).alive))
+			if (xo != yo && !player.isMoving() && (!(Detected(detected[px][py]).alive) || godMode))
 			{
 				// always turn, even if can't walk! it looks better, think any top-down rpg
 				player.updateDirection(xo, yo);					

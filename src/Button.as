@@ -12,6 +12,7 @@ package
 		private var level:int;
 		private var onUp:Function;
 		private var toggleable:Boolean;
+		private var state:String;
 		
 		public function Button(x:int, y:int, _chapter:int=0, _level:int=0, OnClick:Function=null, toggle:Boolean = false) 
 		{
@@ -22,6 +23,7 @@ package
 			level = _level;
 			onUp = OnClick;
 			toggleable = toggle;
+			state = "off";
 		}
 		
 		private function createAnimations():void
@@ -53,28 +55,31 @@ package
 						{
 							PlayState.startLevel = level;
 							PlayState.startChapter = chapter;
+							state = "up";
 							onUp();
 						}
 						else if (FlxG.mouse.justPressed())
 						{
-							play("down");
+							state = "down";
 						}
 						else if (!FlxG.mouse.pressed())
 						{
-							play("over");
+							state = "over";
 						}
 					}
 					else {
-						if (!toggleable) play("off");
+						if (!toggleable || state == "over") state = "off";
 					}
+					play(state);
 				}
 			}
 		}
 		
-		public function toggle(state:Boolean = true):void
+		public function toggle(value:Boolean = true):void
 		{
-			if (state) play("off");
-			else play("on");
+			if (value) state = "off";
+			else state = "on";
+			play(state);
 		}
 	}
 }
