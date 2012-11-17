@@ -460,7 +460,7 @@ package
 			
 			// cycle through detected here to add them on top of everything
 			for (i = 0; i < level.length; i++) {
-				for (j = 0; j < level.length; j++) {
+				for (j = 0; j < level[i].length; j++) {
 					previouslyDetected[i][j] = 0;
 					detected[i][j] = new Detected(i * TILESIZE + XOFFSET, j * TILESIZE + YOFFSET);
 					add(detected[i][j]);
