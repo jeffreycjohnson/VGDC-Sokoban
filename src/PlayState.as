@@ -48,6 +48,8 @@ package
 		/* Single values */
 		
 		public static const TILESIZE:int = 16; // width of a tile in pixels
+		public static const TOOLBAR_HEIGHT:int = 48;
+		
 		public static var XOFFSET:int;
 		public static var YOFFSET:int;
 		
@@ -76,8 +78,8 @@ package
 		private var px:int; // player x
 		private var py:int; // player y
 		
-		private var goalText:FlxText;
 		private var moveText:FlxText;
+		private var timeText:FlxText;
 		private var godModeText:FlxText;
 		
 		// whether or not we should update detected at the end of the tick
@@ -304,14 +306,12 @@ package
 			var i:int = 0;
 			var j:int = 0;
 			
-			//var thisLevel:Level = LevelStorage.levels[levelIndex];
-			//var thisLevel:Level = LevelStorage.levels[index + chapter * 10];
 			var thisLevel:Level = LevelStorage.levels[chapter][index];
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
 			
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
-			YOFFSET = (Main.HEIGHT - TILESIZE * thisLevel.height) / 2;
+			YOFFSET = ((Main.HEIGHT - TOOLBAR_HEIGHT) - TILESIZE * thisLevel.height) / 2;
 			
 			
 			
@@ -323,7 +323,7 @@ package
 			if (YOFFSET % TILESIZE != 0 ) numTilesY++;
 			var startX:int = XOFFSET - numTilesX * TILESIZE;
 			var startY:int = YOFFSET - numTilesY * TILESIZE;
-			add(new WallBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height));
+			add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.LEVEL_1));
 								
 			// cycle through the level data.
 			
@@ -461,26 +461,45 @@ package
 			loadGUI(thisLevel);
 		}
 		
+		// called at the end of loadLevel
 		private function loadGUI(thisLevel:Level):void
 		{
+			const SECTION1_WIDTH:int = 200;
+			const HEIGHT1:int = Main.HEIGHT - 46;
+			const HEIGHT2:int = Main.HEIGHT - 26;
+			const color:uint = 0xffffffff;
+			
+			add(new TiledBackground(0, Main.HEIGHT - TOOLBAR_HEIGHT, Main.WIDTH / TILESIZE, TOOLBAR_HEIGHT / TILESIZE, TiledBackground.MENU_1));
+			
+			moveText = new FlxText(Main.WIDTH - 135, HEIGHT1, 135, "");
+			updateMoveText();
+			moveText.setFormat("PIXEL", 20, color, "left");
+			add(moveText);
+			
+			timeText = new FlxText(Main.WIDTH - 135, HEIGHT2, 135, "");
+			timeText.setFormat("PIXEL", 20, color, "left");
+			updateTimeText();
+			add(timeText);
+			
+			var levelNumberText:FlxText = new FlxText(50, HEIGHT1, 600, (chapterIndex + 1) + "-" + (levelIndex + 1));
+			levelNumberText.setFormat("PIXEL", 20, color, "left");
+			add(levelNumberText);
+			
+			var levelNameText:FlxText = new FlxText(5, HEIGHT2, 300, thisLevel.name);
+			levelNameText.setFormat("PIXEL", 20, color, "left");
+			add(levelNameText);
+			
+			/*
 			godModeText = new FlxText(5, 50, 100, "");
 			updateGodModeText();
 			add(godModeText);
 			
-			goalText = new FlxText(5, Main.HEIGHT - 35, 400, "");
-			goalText.setFormat("PIXEL", 20, 0xffffffff, "left");
-			updateGoalText();
-			add(goalText);
 			
-			moveText = new FlxText(5, Main.HEIGHT - 20, 150, "");
-			moveText.setFormat("PIXEL", 20, 0xffffffff, "left");
-			updateMoveText();
-			add(moveText);
 			
-			add(new FlxText(5, 5, 150, "Level " + +chapterIndex + " - " + levelIndex));
 			add(new FlxText(5, 20, 150, "Name: " + thisLevel.name));
 			add(new FlxText(130, 5, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
 			add(new FlxText(5, 35, 250, thisLevel.levelInfo));
+			*/
 		}
 		
 		private function updateDetected():void
@@ -662,13 +681,28 @@ package
 		
 		private function updateGoalText():void
 		{
-			goalText.text = "Blocks: " + goalCount + " / " + goalNumber;
-			if (goalCount == goalNumber) goalText.text = goalText.text + "   Congrats!";
+			//goalText.text = "Blocks: " + goalCount + " / " + goalNumber;
+			//if (goalCount == goalNumber) goalText.text = goalText.text + "   Congrats!";
 		}
 		
 		private function updateMoveText():void
 		{
-			moveText.text = "Moves: " + moveCount;
+			const pad:int = 4;
+			moveText.text = "Moves: ";
+			
+			var x:int = 1;
+			for (var i:int = 0; i < pad - 1; i++)
+			{
+				x *= 10;
+				if (moveCount < x) moveText.text += "0";
+			}
+			moveText.text += moveCount;
+		}
+		
+		private function updateTimeText():void
+		{
+			// TODO: this.
+			timeText.text = "asdf";
 		}
 		
 		private function updateGodModeText():void
