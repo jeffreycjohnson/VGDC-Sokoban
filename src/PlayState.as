@@ -40,12 +40,9 @@ package
 		
 		// holds the highlightable squares that appear when something is detected by a patroller.
 		private var detected:Array;
-		private var previouslyDetected:Array;
-		private const detectTime:int = 3;
 		
 		// holds block symbols at bottom of toolbar
 		private var blockCounters:Array;
-		
 		
 		
 		/* Single values */
@@ -301,7 +298,6 @@ package
 			floor = [];
 			entities = [];
 			detected = [];
-			previouslyDetected = [];
 			patrollers = new Vector.<PatrolBot>;
 			goalNumber = goalCount = 0;
 			moveCount = 0;
@@ -338,7 +334,6 @@ package
 				floor[i] = [];
 				entities[i] = [];
 				detected[i] = [];
-				previouslyDetected[i] = [];
 				
 				for (j = 0; j < thisLevel.height; j++)
 				{
@@ -450,7 +445,6 @@ package
 			// cycle through detected here to add them on top of everything
 			for (i = 0; i < level.length; i++) {
 				for (j = 0; j < level[i].length; j++) {
-					previouslyDetected[i][j] = 0;
 					detected[i][j] = new Detected(i * TILESIZE + XOFFSET, j * TILESIZE + YOFFSET);
 					add(detected[i][j]);
 				}
@@ -531,8 +525,6 @@ package
 				for (y = 0; y < detected[0].length; y++)
 				{
 					// decrement all tiles so that they dont become visible after multiple passes
-					previouslyDetected[x][y] --;
-					if (previouslyDetected[x][y] < 0) previouslyDetected[x][y] = 0;
 					(Detected)(detected[x][y]).kill();
 				}
 			}
@@ -566,6 +558,8 @@ package
 				
 				var gridX:int;
 				var gridY:int;
+				var oldGridX:int;
+				var oldGridY:int;
 				
 				var pc:int;
 				
@@ -603,6 +597,8 @@ package
 						// cycle through all points
 						for (pc = 0; pc < pointNum; pc++)
 						{
+							oldGridX = (int)((absX - XOFFSET) / TILESIZE);
+							oldGridY = (int)((absY - YOFFSET) / TILESIZE);
 							absX += rise;
 							absY += run;
 							gridX = (int)((absX - XOFFSET) / TILESIZE);
@@ -614,6 +610,10 @@ package
 							var spared:Boolean = (gridX == sparedX1 && gridY == sparedY1) || (gridX == sparedX2 && gridY == sparedY2);
 							if ( !( level[gridX][gridY] == 0 || level[gridX][gridY] == 4 || level[gridX][gridY] == 6 ) && !spared ) break;
 							
+							// break if it tries to go between 2 diagonally placed blocks
+							if ((level[oldGridX][gridY] != 0 && level[oldGridX][gridY] != 4 && level[oldGridX][gridY] != 6) && 
+								(level[gridX][oldGridY] != 0 && level[gridX][oldGridY] != 4 && level[gridX][oldGridY] != 6) && !spared) break;
+							
 							// if the point is significantly contained and isn't overlapping a patrolbot,
 							det = detected[gridX][gridY];
 							
@@ -621,12 +621,7 @@ package
 							if (det.significantlyContains(absX, absY) &&
 							( /*spared || */(level[gridX][gridY] != 5 && level[gridX + guy.lastXo][gridY + guy.lastYo] != 5)) )
 							{
-								// consider reviving it: if it's ready, revive it, otherwise wait until it's past detectTime.
-								previouslyDetected[gridX][gridY] += 2;
-								if (previouslyDetected[gridX][gridY] >= detectTime) det.revive();
-								else {
-									break;
-								}
+								det.revive();
 							}
 							
 							// kill the player if he is detected
@@ -634,56 +629,6 @@ package
 						}
 					}
 				}
-				/*
-				else if (guy.visionType == "straight")
-				{
-					run = radius * Math.cos(guy.theta);
-					rise = radius * Math.sin(guy.theta);
-					
-					absX = sourceX;
-					absY = sourceY;
-					
-					// cycle through all points
-					for (pc = 0; pc < radius; pc++)
-					{
-						// without the / 2 the points are too spread out for large radius
-						absX += rise / 2;
-						absY += run / 2;
-						gridX = (int)((absX - XOFFSET) / TILESIZE);
-						gridY = (int)((absY - YOFFSET) / TILESIZE);
-						
-						// since all tiles are decrements, increments ones in the path twice
-						previouslyDetected[gridX][gridY] += 2;
-						
-						// break if out of bounds
-						if (gridX >= level.length || gridY >= level[0].length || gridX < 0 || gridY < 0)
-						{
-							break;					
-						}				
-						
-						// break if tile is solid
-						// Patrol bots are solid, man!
-						//if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 5 && level[gridX][gridY] != 6)
-						if (level[gridX][gridY] != 0 && level[gridX][gridY] != 4 && level[gridX][gridY] != 6)
-						{
-							break;					
-						}
-						
-						// only count tiles that are detected 3 times in a row as detected to prevent seeing though corners
-						if (previouslyDetected[gridX][gridY] < 3)
-						{
-							break;
-						}
-						
-						// else, revive the tile.
-						det = detected[gridX][gridY];
-						if (det.significantlyContains(absX, absY) && !(level[gridX][gridY] == 5 && !guy.isMoving())) det.revive();
-						
-						// kill the player if he is detected
-						if (gridX == px && gridY == py && !godMode) defeat();
-					}
-				}
-				*/
 			}
 		}
 		
