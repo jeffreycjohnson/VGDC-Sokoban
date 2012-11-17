@@ -22,6 +22,8 @@ package
 		[Embed(source = "../assets/button.png")] public static var BUTTON:Class;
 		[Embed(source = "../assets/background.png")] public static var BG:Class;
 		[Embed(source = "../assets/gratebg.png")] public static var GRATE_BG:Class;
+		[Embed(source = "../assets/blockcounter.png")] public static var BLOCK_COUNTER:Class;
+
 		
 		// fonts
 		[Embed(source="../assets/visitor.ttf", fontFamily="PIXEL", embedAsCFF="false")] public	static var FONT_VISITOR:String;
