@@ -21,6 +21,7 @@ package
 		// technical
 		[Embed(source = "../assets/button.png")] public static var BUTTON:Class;
 		[Embed(source = "../assets/background.png")] public static var BG:Class;
+		[Embed(source = "../assets/background2.png")] public static var BG2:Class;
 		
 		// fonts
 		[Embed(source="../assets/visitor.ttf", fontFamily="PIXEL", embedAsCFF="false")] public	static var FONT_VISITOR:String;

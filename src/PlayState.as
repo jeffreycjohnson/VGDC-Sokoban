@@ -93,21 +93,6 @@ package
 		override public function create():void
 		{
 			
-			// push all things we "Embed"-ed in LevelStorage to an array levels[].
-			
-			var x:int; // chapter
-			var y:int; // level
-			if (LevelStorage.levels.length == 0)
-			for (x = 0; x < LevelStorage.chapterLengths.length; x++)
-			{
-				LevelStorage.levels[x] = [];
-				for (y = 0; y < LevelStorage.chapterLengths[x]; y++)
-				{
-					LevelStorage.levels[x][y] = new Level(LevelStorage[LevelStorage.getLevelString(x,y)]);
-					trace("Adding Level: ",x, y);
-				}
-			}
-			
 			// create fade overlay object
 			fadeOverlay = new FlxSprite(0, 0);
 			fadeOverlay.makeGraphic(Main.WIDTH, Main.HEIGHT, 0xff000000);
@@ -117,6 +102,7 @@ package
 			// to start us off, let's load the start level.
 			fadeOverlay.alpha = 1;
 			switchLevel(startChapter, startLevel);
+			(FlxG.state as PlayState).updateDetectedNext = true;
 		}
 		
 		override public function update():void

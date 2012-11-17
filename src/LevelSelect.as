@@ -9,8 +9,10 @@ package
 	public class LevelSelect extends FlxState
 	{
 		private var buttonArray:Array;
-		private var chapterArray:Array;
 		private var chapter:int = 0;
+		private var chapterText:FlxText;
+		private var buttonNext:Button;
+		private var buttonPrev:Button;
 		
 		public function LevelSelect()
 		{
@@ -23,9 +25,10 @@ package
 		
 		private function switchChapter():void
 		{
-			buttonArray[chapter].toggle();
+			clear();
 			chapter = PlayState.startChapter;
-			showButtons(chapter);
+			trace(chapter);
+			showButtons();
 		}
 		
 		// Load the background and all the buttons
@@ -36,24 +39,19 @@ package
 			var x:int;
 			var y:int;
 			buttonArray = [];
-			chapterArray = [];
 			
 			
 			for (i = 0;  i < LevelStorage.chapterLengths.length; i++)
-			{
-				x = i * 64 + 120;
-				y = 110;
-				chapterArray[i] = new Button(x, y, i, 0, switchChapter, true);
-				
+			{				
 				for (j = 0; j < 10 && j < LevelStorage.chapterLengths[i]; j++)
 				{
-					x = j % 5 * 64 + 50;
-					y = (j - j % 5) / 5 * 48 + 180;
+					x = (int)(j / 5) * 175 + 50;
+					y = (j % 5) * 38 + 90;
 					buttonArray[i * 10 + j] = new Button(x, y, i, j, switchState);
 				}
 			}
 			
-			showButtons(0);
+			showButtons();
 		}
 		
 		// Just recreate the main menu if they press escape
@@ -72,30 +70,31 @@ package
 			FlxG.switchState(new PlayState);
 		}
 		
-		private function showButtons(chapter:int):void
+		private function showButtons():void
 		{
-			clear();
-			add(new FlxSprite(0, 0, Assets.BG));
-			add(new FlxText(160, 80, 100, "Chapter Select"));
+			add(new FlxSprite(0, 0, Assets.BG2));
 			
 			var x:int;
 			var y:int;
-			for (var i:int = 0;  i < LevelStorage.chapterLengths.length; i++)
-			{
-				add(chapterArray[i]);
-				x = i * 64 + 132;
-				y = 120;
-				add(new FlxText(x, y, 10, i.toString()));
+			if (chapter > 0) {
+				buttonPrev = new Button(5, 50, chapter - 1, 0, switchChapter);
+				add(buttonPrev);
+				add(new FlxText(47, 56, 100, "Previous"));
+			}
+			if (chapter < LevelStorage.chapterLengths.length - 1) {
+				buttonNext = new Button(267, 50, chapter + 1, 0, switchChapter);
+				add(buttonNext);
+				add(new FlxText(318, 56, 100, "Next"));
 			}
 			
-			add(new FlxText(140, 160, 200, "Chapter " + chapter.toString() + ": " + LevelStorage.chapterNames[chapter]));
+			add(new FlxText(140, 50, 200, "Chapter " + (chapter + 1).toString() + ": " + LevelStorage.chapterNames[chapter]));
 			
 			for (var j:int = 0; j < 10 && buttonArray[chapter * 10 + j] != null && (chapter * 10 + j <= PlayState.maxLevel.data.value || Main.debug); j++)
 			{
 				add(buttonArray[chapter * 10 + j]);
-				x = j % 5 * 64 + 62;
-				y = (j - j % 5) / 5 * 48 + 190;
-				add(new FlxText(x, y, 10, j.toString()));
+				x = (int)(j / 5) * 175 + 65;
+				y = (j % 5) * 38 + 95;
+				add(new FlxText(x, y, 100, (j + 1).toString() + ": " + LevelStorage.levels[chapter][j].name));
 			}
 		}
 	}

@@ -48,7 +48,6 @@ package
 			loadGraphic(Assets.PATROLBOT1, true, false, 16, 16);
 			createAnimations();
 			
-			(FlxG.state as PlayState).updateDetectedNext = true;
 		}
 		
 		public function clonePatrolBot():PatrolBot

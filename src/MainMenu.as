@@ -21,6 +21,22 @@ package
 		// Load the background and all the buttons
 		override public function create():void
 		{
+			
+			// push all things we "Embed"-ed in LevelStorage to an array levels[].
+			
+			var x:int; // chapter
+			var y:int; // level
+			if (LevelStorage.levels.length == 0)
+			for (x = 0; x < LevelStorage.chapterLengths.length; x++)
+			{
+				LevelStorage.levels[x] = [];
+				for (y = 0; y < LevelStorage.chapterLengths[x]; y++)
+				{
+					LevelStorage.levels[x][y] = new Level(LevelStorage[LevelStorage.getLevelString(x,y)]);
+					trace("Adding Level: ",x, y);
+				}
+			}
+			
 			PlayState.maxLevel = SharedObject.getLocal("Level");
 			if (PlayState.maxLevel.data.value == null)
 			{
