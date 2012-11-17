@@ -43,6 +43,9 @@ package
 		private var previouslyDetected:Array;
 		private const detectTime:int = 3;
 		
+		// holds block symbols at bottom of toolbar
+		private var blockCounters:Array;
+		
 		
 		
 		/* Single values */
@@ -226,20 +229,20 @@ package
 					if (floor[x_next][y_next] == 0 && floor[x_next2][y_next2] == 1)
 					{
 						goalCount++;
-						updateGoalText();
+						updateBlockCounters();
 						b.power(true);
 					}
 					else if (floor[x_next][y_next] == 1 && floor[x_next2][y_next2] == 0)
 					{
 						goalCount--;
-						updateGoalText();
+						updateBlockCounters();
 						b.power(false);
 					}
 				}
 				// TODO: other cases (?)
 			}
 			
-
+			
 			// finally, update all objects we have added to our FlxState.
 			super.update();
 			
@@ -489,6 +492,18 @@ package
 			levelNameText.setFormat("PIXEL", 20, color, "left");
 			add(levelNameText);
 			
+			const startX:int = 170;
+			const startY:int = Main.HEIGHT - 40;
+			const cols:int = 3;
+			blockCounters = [];
+			for (var i:int = 0; i < goalNumber; i++)
+			{
+				var x:int = startX + (i % cols) * 24;
+				var y:int = startY + (int)(i / cols) * 24;
+				blockCounters[i] = new BlockCounter(x, y);
+				add( (BlockCounter)(blockCounters[i]));
+			}
+			
 			/*
 			godModeText = new FlxText(5, 50, 100, "");
 			updateGodModeText();
@@ -679,12 +694,6 @@ package
 			add(new FlxText(10, 120, 150, "Press R to Try Again."));
 		}
 		
-		private function updateGoalText():void
-		{
-			//goalText.text = "Blocks: " + goalCount + " / " + goalNumber;
-			//if (goalCount == goalNumber) goalText.text = goalText.text + "   Congrats!";
-		}
-		
 		private function updateMoveText():void
 		{
 			const pad:int = 4;
@@ -705,10 +714,19 @@ package
 			timeText.text = "asdf";
 		}
 		
+		private function updateBlockCounters():void
+		{
+			for (var i:int = 0; i < blockCounters.length; i++)
+			{
+				if (i < goalCount) (BlockCounter)(blockCounters[i]).changeAnimation(true);
+				else (BlockCounter)(blockCounters[i]).changeAnimation(false);
+			}
+		}
+		
 		private function updateGodModeText():void
 		{
-			if (godMode) godModeText.text = "Godmode: ON";
-			else godModeText.text = "Godmode: OFF";
+			//if (godMode) godModeText.text = "Godmode: ON";
+			//else godModeText.text = "Godmode: OFF";
 		}
 		
 	}
