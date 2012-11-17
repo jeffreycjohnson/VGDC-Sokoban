@@ -337,7 +337,7 @@ package
 			if (YOFFSET % TILESIZE != 0 ) numTilesY++;
 			var startX:int = XOFFSET - numTilesX * TILESIZE;
 			var startY:int = YOFFSET - numTilesY * TILESIZE;
-			add(new WallBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height));
+			add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.LEVEL_1));
 								
 			// cycle through the level data.
 			
