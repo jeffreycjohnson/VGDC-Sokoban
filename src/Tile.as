@@ -21,6 +21,10 @@ package
 			{
 				loadGraphic(Assets.GRATE_BG, false, false, 16, 16);
 			}
+			else if (type == TiledBackground.BORDER_1)
+			{
+				loadGraphic(Assets.BORDER, false, false, 16, 16);
+			}
 		}
 		
 	}

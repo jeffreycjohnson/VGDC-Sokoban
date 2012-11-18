@@ -10,6 +10,7 @@ package
 	{
 		public static const LEVEL_1:String = "a";
 		public static const MENU_1:String = "b";
+		public static const BORDER_1:String = "c";
 		
 		private const TILESIZE:int = PlayState.TILESIZE;
 		

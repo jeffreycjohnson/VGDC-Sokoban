@@ -24,9 +24,10 @@ package
 		[Embed(source = "../assets/background2.png")] public static var BG2:Class;
 		[Embed(source = "../assets/gratebg.png")] public static var GRATE_BG:Class;
 		[Embed(source = "../assets/blockcounter.png")] public static var BLOCK_COUNTER:Class;
+		[Embed(source = "../assets/border.png")] public static var BORDER:Class;
 		
 		// fonts
-		[Embed(source="../assets/visitor.ttf", fontFamily="PIXEL", embedAsCFF="false")] public	static var FONT_VISITOR:String;
+		[Embed(source="../assets/FreePixel.ttf", fontFamily="PIXEL", embedAsCFF="false")] public static var FONT_VISITOR:String;
 	}
 
 }

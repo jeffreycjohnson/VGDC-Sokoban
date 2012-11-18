@@ -467,23 +467,25 @@ package
 			const color:uint = 0xffffffff;
 			
 			add(new TiledBackground(0, Main.HEIGHT - TOOLBAR_HEIGHT, Main.WIDTH / TILESIZE, TOOLBAR_HEIGHT / TILESIZE, TiledBackground.MENU_1));
+			// for some reason flixel wont recognize the transparency on this so I copied the background from wall.png
+			add(new TiledBackground(-8, Main.HEIGHT - TOOLBAR_HEIGHT - 14, Main.WIDTH / TILESIZE + 1, 1, TiledBackground.BORDER_1));
 			
 			moveText = new FlxText(Main.WIDTH - 135, HEIGHT1, 135, "");
 			updateMoveText();
-			moveText.setFormat("PIXEL", 20, color, "left");
+			moveText.setFormat("PIXEL", 16, color, "left");
 			add(moveText);
 			
 			timeText = new FlxText(Main.WIDTH - 135, HEIGHT2, 135, "");
-			timeText.setFormat("PIXEL", 20, color, "left");
+			timeText.setFormat("PIXEL", 16, color, "left");
 			updateTimeText();
 			add(timeText);
 			
 			var levelNumberText:FlxText = new FlxText(50, HEIGHT1, 600, (chapterIndex + 1) + "-" + (levelIndex + 1));
-			levelNumberText.setFormat("PIXEL", 20, color, "left");
+			levelNumberText.setFormat("PIXEL", 16, color, "left");
 			add(levelNumberText);
 			
-			var levelNameText:FlxText = new FlxText(5, HEIGHT2, 300, thisLevel.name);
-			levelNameText.setFormat("PIXEL", 20, color, "left");
+			var levelNameText:FlxText = new FlxText(5, HEIGHT2, 300, thisLevel.name.toUpperCase());
+			levelNameText.setFormat("PIXEL", 16, color, "left");
 			add(levelNameText);
 			
 			const startX:int = 170;
@@ -567,7 +569,7 @@ package
 				if (guy.visionType == "cone")
 				{
 					var lineAngle:Number = 0.15; // radians between lines
-					var pointDist:Number = 0.5; // distance between points
+					var pointDist:Number = 8; // distance between points
 					var extraPoints:int = 12 / pointDist;
 					
 					var lineNum:int = (maxTheta - minTheta) / lineAngle; // number of lines to draw
