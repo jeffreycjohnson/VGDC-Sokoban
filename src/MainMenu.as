@@ -62,7 +62,10 @@ package
 			super.update();
 			if (FlxG.keys.justPressed("ESCAPE"))
 			{
-				recycle();
+				remove(startButton);
+				remove(controlsButton);
+				remove(levelsButton);
+				remove(creditsButton);
 				create();
 			}
 		}
@@ -74,8 +77,10 @@ package
 
 		private function controlsHelp():void
 		{
-			//remove everything
-			recycle();
+			remove(startButton);
+			remove(controlsButton);
+			remove(levelsButton);
+			remove(creditsButton);
 			
 			// add background and text objects
 			add(new FlxSprite(0, 0, Assets.BG));
@@ -94,8 +99,10 @@ package
 
 		private function credits():void
 		{
-			//remove everything
-			recycle();
+			remove(startButton);
+			remove(controlsButton);
+			remove(levelsButton);
+			remove(creditsButton);
 			
 			// add background and text objects
 			add(new FlxSprite(0, 0, Assets.BG));

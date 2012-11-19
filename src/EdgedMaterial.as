@@ -88,13 +88,13 @@ package
 			addAnimation("topright", [3]);
 			
 			addAnimation("left1", [4]);
-			addAnimation("center1", [5]);
-			addAnimation("center2", [6]);
+			//addAnimation("center1", [5]);
+			//addAnimation("center2", [6]);
 			addAnimation("right1", [7]);
 			
 			addAnimation("left2", [8]);
-			addAnimation("center3", [9]);
-			addAnimation("center4", [10]);
+			//addAnimation("center3", [9]);
+			//addAnimation("center4", [10]);
 			addAnimation("right2", [11]);
 			
 			addAnimation("bottomleft", [12]);
@@ -106,6 +106,11 @@ package
 			addAnimation("insidecorner2", [17]);
 			addAnimation("insidecorner3", [20]);
 			addAnimation("insidecorner4", [21]);
+			
+			addAnimation("center1", [26]);
+			addAnimation("center2", [27]);
+			addAnimation("center3", [30]);
+			addAnimation("center4", [31]);
 		}
 		
 	}
