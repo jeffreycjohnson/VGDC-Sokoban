@@ -14,6 +14,10 @@ package
 		private var levelsButton:FlxButton;
 		private var creditsButton:FlxButton;
 		
+		private var title:FlxGroup = new FlxGroup();
+		private var controls:FlxGroup = new FlxGroup();
+		private var credits:FlxGroup = new FlxGroup();
+		
 		public function MainMenu()
 		{
 		}
@@ -46,14 +50,44 @@ package
 			
 			add(new FlxSprite(0, 0, Assets.BG));
 			
+			// add appropriate elements to each FlxGroup
+			
+			// title
+			/*
 			startButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 - 20, "Play", play);
-			add(startButton);
-			controlsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 10, "Controls", controlsHelp);
-			add(controlsButton);
+			controlsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 10, "Controls", createControls);
 			levelsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 40, "Levels", levelsDisplay);
-			add(levelsButton);
-			creditsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 70, "Credits", credits);
-			add(creditsButton);
+			creditsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 70, "Credits", createCredits);
+			title.add(startButton);
+			title.add(controlsButton);
+			title.add(levelsButton);
+			title.add(creditsButton);
+			*/
+			title.add(new Button(Main.WIDTH / 2 - 50, 100, 0, 0, play));
+			title.add(new Button(Main.WIDTH / 2 - 50, 150, 0, 0, createControls));
+			title.add(new Button(Main.WIDTH / 2 - 50, 200, 0, 0, levelsDisplay));
+			title.add(new Button(Main.WIDTH / 2 - 50, 250, 0, 0, createCredits));
+			title.add(new FlxText(Main.WIDTH / 2 - 50, 100, 100, "Play"));
+			title.add(new FlxText(Main.WIDTH / 2 - 50, 150, 100, "Controls"));
+			title.add(new FlxText(Main.WIDTH / 2 - 50, 200, 100, "Levels"));
+			title.add(new FlxText(Main.WIDTH / 2 - 50, 250, 100, "Credits"));
+			
+			// controls
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Use the Arrow Keys to Move."));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Next Level: Page Up"));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Previous Level: Page Down"));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Reset Level: R"));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
+			
+			// credits
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Patrick Traynor"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Jeffrey Johnson"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Jason Lo"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Patrick Shin"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
+			
+			// to start us off, let's add title
+			createTitle();
 		}
 		
 		// Just recreate the main menu if they press escape
@@ -62,56 +96,42 @@ package
 			super.update();
 			if (FlxG.keys.justPressed("ESCAPE"))
 			{
-				remove(startButton);
-				remove(controlsButton);
-				remove(levelsButton);
-				remove(creditsButton);
-				create();
+				createTitle();
 			}
 		}
-
-		private function play():void
+		
+		private function createTitle():void
 		{
-			FlxG.switchState(new PlayState);
+			remove(controls);
+			remove(credits);
+			remove(title);
+			add(title);
 		}
-
-		private function controlsHelp():void
+		
+		private function createControls():void
 		{
-			remove(startButton);
-			remove(controlsButton);
-			remove(levelsButton);
-			remove(creditsButton);
-			
-			// add background and text objects
-			add(new FlxSprite(0, 0, Assets.BG));
-			
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Use the Arrow Keys to Move."));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Next Level: Page Up"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Previous Level: Page Down"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Reset Level: R"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
+			remove(title);
+			remove(controls);
+			remove(credits);
+			add(controls);
+		}
+		
+		private function createCredits():void
+		{
+			remove(title);
+			remove(controls);
+			remove(credits);
+			add(credits);
 		}
 		
 		private function levelsDisplay():void
 		{
 			FlxG.switchState(new LevelSelect);
 		}
-
-		private function credits():void
+		
+		private function play():void
 		{
-			remove(startButton);
-			remove(controlsButton);
-			remove(levelsButton);
-			remove(creditsButton);
-			
-			// add background and text objects
-			add(new FlxSprite(0, 0, Assets.BG));
-			
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Patrick Traynor"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Jeffrey Johnson"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Jason Lo"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Patrick Shin"));
-			add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
+			FlxG.switchState(new PlayState);
 		}
 	}
 
