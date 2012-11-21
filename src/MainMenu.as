@@ -37,7 +37,6 @@ package
 				for (y = 0; y < LevelStorage.chapterLengths[x]; y++)
 				{
 					LevelStorage.levels[x][y] = new Level(LevelStorage[LevelStorage.getLevelString(x,y)]);
-					trace("Adding Level: ",x, y);
 				}
 			}
 			
@@ -83,8 +82,8 @@ package
 			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Patrick Traynor"));
 			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Jeffrey Johnson"));
 			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Jason Lo"));
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Patrick Shin"));
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
+			//credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Patrick Shin")); // still here in comment form
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Press Escape to Return to the Main Menu."));
 			
 			// to start us off, let's add title
 			createTitle();

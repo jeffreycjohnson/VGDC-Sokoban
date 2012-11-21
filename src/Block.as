@@ -7,18 +7,21 @@ package
 	
 	public class Block extends MovingSprite
 	{
+		private var startActive:Boolean;
 		
-		public function Block(x:int, y:int) 
+		public function Block(x:int, y:int, active:Boolean) 
 		{
 			super(x, y);
 			loadGraphic(Assets.BLOCK, true, false, 16, 16);
 			createAnimations();
-			play("inactive");
+			startActive = active;
+			if (startActive) play("active");
+			else play ("inactive");
 		}
 		
 		public function clone():Block
 		{
-			return new Block(x, y);
+			return new Block(x, y, startActive);
 		}
 		
 		override public function update():void

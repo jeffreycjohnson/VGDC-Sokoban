@@ -308,6 +308,7 @@ package
 			var thisLevel:Level = LevelStorage.levels[chapter][index];
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
+			goalCount += thisLevel.blocksActive;
 			
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
 			YOFFSET = ((Main.HEIGHT - TOOLBAR_HEIGHT) - TILESIZE * thisLevel.height) / 2;
@@ -498,6 +499,7 @@ package
 				blockCounters[i] = new BlockCounter(x, y);
 				add( (BlockCounter)(blockCounters[i]));
 			}
+			updateBlockCounters();
 			
 			/*
 			godModeText = new FlxText(5, 50, 100, "");

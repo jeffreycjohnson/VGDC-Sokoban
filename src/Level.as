@@ -13,6 +13,7 @@ package
 		public var playerY:int;
 		public var width:int;
 		public var height:int;
+		public var blocksActive:int;
 		
 		public var levelArray:Array = [];
 		public var floorArray:Array = [];
@@ -39,6 +40,7 @@ package
 			// Load width and height
 			width = xml.@width / PlayState.TILESIZE;
 			height = xml.@height / PlayState.TILESIZE;
+			blocksActive = 0;
 			
 			// Set up arrays to null
 			var i:int;
@@ -64,10 +66,10 @@ package
 				
 				// block
 				if (id == 2) {
-					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE));
+					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, false));
 				}
 				// goal-floor
-				if (id == 3) {
+				else if (id == 3) {
 					levelArray[x][y] = 0;
 					floorArray[x][y] = 1;
 				}
@@ -76,6 +78,13 @@ package
 				{
 					playerX = x;
 					playerY = y;
+				}
+				// block on goal-floor
+				else if (id == 5) {
+					levelArray[x][y] = 2;
+					floorArray[x][y] = 1;
+					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, true));
+					blocksActive++;
 				}
 			}
 			

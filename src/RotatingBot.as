@@ -13,8 +13,8 @@ package
 		{
 			super(x, y, 50, visionAngle, visionRadius, "cone");
 			
-			trace("Oooh");
-			trace(initAngle * Math.PI / 180);
+			//trace("Oooh");
+			//trace(initAngle * Math.PI / 180);
 			
 			this.rotateSpeed = rotateSpeed;
 			_theta = +initAngle * Math.PI / 180;

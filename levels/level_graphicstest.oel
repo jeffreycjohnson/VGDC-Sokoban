@@ -28,7 +28,7 @@
     <tile x="2" y="1" id="0" />
     <tile x="2" y="2" id="2" />
     <tile x="2" y="3" id="0" />
-    <tile x="2" y="4" id="0" />
+    <tile x="2" y="4" id="5" />
     <tile x="2" y="5" id="0" />
     <tile x="2" y="6" id="0" />
     <tile x="2" y="7" id="1" />
