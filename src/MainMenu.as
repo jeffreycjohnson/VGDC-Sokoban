@@ -63,14 +63,14 @@ package
 			title.add(levelsButton);
 			title.add(creditsButton);
 			*/
-			title.add(new Button(Main.WIDTH / 2 - 50, 100, 0, 0, play));
-			title.add(new Button(Main.WIDTH / 2 - 50, 150, 0, 0, createControls));
-			title.add(new Button(Main.WIDTH / 2 - 50, 200, 0, 0, levelsDisplay));
-			title.add(new Button(Main.WIDTH / 2 - 50, 250, 0, 0, createCredits));
-			title.add(new FlxText(Main.WIDTH / 2 - 50, 100, 100, "Play"));
-			title.add(new FlxText(Main.WIDTH / 2 - 50, 150, 100, "Controls"));
-			title.add(new FlxText(Main.WIDTH / 2 - 50, 200, 100, "Levels"));
-			title.add(new FlxText(Main.WIDTH / 2 - 50, 250, 100, "Credits"));
+			title.add(new Button(Main.WIDTH / 2 - 66, 100, 0, 0, play, .75, .75));
+			title.add(new Button(Main.WIDTH / 2 - 66, 150, 0, 0, createControls, .75, .75));
+			title.add(new Button(Main.WIDTH / 2 - 66, 200, 0, 0, levelsDisplay, .75, .75));
+			title.add(new Button(Main.WIDTH / 2 - 66, 250, 0, 0, createCredits, .75, .75));
+			title.add(new FlxText(Main.WIDTH / 2 - 16, 105, 100, "Play"));
+			title.add(new FlxText(Main.WIDTH / 2 - 24, 155, 100, "Controls"));
+			title.add(new FlxText(Main.WIDTH / 2 - 20, 205, 100, "Levels"));
+			title.add(new FlxText(Main.WIDTH / 2 - 22, 255, 100, "Credits"));
 			
 			// controls
 			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Use the Arrow Keys to Move."));

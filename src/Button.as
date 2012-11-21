@@ -13,8 +13,10 @@ package
 		private var onUp:Function;
 		private var toggleable:Boolean;
 		private var state:String;
+		private var _x:int;
+		private var _y:int;
 		
-		public function Button(x:int, y:int, _chapter:int=0, _level:int=0, OnClick:Function=null, toggle:Boolean = false) 
+		public function Button(x:int, y:int, _chapter:int=0, _level:int=0, OnClick:Function=null, scaleX:Number=1, scaleY:Number=1, toggle:Boolean = false) 
 		{
 			super(x, y);
 			loadGraphic(Assets.BUTTON, true, false, 128, 24);
@@ -24,6 +26,11 @@ package
 			onUp = OnClick;
 			toggleable = toggle;
 			state = "up";
+			_x = x + width * (1 - scaleX) / 2;
+			_y = y + height * (1 - scaleY) / 2;
+			width *= scaleX;
+			height *= scaleY;
+			scale = new FlxPoint(scaleX, scaleY);
 		}
 		
 		private function createAnimations():void
@@ -48,7 +55,7 @@ package
 				{
 					camera = cameras[i++] as FlxCamera;
 					FlxG.mouse.getWorldPosition(camera,_point);
-					if(overlapsPoint(_point,true,camera))
+					if(_point.x >= _x && _point.y >= _y && _point.x < _x + width && _point.y < _y + height)//(overlapsPoint(_point,true,camera))
 					{
 						if(FlxG.mouse.justReleased() && state != "up")
 						{
