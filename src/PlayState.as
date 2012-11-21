@@ -172,9 +172,9 @@ package
 			}
 			
 			if (FlxG.keys.justPressed("RIGHT")) xo = 1;
-			if (FlxG.keys.justPressed("LEFT")) xo = -1;
-			if (FlxG.keys.justPressed("DOWN")) yo = 1;
-			if (FlxG.keys.justPressed("UP")) yo = -1;
+			else if (FlxG.keys.justPressed("LEFT")) xo = -1;
+			else if (FlxG.keys.justPressed("DOWN")) yo = 1;
+			else if (FlxG.keys.justPressed("UP")) yo = -1;
 			
 			var next:int = level[px + xo][py + yo]; // the tile right in front of player
 			var next2:int = next != 1 ? level[px + 2 * xo][py + 2 * yo] : 0; // the tile 2 blocks in front of player
@@ -467,8 +467,7 @@ package
 			const color:uint = 0xffffffff;
 			
 			add(new TiledBackground(0, Main.HEIGHT - TOOLBAR_HEIGHT, Main.WIDTH / TILESIZE, TOOLBAR_HEIGHT / TILESIZE, TiledBackground.MENU_1));
-			// for some reason flixel wont recognize the transparency on this so I copied the background from wall.png
-			add(new TiledBackground(-8, Main.HEIGHT - TOOLBAR_HEIGHT - 14, Main.WIDTH / TILESIZE + 1, 1, TiledBackground.BORDER_1));
+			add(new TiledBackground(-8, Main.HEIGHT - TOOLBAR_HEIGHT - 8, Main.WIDTH / TILESIZE + 1, 1, TiledBackground.BORDER_1));
 			
 			moveText = new FlxText(Main.WIDTH - 135, HEIGHT1, 135, "");
 			updateMoveText();

@@ -17,7 +17,7 @@ package
 		public function TiledBackground(x:int, y:int, numTilesX:int, numTilesY:int, type:String) 
 		{
 			super(x, y);
-			makeGraphic(numTilesX * TILESIZE, numTilesY * TILESIZE, 0xFFFF0000);
+			makeGraphic(numTilesX * TILESIZE, numTilesY * TILESIZE, 0x00ff0000);
 			var template:FlxSprite = new Tile(type);
 			for (var i:int = 0; i < numTilesX; i++) {
 				for (var j:int = 0; j < numTilesY; j++) {

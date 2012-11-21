@@ -60,16 +60,16 @@ package
 		private function createAnimations():void
 		{
 			addAnimation("idle_down", [0]);
-			addAnimation("walk_down", [1, 2], 30);
+			addAnimation("walk_down", [0, 0], 30);
 			
 			addAnimation("idle_up", [3]);
-			addAnimation("walk_up", [4, 5], 30);
+			addAnimation("walk_up", [3, 3], 30);
 			
 			addAnimation("idle_right", [6]);
-			addAnimation("walk_right", [7, 8], 30);
+			addAnimation("walk_right", [6, 6], 30);
 			
 			addAnimation("idle_left", [9]);
-			addAnimation("walk_left", [10, 11], 30);
+			addAnimation("walk_left", [9, 9], 30);
 		}
 		
 		
