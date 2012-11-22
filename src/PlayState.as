@@ -71,8 +71,15 @@ package
 		private var goalCount:int  // goals achieved so far
 		private var godMode:Boolean = false;
 		
-		private var locked:Boolean = false;
+		private var locked:int = 0;
 		private var defeatNext:Boolean = false;
+		private var victory_marker:Boolean = false;
+		private var portal:Teleporter;
+		
+		private var buttonNext:Button;
+		private var buttonMenu:Button;
+		private var nextLevelText:FlxText;
+		private var toMenuText:FlxText;
 		
 		private var player:Player;
 		private var px:int; // player x
@@ -94,6 +101,8 @@ package
 		
 		override public function create():void
 		{
+			portal = new Teleporter(0, 0);
+			portal.alpha = 0;
 			
 			// create fade overlay object
 			fadeOverlay = new FlxSprite(0, 0);
@@ -109,10 +118,12 @@ package
 		
 		override public function update():void
 		{
+			
 			// Fading between levels
 			if (fading)
 			{
 				fadeOverlay.alpha += fadeRate;
+				if (fadeRate < 0) portal.alpha -= fadeRate;
 				if (fadeOverlay.alpha == 1)
 				{
 					fadeRate *= -1;
@@ -156,7 +167,30 @@ package
 			// Locked state (don't do any game logic at all)
 			if (locked)
 			{
-				return;
+				locked--;
+				portal.grow();
+				if (victory_marker && !locked)
+				{
+					locked++;
+					victory();
+					super.update();
+				}
+				// we want to run a couple more update cycles so that the player finishes moving
+				else if (victory_marker && locked > 65) true;
+				
+				// give them a moment to see their mistake then fade out
+				else if (locked && locked < 60)
+				{
+					fadeOverlay.alpha += fadeRateConst / 4;
+					return;
+				}
+				// restart level once we fade out
+				else if (!locked && !victory_marker)
+				{
+					switchLevel(chapterIndex, levelIndex);
+					return;
+				}
+				else return;
 			}
 			
 			// calculate movement values
@@ -257,6 +291,15 @@ package
 				defeat();
 			}
 			
+			if (victory_marker && ! locked)
+			{
+				locked = 100;
+				portal.resetSize();
+				portal.x = px * TILESIZE + XOFFSET - 16;
+				portal.y = py * TILESIZE + YOFFSET - 16;
+				portal.alpha = 1;
+				add(portal);
+			}
 			
 			
 			// trace array (for debugging)
@@ -301,7 +344,8 @@ package
 			patrollers = new Vector.<PatrolBot>;
 			goalNumber = goalCount = 0;
 			moveCount = 0;
-			locked = false;
+			locked = 0;
+			victory_marker = false;
 			var i:int = 0;
 			var j:int = 0;
 			
@@ -637,9 +681,19 @@ package
 		
 		private function defeat():void
 		{
-			locked = true;
-			add(new FlxText(10, 100, 150, "You Lose!"));
-			add(new FlxText(10, 120, 150, "Press R to Try Again."));
+			locked = 90;
+			add(new FlxText(182, 100, 150, "Detected!"));
+		}
+		
+		private function victory():void
+		{
+			clear();
+			add(fadeOverlay);
+			add(new FlxText(160, 50, 100, "Level Completed"));
+			add(buttonMenu = new Button(90, 100, 0, 0, toMenu, .75, 1));
+			add(buttonNext = new Button(190, 100, 0, 0, nextLevel, .75, 1));
+			add(toMenuText = new FlxText(125, 105, 100, "Main Menu"));
+			add(nextLevelText = new FlxText(225, 105, 100, "Next Level"));
 		}
 		
 		private function updateMoveText():void
@@ -669,6 +723,7 @@ package
 				if (i < goalCount) (BlockCounter)(blockCounters[i]).changeAnimation(true);
 				else (BlockCounter)(blockCounters[i]).changeAnimation(false);
 			}
+			if (goalCount == goalNumber) victory_marker = true;
 		}
 		
 		private function updateGodModeText():void
@@ -677,6 +732,17 @@ package
 			//else godModeText.text = "Godmode: OFF";
 		}
 		
+		private function toMenu():void
+		{
+			FlxG.switchState(new MainMenu);
+		}
+		
+		private function nextLevel():void
+		{
+			chapterIndex = chapterIndex + (levelIndex >= 9 ? 1 : 0);
+			levelIndex = (levelIndex >= 9 ? 0 : levelIndex + 1);
+			switchLevel(chapterIndex, levelIndex);
+		}
 	}
 
 }

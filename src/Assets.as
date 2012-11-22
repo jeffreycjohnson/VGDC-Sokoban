@@ -16,6 +16,7 @@ package
 		[Embed(source = "../assets/patrolbot1.png")] public static var PATROLBOT1:Class;
 		[Embed(source = "../assets/rotatingbot.png")] public static var ROTATINGBOT:Class;
 		[Embed(source = "../assets/laser.png")] public static var LASER:Class;
+		[Embed(source = "../assets/portal.png")] public static var TELEPORTER:Class;
 		[Embed(source = "../assets/patrol2.png")] public static var PATROL_HIGHLIGHT:Class;
 		
 		// technical
