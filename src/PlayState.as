@@ -66,6 +66,7 @@ package
 		
 		private var moveCount:int; // how many moves the player has done
 		public static var maxLevel:SharedObject; // tracks th players progress
+		public static var minMoves:SharedObject;
 		
 		private var goalNumber:int; // total number of goals
 		private var goalCount:int  // goals achieved so far
@@ -687,6 +688,15 @@ package
 		
 		private function victory():void
 		{
+			minMoves = SharedObject.getLocal((chapterIndex * 10 + levelIndex).toString());
+			if (minMoves.data.value > moveCount || minMoves.data.value == null)
+			{
+				minMoves.data.value = moveCount;
+				trace(minMoves.data.value);
+				minMoves.flush();
+			}
+			minMoves.close();
+			
 			clear();
 			add(fadeOverlay);
 			add(new FlxText(160, 50, 100, "Level Completed"));
@@ -739,9 +749,12 @@ package
 		
 		private function nextLevel():void
 		{
-			chapterIndex = chapterIndex + (levelIndex >= 9 ? 1 : 0);
-			levelIndex = (levelIndex >= 9 ? 0 : levelIndex + 1);
-			switchLevel(chapterIndex, levelIndex);
+			// same chapter
+			if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
+				switchLevel(chapterIndex, levelIndex + 1);
+			// swtiching chapters
+			else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
+				switchLevel(chapterIndex + 1, 0);
 		}
 	}
 
