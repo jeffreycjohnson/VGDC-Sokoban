@@ -79,8 +79,10 @@ package
 		
 		private var buttonNext:Button;
 		private var buttonMenu:Button;
+		private var buttonRestart:Button;
 		private var nextLevelText:FlxText;
 		private var toMenuText:FlxText;
+		private var restartText:FlxText;
 		
 		private var player:Player;
 		private var px:int; // player x
@@ -170,6 +172,7 @@ package
 			{
 				locked--;
 				portal.grow();
+				// Show the end of level GUI
 				if (victory_marker && !locked)
 				{
 					locked++;
@@ -292,6 +295,7 @@ package
 				defeat();
 			}
 			
+			// Make the portal and set it it fade out and load the end of level GUI
 			if (victory_marker && ! locked)
 			{
 				locked = 100;
@@ -325,6 +329,19 @@ package
 			
 			chapterIndex = chapter;
 			levelIndex = level;
+			
+			if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
+				minMoves = SharedObject.getLocal((chapterIndex * 10 + levelIndex +  1).toString());
+			else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
+				minMoves = SharedObject.getLocal(((chapterIndex + 1) * 10).toString());
+			
+			// Make sure that no level that is unlocked is null so that the levelSelect does not lag
+			if (minMoves.data.value == null)
+			{
+				minMoves.data.value = 0;
+				minMoves.flush();
+			}
+			minMoves.close();
 			
 			if (maxLevel.data.value == null || levelIndex + chapterIndex * 10 > maxLevel.data.value)
 			{
@@ -688,11 +705,11 @@ package
 		
 		private function victory():void
 		{
+			// Update the minimum number of moves
 			minMoves = SharedObject.getLocal((chapterIndex * 10 + levelIndex).toString());
-			if (minMoves.data.value > moveCount || minMoves.data.value == null)
+			if (minMoves.data.value == null || minMoves.data.value > moveCount)
 			{
 				minMoves.data.value = moveCount;
-				trace(minMoves.data.value);
 				minMoves.flush();
 			}
 			minMoves.close();
@@ -700,10 +717,12 @@ package
 			clear();
 			add(fadeOverlay);
 			add(new FlxText(160, 50, 100, "Level Completed"));
-			add(buttonMenu = new Button(90, 100, 0, 0, toMenu, .75, 1));
-			add(buttonNext = new Button(190, 100, 0, 0, nextLevel, .75, 1));
-			add(toMenuText = new FlxText(125, 105, 100, "Main Menu"));
-			add(nextLevelText = new FlxText(225, 105, 100, "Next Level"));
+			add(buttonRestart = new Button(40, 100, 0, 0, restart, .75, 1));
+			add(buttonMenu = new Button(140, 100, 0, 0, toMenu, .75, 1));
+			add(buttonNext = new Button(240, 100, 0, 0, nextLevel, .75, 1));
+			add(toMenuText = new FlxText(85, 105, 100, "Restart"));
+			add(toMenuText = new FlxText(175, 105, 100, "Main Menu"));
+			add(nextLevelText = new FlxText(275, 105, 100, "Next Level"));
 		}
 		
 		private function updateMoveText():void
@@ -755,6 +774,11 @@ package
 			// swtiching chapters
 			else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
 				switchLevel(chapterIndex + 1, 0);
+		}
+		
+		private function restart():void
+		{
+			switchLevel(levelIndex, chapterIndex);
 		}
 	}
 

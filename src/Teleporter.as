@@ -2,6 +2,9 @@ package {
 	
 	import org.flixel.*;
 	
+	/**
+	 * A Class to hold the portal graphic for changing levels
+	 */
 	public class Teleporter extends FlxSprite
 	{
 		
@@ -15,6 +18,7 @@ package {
 			grow();
 		}
 		
+		// Make the portal spin
 		override public function update():void {
 			super.update();
 			angle -= 10;
