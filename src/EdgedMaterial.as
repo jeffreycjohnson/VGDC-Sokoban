@@ -8,6 +8,7 @@ package
 	public class EdgedMaterial extends FlxSprite
 	{
 		private var id:int;
+		private var _needsBacking:Boolean;
 		public static const WALL:int = 1;
 		public static const WINDOW:int = 6;
 		
@@ -78,6 +79,24 @@ package
 			}
 			
 			play(ref);
+			
+			_needsBacking = !(ref == "center1" || ref == "center2" || ref == "center3" || ref == "center4");
+		}
+		
+		public function updateSpriteSolid(xx:int, yy:int):void
+		{
+			var ref:String;
+			
+			if (yy % 2 == 1) {
+				if (xx % 2 == 1) ref = "center1";
+				else ref = "center2";
+			}
+			else {
+				if (xx % 2 == 1) ref = "center3";
+				else ref = "center4";
+			}
+			
+			play(ref);
 		}
 		
 		protected function createAnimations():void
@@ -111,6 +130,12 @@ package
 			addAnimation("center2", [27]);
 			addAnimation("center3", [30]);
 			addAnimation("center4", [31]);
+		}
+		
+		// whether or not we should draw a 
+		public function needsBacking():Boolean
+		{
+			return _needsBacking;
 		}
 		
 	}

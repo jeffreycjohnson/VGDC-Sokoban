@@ -386,7 +386,7 @@ package
 			var startX:int = XOFFSET - numTilesX * TILESIZE;
 			var startY:int = YOFFSET - numTilesY * TILESIZE;
 			add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.LEVEL_1));
-								
+			
 			// cycle through the level data.
 			
 			var xAbs:int;
@@ -447,11 +447,21 @@ package
 					{
 						var guy:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WALL);
 						guy.updateSprite(corners, i, j);
+						if (guy.needsBacking()) {
+							var guy2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WALL);
+							guy2.updateSpriteSolid(i, j);
+							add(guy2);
+						}
 						add(guy);
 					}
 					else if (corners[i][j] == 6) {
 						var girl:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
 						girl.updateSprite(corners, i, j);
+						if (girl.needsBacking()) {
+							var girl2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
+							girl2.updateSpriteSolid(i, j);
+							add(girl2);
+						}
 						add(girl);					
 					}
 				}
