@@ -144,18 +144,6 @@ package
 			_lastXo = 0;
 			_lastYo = 0;
 			
-			// 2 - set the new direction
-			// outdated - we now set the direction dynamically while turning during update(). maybe we might want to revert to this though, who knows
-			/*
-			var order:Array = [Dir.SOUTH, Dir.WEST, Dir.NORTH, Dir.EAST, Dir.SOUTH, Dir.WEST, Dir.NORTH, Dir.EAST];
-			var index:int;
-			if (direction == Dir.NORTH) index = 2;
-			else if (direction == Dir.EAST) index = 3;
-			else if (direction == Dir.SOUTH) index = 4;
-			else if (direction == Dir.WEST) index = 5;
-			direction = order[index + turnDir];
-			*/
-			
 		}
 		
 		protected function tick():void { }

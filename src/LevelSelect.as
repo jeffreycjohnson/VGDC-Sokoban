@@ -27,7 +27,6 @@ package
 		{
 			clear();
 			chapter = PlayState.startChapter;
-			trace(chapter);
 			showButtons();
 		}
 		

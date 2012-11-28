@@ -51,17 +51,6 @@ package
 			
 			// add appropriate elements to each FlxGroup
 			
-			// title
-			/*
-			startButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 - 20, "Play", play);
-			controlsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 10, "Controls", createControls);
-			levelsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 40, "Levels", levelsDisplay);
-			creditsButton = new FlxButton(Main.WIDTH / 2 - 40, Main.HEIGHT / 2 + 70, "Credits", createCredits);
-			title.add(startButton);
-			title.add(controlsButton);
-			title.add(levelsButton);
-			title.add(creditsButton);
-			*/
 			title.add(new Button(Main.WIDTH / 2 - 66, 100, 0, 0, play, .75, .75));
 			title.add(new Button(Main.WIDTH / 2 - 66, 150, 0, 0, createControls, .75, .75));
 			title.add(new Button(Main.WIDTH / 2 - 66, 200, 0, 0, levelsDisplay, .75, .75));

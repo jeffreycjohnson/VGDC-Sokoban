@@ -18,25 +18,21 @@ package
 			if (type == "right")
 			{
 				loadRotatedGraphic(Assets.LASER, 4, 3);
-				direction = Dir.EAST;
 				_theta = 0 + Math.PI / 2;
 			}
 			else if (type == "down")
 			{
 				loadRotatedGraphic(Assets.LASER, 4, 0);
-				direction = Dir.SOUTH;
 				_theta = 3 * Math.PI / 2 + Math.PI / 2;
 			}
 			else if (type == "left")
 			{
 				loadRotatedGraphic(Assets.LASER, 4, 1);
-				direction = Dir.WEST;
 				_theta = 0 + 3 * Math.PI / 2;
 			}
 			else if (type == "up")
 			{
 				loadRotatedGraphic(Assets.LASER, 4, 2);
-				direction = Dir.NORTH;
 				_theta = Math.PI / 2 + Math.PI / 2;
 			}
 		}

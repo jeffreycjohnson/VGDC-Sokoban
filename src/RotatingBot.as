@@ -13,9 +13,6 @@ package
 		{
 			super(x, y, 50, visionAngle, visionRadius, "cone");
 			
-			//trace("Oooh");
-			//trace(initAngle * Math.PI / 180);
-			
 			this.rotateSpeed = rotateSpeed;
 			_theta = +initAngle * Math.PI / 180;
 			loadGraphic(Assets.ROTATINGBOT, false, false, 16, 16);

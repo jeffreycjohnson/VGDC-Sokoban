@@ -90,7 +90,7 @@ package
 		
 		private var moveText:FlxText;
 		private var timeText:FlxText;
-		private var godModeText:FlxText;
+		//private var godModeText:FlxText;
 		
 		// whether or not we should update detected at the end of the tick
 		private var _updateDetectedNext:Boolean;
@@ -206,7 +206,7 @@ package
 			if (FlxG.keys.justPressed("G"))
 			{
 				godMode = !godMode;
-				updateGodModeText();
+				//updateGodModeText();
 			}
 			
 			if (FlxG.keys.justPressed("RIGHT")) xo = 1;
@@ -578,8 +578,6 @@ package
 			updateGodModeText();
 			add(godModeText);
 			
-			
-			
 			add(new FlxText(5, 20, 150, "Name: " + thisLevel.name));
 			add(new FlxText(130, 5, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
 			add(new FlxText(5, 35, 250, thisLevel.levelInfo));
@@ -717,7 +715,7 @@ package
 		{
 			// Update the minimum number of moves
 			minMoves = SharedObject.getLocal((chapterIndex * 10 + levelIndex).toString());
-			if (minMoves.data.value == null || minMoves.data.value > moveCount)
+			if (minMoves.data.value == null || minMoves.data.value == 0 || minMoves.data.value > moveCount)
 			{
 				minMoves.data.value = moveCount;
 				minMoves.flush();
@@ -765,11 +763,11 @@ package
 			if (goalCount == goalNumber) victory_marker = true;
 		}
 		
-		private function updateGodModeText():void
+		/*private function updateGodModeText():void
 		{
-			//if (godMode) godModeText.text = "Godmode: ON";
-			//else godModeText.text = "Godmode: OFF";
-		}
+			if (godMode) godModeText.text = "Godmode: ON";
+			else godModeText.text = "Godmode: OFF";
+		}*/
 		
 		private function toMenu():void
 		{
