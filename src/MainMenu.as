@@ -24,8 +24,23 @@ package
 		
 		// Load the background and all the buttons
 		override public function create():void
+		{			
+			init();
+			FlxG.flash(0x00000000, 0.25);
+		}
+		
+		// Just recreate the main menu if they press escape
+		override public function update():void
 		{
-			
+			super.update();
+			if (FlxG.keys.justPressed("ESCAPE"))
+			{
+				createTitle();
+			}
+		}
+		
+		private function init():void 
+		{
 			// push all things we "Embed"-ed in LevelStorage to an array levels[].
 			
 			var x:int; // chapter
@@ -76,16 +91,6 @@ package
 			
 			// to start us off, let's add title
 			createTitle();
-		}
-		
-		// Just recreate the main menu if they press escape
-		override public function update():void
-		{
-			super.update();
-			if (FlxG.keys.justPressed("ESCAPE"))
-			{
-				createTitle();
-			}
 		}
 		
 		private function createTitle():void

@@ -245,24 +245,16 @@ package
 			}
 			else if (FlxG.keys.justPressed("PAGEUP") && (Main.debug || chapterIndex * 10 + levelIndex > maxLevel.data.value))
 			{
-				// same chapter
 				if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
-					scrollLevel(1);//switchLevel(chapterIndex, levelIndex + 1);
-				// swtiching chapters
-				//else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
-					//switchLevel(chapterIndex + 1, 0);
+					nextLevel();//scrollLevel(1);//switchLevel(chapterIndex, levelIndex + 1);
 				
 			}
 			else if (FlxG.keys.justPressed("PAGEDOWN"))
 			{
-				// same chapter
 				if (levelIndex > 0)
-					scrollLevel(-1);//switchLevel(chapterIndex, levelIndex - 1);
-				// switching chapters
-				//else if (levelIndex == 0 && chapterIndex > 0)
-					//switchLevel(chapterIndex - 1, LevelStorage.chapterLengths[chapterIndex - 1] - 1);
+					prevLevel();//scrollLevel( -1);//switchLevel(chapterIndex, levelIndex - 1);
 			}
-			else if (FlxG.keys.justPressed("ESCAPE")) FlxG.switchState(new MainMenu);
+			else if (FlxG.keys.justPressed("ESCAPE")) toMenu();
 			
 			}
 			
@@ -876,13 +868,24 @@ package
 		private function toMenu():void
 		{
 			victoried = false;
-			FlxG.switchState(new MainMenu);
+			
+			FlxG.fade(0x00000000, 0.25, function ():void 
+			{
+				trace("hello");
+				FlxG.switchState(new MainMenu);
+			});
 		}
 		
 		private function nextLevel():void
 		{
 			victoried = false;
 			scrollLevel(1);
+		}
+		
+		private function prevLevel():void
+		{
+			victoried = false;
+			scrollLevel(-1);
 		}
 		
 		private function restart():void
