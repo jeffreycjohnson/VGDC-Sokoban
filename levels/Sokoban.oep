@@ -16,7 +16,7 @@
     <Width>960</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\Jason\Documents\AS3\VGDC-Sokoban\levels\Sokoban.oep</Filename>
+  <Filename>C:\Users\patri_000\Documents\GitHub\VGDC-Sokoban\levels\Sokoban.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -53,11 +53,53 @@
         <Y>1</Y>
       </ScrollFactor>
     </LayerDefinition>
+    <LayerDefinition xsi:type="TileLayerDefinition">
+      <Name>SolidTileLayer</Name>
+      <Grid>
+        <Width>16</Width>
+        <Height>16</Height>
+      </Grid>
+      <ScrollFactor>
+        <X>1</X>
+        <Y>1</Y>
+      </ScrollFactor>
+      <ExportMode>XML</ExportMode>
+    </LayerDefinition>
+    <LayerDefinition xsi:type="TileLayerDefinition">
+      <Name>TransparentTileLayer</Name>
+      <Grid>
+        <Width>16</Width>
+        <Height>16</Height>
+      </Grid>
+      <ScrollFactor>
+        <X>1</X>
+        <Y>1</Y>
+      </ScrollFactor>
+      <ExportMode>XML</ExportMode>
+    </LayerDefinition>
   </LayerDefinitions>
   <Tilesets>
     <Tileset>
       <Name>PlaceholderTileset</Name>
       <FilePath>..\assets\placeholder_tileset.png</FilePath>
+      <TileSize>
+        <Width>16</Width>
+        <Height>16</Height>
+      </TileSize>
+      <TileSep>0</TileSep>
+    </Tileset>
+    <Tileset>
+      <Name>SolidObjects</Name>
+      <FilePath>..\assets\extratiles_solid.png</FilePath>
+      <TileSize>
+        <Width>16</Width>
+        <Height>16</Height>
+      </TileSize>
+      <TileSep>0</TileSep>
+    </Tileset>
+    <Tileset>
+      <Name>TransparentObjects</Name>
+      <FilePath>..\assets\extratiles_transparent.png</FilePath>
       <TileSize>
         <Width>16</Width>
         <Height>16</Height>

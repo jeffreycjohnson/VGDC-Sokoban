@@ -71,10 +71,6 @@ package
 		private var goalCount:int  // goals achieved so far
 		private var godMode:Boolean = false;
 		
-		private var gameLocked:Boolean; // if true, then the player can't move and moving game stuff doesn't update.
-		private var defeatNext:Boolean = false;
-		private var victory_marker:Boolean = false;
-		
 		private var tileset:Class; // current tileset image
 		
 		private var buttonNext:Button;
@@ -97,7 +93,10 @@ package
 		private var _updateDetectedNext:Boolean;
 		public function set updateDetectedNext(b:Boolean):void { _updateDetectedNext = b; };
 		
+		private var gameLocked:Boolean; // if true, then the player can't move and moving game stuff doesn't update.
+		
 		// defeating the player
+		private var defeatNext:Boolean = false;
 		private var defeated:Boolean;
 		private var defeatCount:int;
 		private const defeatTime:int = 60;
@@ -548,6 +547,17 @@ package
 					}
 				}
 			}
+			
+			// Cycle through extra tiles
+			for (i = 0; i < thisLevel.extraTiles.length; i++)
+			{
+				var gal:IdleGraphic = (IdleGraphic)(thisLevel.extraTiles[i]).clone();
+				if (gal.isSolid()) level[gal.x / TILESIZE][gal.y / TILESIZE] = 1;
+				gal.x += XOFFSET;
+				gal.y += YOFFSET;
+				curG.add(gal);
+			}
+			
 						
 			// cycle through the entity data.
 			
@@ -783,7 +793,7 @@ package
 							}
 							
 							// kill the player if he is detected
-							if (gridX == px && gridY == py && det.alive && !godMode && !player.isMoving()) defeatNext = true;
+							if (gridX == px && gridY == py && det.alive && !godMode && !player.isMoving() && !victoried) defeatNext = true;
 						}
 					}
 				}
@@ -817,12 +827,12 @@ package
 			
 			add(buttonMenu = new Button(40, 100, 0, 0, toMenu, .75, 1));
 			add(buttonRestart = new Button(140, 100, 0, 0, restart, .75, 1));
-			if (levelIndex < LevelStorage.chapterLengths[chapterIndex])
+			if (levelIndex < LevelStorage.chapterLengths[chapterIndex]-1)
 				add(buttonNext = new Button(240, 100, 0, 0, nextLevel, .75, 1));
 						
 			add(toMenuText = new FlxText(85, 105, 100, "Menu [<-]"));
 			add(toMenuText = new FlxText(175, 105, 100, "Retry [^]"));
-			if (levelIndex < LevelStorage.chapterLengths[chapterIndex])
+			if (levelIndex < LevelStorage.chapterLengths[chapterIndex]-1)
 				add(nextLevelText = new FlxText(275, 105, 100, "Next [->]"));
 		}
 		
@@ -871,7 +881,6 @@ package
 			
 			FlxG.fade(0x00000000, 0.25, function ():void 
 			{
-				trace("hello");
 				FlxG.switchState(new MainMenu);
 			});
 		}

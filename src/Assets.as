@@ -10,6 +10,8 @@ package
 		[Embed(source = "../assets/tileset_storage.png")] public static var TILESET_STORAGE:Class;
 		[Embed(source = "../assets/window.png")] public static var WINDOW:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
+		[Embed(source = "../assets/extratiles_solid.png")] public static var EXTRA_SOLID:Class;
+		[Embed(source = "../assets/extratiles_transparent.png")] public static var EXTRA_TRANSPARENT:Class;
 		
 		// moving level objects
 		[Embed(source = "../assets/player.png")] public static var PLAYER:Class;

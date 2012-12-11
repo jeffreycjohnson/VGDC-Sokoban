@@ -19,6 +19,7 @@ package
 		public var levelArray:Array = [];
 		public var floorArray:Array = [];
 		public var entitiesArray:Array = [];
+		public var extraTiles:Array = [];
 		
 		public function Level(levelData:Class) 
 		{
@@ -112,7 +113,6 @@ package
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;
 			}
 			
-			
 			for each (node in xml.EntityLayer.Laser)
 			{
 				x = node.@x;
@@ -142,6 +142,23 @@ package
 				levelArray[x/PlayState.TILESIZE][y/PlayState.TILESIZE] = 5;
 			}
 			// add more entity types here (e.g. laser emitters, keys, etc.
+			
+			// Load data from extra tiles
+			for each (node in xml.SolidTileLayer.tile)
+			{
+				x = node.@x;
+				y = node.@y;
+				id = node.@id;
+				extraTiles.push(new IdleGraphic(x*16, y*16, Assets.EXTRA_SOLID, id, true));
+			}
+			
+			for each (node in xml.TransparentTileLayer.tile)
+			{
+				x = node.@x;
+				y = node.@y;
+				id = node.@id;
+				extraTiles.push(new IdleGraphic(x*16, y*16, Assets.EXTRA_TRANSPARENT, id, false));
+			}
 			
 			
 		}

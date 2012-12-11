@@ -167,4 +167,13 @@
     <tile x="14" y="10" id="1" />
   </MainLayer>
   <EntityLayer />
+  <SolidTileLayer tileset="SolidObjects" exportMode="XML">
+    <tile x="5" y="6" id="0" />
+    <tile x="9" y="4" id="1" />
+  </SolidTileLayer>
+  <TransparentTileLayer tileset="TransparentObjects" exportMode="XML">
+    <tile x="5" y="1" id="0" />
+    <tile x="5" y="2" id="0" />
+    <tile x="6" y="1" id="1" />
+  </TransparentTileLayer>
 </level>
