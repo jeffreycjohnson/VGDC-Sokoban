@@ -13,8 +13,8 @@ package
 			super();
 			if (type == TiledBackground.LEVEL_1)
 			{
-				loadGraphic(Assets.WALL, false, false, 16, 16);
-				addAnimation("default", [7]);
+				loadGraphic(Assets.TILESET_STORAGE, false, false, 16, 16);
+				addAnimation("default", [5]);
 				play("default");
 			}
 			else if (type == TiledBackground.MENU_1)

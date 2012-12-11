@@ -1,4 +1,4 @@
-<level width="304" height="176" Name="ClassicSoko1">
+<level width="304" height="176" Name="ClassicSoko1" Level_Info="" Tileset="Storage">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

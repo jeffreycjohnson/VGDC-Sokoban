@@ -9,6 +9,11 @@ package {
 	{
 		
 		private var size:Number;
+		private var growing:Boolean;
+		
+		private const growSpeed:Number = 1.08;
+		private const spinSpeed:Number = 10;
+		private const fadeSpeed:Number = 2 / PlayState.teleportTime;
 		
 		public function Teleporter(x:int, y:int)
 		{
@@ -18,24 +23,42 @@ package {
 			grow();
 		}
 		
-		// Make the portal spin
 		override public function update():void {
 			super.update();
-			angle -= 10;
+			
+			angle -= spinSpeed;
 			while (angle >= 90) angle -= 90;
 			while (angle < 0) angle += 90;
+			
+			if (growing) grow();
+			else shrink();
+			
+			if (growing) alpha += fadeSpeed;
+			else alpha -= fadeSpeed;
 		}
 		
-		public function grow():void
+		private function grow():void
 		{
 			scale = new FlxPoint(size, size);
-			size *= 1.1;
+			size *= growSpeed;
 		}
 		
-		public function resetSize():void
+		private function shrink():void
+		{
+			scale = new FlxPoint(size, size);
+			size *= (2-growSpeed)
+		}
+		
+		public function startAnimation():void
 		{
 			size = .1;
-			grow();
+			growing = true;
+			alpha = 0;
+		}
+		
+		public function startShrinking():void
+		{
+			growing = false;
 		}
 	}
 }

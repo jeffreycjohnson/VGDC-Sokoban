@@ -18,8 +18,6 @@ Keys and locks, or groups of goal spaces that activate a certain goal
 Game Engine Features
 ----------------------
 
-Door that opens when goals are filled
-
 Pushable block that doesn't work on goal spaces
 
 
@@ -42,7 +40,6 @@ Wall tileset
 Floor graphics
 	16x16 standard floor
 	16x16 goal tile
-	16x16 door tile
 
 
 Audio

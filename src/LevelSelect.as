@@ -18,7 +18,7 @@ package
 		{
 		}
 		
-		private function switchState():void
+		private function play():void
 		{
 			FlxG.switchState(new PlayState);
 		}
@@ -46,7 +46,7 @@ package
 				{
 					x = (int)(j / 5) * 175 + 50;
 					y = (j % 5) * 38 + 90;
-					buttonArray[i * 10 + j] = new Button(x, y, i, j, switchState);
+					buttonArray[i * 10 + j] = new Button(x, y, i, j, play);
 				}
 			}
 			
@@ -61,12 +61,6 @@ package
 				FlxG.switchState(new MainMenu);
 			}
 			super.update();
-		}
-
-		private function play(levelIndex:int):void
-		{
-			PlayState.startLevel = levelIndex;
-			FlxG.switchState(new PlayState);
 		}
 		
 		private function showButtons():void

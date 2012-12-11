@@ -27,6 +27,7 @@
   <LevelValueDefinitions>
     <ValueDefinition xsi:type="StringValueDefinition" Name="Name" Default="Unnamed Level" MaxChars="-1" MultiLine="false" />
     <ValueDefinition xsi:type="StringValueDefinition" Name="Level_Info" Default="" MaxChars="-1" MultiLine="false" />
+    <ValueDefinition xsi:type="StringValueDefinition" Name="Tileset" Default="Storage" MaxChars="-1" MultiLine="false" />
   </LevelValueDefinitions>
   <LayerDefinitions>
     <LayerDefinition xsi:type="TileLayerDefinition">

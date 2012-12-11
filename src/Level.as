@@ -14,6 +14,7 @@ package
 		public var width:int;
 		public var height:int;
 		public var blocksActive:int;
+		public var tileset:Class;
 		
 		public var levelArray:Array = [];
 		public var floorArray:Array = [];
@@ -31,11 +32,12 @@ package
 			var xml:XML = XML(bytes.readUTFBytes(bytes.length));
 			var node:XML;
 			
-			// Load the level name
+			// Load level variables - name, levelinfo, tileset
 			name = xml.@Name;
-			
-			//Load any ectra level info
 			levelInfo = xml.@Level_Info;
+			var t:String = xml.@Tileset;
+			if (t == "Storage") tileset = Assets.TILESET_STORAGE;
+			//else if (t == "Silo") tileset = Assets.TILESET_SILO;
 			
 			// Load width and height
 			width = xml.@width / PlayState.TILESIZE;

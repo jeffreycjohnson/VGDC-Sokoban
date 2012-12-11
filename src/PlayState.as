@@ -58,11 +58,10 @@ package
 		private var fadeRate:Number;
 		private var fadeOverlay:FlxSprite;
 		
-		public static var startChapter:int = 0;
-		public static var startLevel:int = 0;
+		public static var startChapter:int;
+		public static var startLevel:int;
 		private var chapterIndex:int; // range 0-9
 		private var levelIndex:int; // range 0-9
-		
 		
 		private var moveCount:int; // how many moves the player has done
 		public static var maxLevel:SharedObject; // tracks th players progress
@@ -72,10 +71,11 @@ package
 		private var goalCount:int  // goals achieved so far
 		private var godMode:Boolean = false;
 		
-		private var locked:int = 0;
+		private var gameLocked:Boolean; // if true, then the player can't move and moving game stuff doesn't update.
 		private var defeatNext:Boolean = false;
 		private var victory_marker:Boolean = false;
-		private var portal:Teleporter;
+		
+		private var tileset:Class; // current tileset image
 		
 		private var buttonNext:Button;
 		private var buttonMenu:Button;
@@ -89,17 +89,41 @@ package
 		private var py:int; // player y
 		
 		private var moveText:FlxText;
-		private var timeText:FlxText;
+		private var levelNumberText:FlxText;
+		private var levelNameText:FlxText;
 		//private var godModeText:FlxText;
 		
 		// whether or not we should update detected at the end of the tick
 		private var _updateDetectedNext:Boolean;
 		public function set updateDetectedNext(b:Boolean):void { _updateDetectedNext = b; };
 		
+		// defeating the player
+		private var defeated:Boolean;
+		private var defeatCount:int;
+		private const defeatTime:int = 60;
+		
+		// Level scrolling transition stuff
+		private var curG:FlxGroup; // current group
+		private var prevG:FlxGroup; // previous group
+		private var guiG:FlxGroup; // gui elements
+		private var scrolling:Boolean;
+		private var scrollDir:int;
+		private var scrollCount:int;
+		private const scrollTime:int = 50;
+		private const scrollSpeed:int = 8; // scrolltime * scrollSpeed MUST equal Main.WIDTH
+		
+		// teleporter
+		private var portal:Teleporter;
+		private var teleporting:Boolean;
+		private var teleportCount:int;
+		public static const teleportTime:int = 60;
+		
 		
 		// TODO: possibly add in parameters for which level to start on?
 		public function PlayState()
 		{
+			levelIndex = startLevel;
+			chapterIndex = startChapter;
 		}
 		
 		override public function create():void
@@ -110,95 +134,125 @@ package
 			// create fade overlay object
 			fadeOverlay = new FlxSprite(0, 0);
 			fadeOverlay.makeGraphic(Main.WIDTH, Main.HEIGHT, 0xff000000);
-			fadeOverlay.alpha = 0;
-			add(fadeOverlay);
 			
 			// to start us off, let's load the start level.
-			fadeOverlay.alpha = 1;
-			switchLevel(startChapter, startLevel);
-			(FlxG.state as PlayState).updateDetectedNext = true;
+			fadeOverlay.alpha = 0;
+			loadLevel(startChapter, startLevel);
+			
+			loadGUI(); // create the gui once and only once this PlayState
+			updateLevelGUI();
+			updateDetectedNext = true;
+			add(curG);
+			add(guiG);
 		}
 		
 		override public function update():void
 		{
+			/* scrolling, teleporting, fading, defeated */
+			{
 			
-			// Fading between levels
-			if (fading)
+			// Scrolling between levels
+			if (scrolling)
+			{
+				scrollCount++;
+				NaboUtil.moveGroup(curG, scrollSpeed*scrollDir);
+				NaboUtil.moveGroup(prevG, scrollSpeed * scrollDir);
+				if (scrollCount == int(scrollTime / 2)) updateLevelGUI();
+				if (scrollCount == scrollTime)
+				{
+					scrolling = false;
+					remove(prevG);
+				}
+				return;
+			}
+			
+			// Teleporter animation playing
+			else if (teleporting)
+			{
+				teleportCount++;
+				if (teleportCount == int(teleportTime / 2))
+				{
+					portal.startShrinking();
+					player.kill();
+				}
+				if (teleportCount == teleportTime)
+				{
+					teleporting = false;
+					remove(portal);
+					victory();
+				}
+			}
+			
+			// Fading out and in
+			else if (fading)
 			{
 				fadeOverlay.alpha += fadeRate;
-				if (fadeRate < 0) portal.alpha -= fadeRate;
 				if (fadeOverlay.alpha == 1)
 				{
 					fadeRate *= -1;
+					clear();
 					loadLevel(chapterIndex, levelIndex);
+					add(curG);
 					add(fadeOverlay);
+					add(guiG);
+					updateLevelGUI();
 				}
 				else if (fadeOverlay.alpha == 0)
 				{
 					fading = false;
 					fadeRate = 0;
+					remove(fadeOverlay);
 				}
 				return;
 			}
 			
-			// Switching Levels
+			// Defeated (waiting)
+			else if (defeated)
+			{
+				defeatCount++;
+				if (defeatCount == defeatTime)
+				{
+					defeated = false;
+					fadeLevel(chapterIndex, levelIndex);
+				}
+				return;
+			}
+			
+			}
+			
+			/* R, PgUp, PgDn, Esc */
+			if (!gameLocked) {
 			if (FlxG.keys.justPressed("R"))
 			{
-				switchLevel(chapterIndex, levelIndex);
+				fadeLevel(chapterIndex, levelIndex);
 			}
 			else if (FlxG.keys.justPressed("PAGEUP") && (Main.debug || chapterIndex * 10 + levelIndex > maxLevel.data.value))
 			{
 				// same chapter
 				if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
-					switchLevel(chapterIndex, levelIndex + 1);
+					scrollLevel(1);//switchLevel(chapterIndex, levelIndex + 1);
 				// swtiching chapters
-				else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
-					switchLevel(chapterIndex + 1, 0);
+				//else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
+					//switchLevel(chapterIndex + 1, 0);
 				
 			}
 			else if (FlxG.keys.justPressed("PAGEDOWN"))
 			{
 				// same chapter
 				if (levelIndex > 0)
-					switchLevel(chapterIndex, levelIndex - 1);
+					scrollLevel(-1);//switchLevel(chapterIndex, levelIndex - 1);
 				// switching chapters
-				else if (levelIndex == 0 && chapterIndex > 0)
-					switchLevel(chapterIndex - 1, LevelStorage.chapterLengths[chapterIndex - 1] - 1);
+				//else if (levelIndex == 0 && chapterIndex > 0)
+					//switchLevel(chapterIndex - 1, LevelStorage.chapterLengths[chapterIndex - 1] - 1);
 			}
 			else if (FlxG.keys.justPressed("ESCAPE")) FlxG.switchState(new MainMenu);
 			
-			// Locked state (don't do any game logic at all)
-			if (locked)
-			{
-				locked--;
-				portal.grow();
-				// Show the end of level GUI
-				if (victory_marker && !locked)
-				{
-					locked++;
-					victory();
-					super.update();
-				}
-				// we want to run a couple more update cycles so that the player finishes moving
-				else if (victory_marker && locked > 65) true;
-				
-				// give them a moment to see their mistake then fade out
-				else if (locked && locked < 60)
-				{
-					fadeOverlay.alpha += fadeRateConst / 4;
-					return;
-				}
-				// restart level once we fade out
-				else if (!locked && !victory_marker)
-				{
-					switchLevel(chapterIndex, levelIndex);
-					return;
-				}
-				else return;
 			}
 			
-			// calculate movement values
+			/* player movement */
+			if (!gameLocked) {
 			
+			// calculate movement values
 			var xo:int = 0; // x offset (1 or -1)
 			var yo:int = 0; // y offset (1 or -1)
 			
@@ -277,9 +331,7 @@ package
 				// TODO: other cases (?)
 			}
 			
-			
-			// finally, update all objects we have added to our FlxState.
-			super.update();
+			}
 			
 			// if we should update the detecteds this tick, then do so.
 			if (_updateDetectedNext) 
@@ -295,19 +347,11 @@ package
 				defeat();
 			}
 			
-			// Make the portal and set it it fade out and load the end of level GUI
-			if (victory_marker && ! locked)
-			{
-				locked = 100;
-				portal.resetSize();
-				portal.x = px * TILESIZE + XOFFSET - 16;
-				portal.y = py * TILESIZE + YOFFSET - 16;
-				portal.alpha = 1;
-				add(portal);
-			}
+			// finally, update all objects we have added to our FlxState.
+			super.update();
 			
 			
-			// trace array (for debugging)
+			// trace level array (for debugging)
 			/*
 			for (var y:int = 0; y < level[0].length; y++) {
 				var s:String = "";
@@ -319,17 +363,23 @@ package
 			trace();
 			*/
 			
-			
 		}
 		
-		private function switchLevel(chapter:int, level:int):void
+		// fade to black, then fade in to the next level
+		private function fadeLevel(chapter:int, level:int):void
 		{
 			fading = true;
 			fadeRate = fadeRateConst;
+			clear();
+			add(curG);
+			add(fadeOverlay);
+			add(guiG);
 			
 			chapterIndex = chapter;
 			levelIndex = level;
 			
+			
+			// least moves (needed?)
 			if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
 				minMoves = SharedObject.getLocal((chapterIndex * 10 + levelIndex +  1).toString());
 			else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
@@ -350,11 +400,32 @@ package
 			}
 		}
 		
+		//scroll right (dir=1) or left (dir=-1) to the next level
+		private function scrollLevel(dir:int):void
+		{
+			scrolling = true;
+			scrollDir = -dir;
+			scrollCount = 0;
+			levelIndex += dir;
+			
+			// clear stage, and assign groups to correct stuff
+			clear();
+			prevG = curG;
+			loadLevel(chapterIndex, levelIndex);
+			
+			// move current group by appropriate offset
+			NaboUtil.moveGroup(curG, Main.WIDTH*-scrollDir);
+			
+			add(curG);
+			add(prevG);
+			add(guiG);
+		}
+		
+		// load the level at the given index to curG.
 		private function loadLevel(chapter:int, index:int):void
 		{
-			// standard stuff.
+			// reset internal (non-visible) data values
 			levelIndex = index;
-			clear();
 			level = [];
 			floor = [];
 			entities = [];
@@ -362,20 +433,22 @@ package
 			patrollers = new Vector.<PatrolBot>;
 			goalNumber = goalCount = 0;
 			moveCount = 0;
-			locked = 0;
-			victory_marker = false;
+			gameLocked = false;
 			var i:int = 0;
 			var j:int = 0;
 			
+			// load level from file and set values from it.
 			var thisLevel:Level = LevelStorage.levels[chapter][index];
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
+			tileset = thisLevel.tileset;
 			goalCount += thisLevel.blocksActive;
 			
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
 			YOFFSET = ((Main.HEIGHT - TOOLBAR_HEIGHT) - TILESIZE * thisLevel.height) / 2;
 			
-			
+			// clear our current group
+			curG = new FlxGroup();
 			
 			// add a repeating background object alligned with the level.
 			
@@ -385,7 +458,7 @@ package
 			if (YOFFSET % TILESIZE != 0 ) numTilesY++;
 			var startX:int = XOFFSET - numTilesX * TILESIZE;
 			var startY:int = YOFFSET - numTilesY * TILESIZE;
-			add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.LEVEL_1));
+			curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.LEVEL_1));
 			
 			// cycle through the level data.
 			
@@ -412,11 +485,11 @@ package
 					
 					// goal-floor
 					if (floor[i][j] == 1) {
-						add( new Floor(xAbs, yAbs, "goal"));
+						curG.add( new Floor(xAbs, yAbs, "goal", tileset));
 						goalNumber++;
 					}
 					// empty-floor
-					else add( new Floor(xAbs, yAbs, "normal"));
+					else curG.add( new Floor(xAbs, yAbs, "normal", tileset));
 					
 				}
 			}
@@ -450,9 +523,9 @@ package
 						if (guy.needsBacking()) {
 							var guy2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WALL);
 							guy2.updateSpriteSolid(i, j);
-							add(guy2);
+							curG.add(guy2);
 						}
-						add(guy);
+						curG.add(guy);
 					}
 					else if (corners[i][j] == 6) {
 						var girl:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
@@ -460,9 +533,9 @@ package
 						if (girl.needsBacking()) {
 							var girl2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
 							girl2.updateSpriteSolid(i, j);
-							add(girl2);
+							curG.add(girl2);
 						}
-						add(girl);					
+						curG.add(girl);
 					}
 				}
 			}
@@ -506,72 +579,52 @@ package
 				((MovingSprite)(specificGuy)).updateGridValues();
 				
 				// add each entity to the FlxState, and also to it's place in the entitites array.
-				add(specificGuy);
+				curG.add(specificGuy);
 				entities[x][y] = specificGuy;
 			}
 			
 			
 			// create player
 			player = new Player(px * TILESIZE + XOFFSET, py * TILESIZE + YOFFSET);
-			add(player);
+			curG.add(player);
 			
 			// cycle through detected here to add them on top of everything
 			for (i = 0; i < level.length; i++) {
 				for (j = 0; j < level[i].length; j++) {
 					detected[i][j] = new Detected(i * TILESIZE + XOFFSET, j * TILESIZE + YOFFSET);
-					add(detected[i][j]);
+					curG.add(detected[i][j]);
 				}
 			}
 			
 			// update Detecteds for the first time
 			updateDetected();
 			
-			
-			// create various GUI-entities
-			loadGUI(thisLevel);
 		}
 		
-		// called at the end of loadLevel
-		private function loadGUI(thisLevel:Level):void
+		// create all the gui objects and add them to guiG.
+		private function loadGUI():void
 		{
 			const SECTION1_WIDTH:int = 200;
 			const HEIGHT1:int = Main.HEIGHT - 46;
 			const HEIGHT2:int = Main.HEIGHT - 26;
 			const color:uint = 0xffffffff;
+			guiG = new FlxGroup();
 			
-			add(new TiledBackground(0, Main.HEIGHT - TOOLBAR_HEIGHT, Main.WIDTH / TILESIZE, TOOLBAR_HEIGHT / TILESIZE, TiledBackground.MENU_1));
-			add(new TiledBackground(-8, Main.HEIGHT - TOOLBAR_HEIGHT - 8, Main.WIDTH / TILESIZE + 1, 1, TiledBackground.BORDER_1));
+			guiG.add(new TiledBackground(0, Main.HEIGHT - TOOLBAR_HEIGHT, Main.WIDTH / TILESIZE, TOOLBAR_HEIGHT / TILESIZE, TiledBackground.MENU_1));
+			guiG.add(new TiledBackground(-8, Main.HEIGHT - TOOLBAR_HEIGHT - 8, Main.WIDTH / TILESIZE + 1, 1, TiledBackground.BORDER_1));
 			
 			moveText = new FlxText(Main.WIDTH - 135, HEIGHT1, 135, "");
 			updateMoveText();
 			moveText.setFormat("PIXEL", 16, color, "left");
-			add(moveText);
+			guiG.add(moveText);
 			
-			timeText = new FlxText(Main.WIDTH - 135, HEIGHT2, 135, "");
-			timeText.setFormat("PIXEL", 16, color, "left");
-			updateTimeText();
-			add(timeText);
-			
-			var levelNumberText:FlxText = new FlxText(50, HEIGHT1, 600, (chapterIndex + 1) + "-" + (levelIndex + 1));
+			levelNumberText = new FlxText(50, HEIGHT1, 600, (chapterIndex + 1) + "-" + (levelIndex + 1));
 			levelNumberText.setFormat("PIXEL", 16, color, "left");
-			add(levelNumberText);
+			guiG.add(levelNumberText);
 			
-			var levelNameText:FlxText = new FlxText(5, HEIGHT2, 300, thisLevel.name.toUpperCase());
+			levelNameText = new FlxText(5, HEIGHT2, 300, "Placeholder");//thisLevel.name.toUpperCase());
 			levelNameText.setFormat("PIXEL", 16, color, "left");
-			add(levelNameText);
-			
-			const startX:int = 170;
-			const startY:int = Main.HEIGHT - 40;
-			const cols:int = 3;
-			blockCounters = [];
-			for (var i:int = 0; i < goalNumber; i++)
-			{
-				var x:int = startX + (i % cols) * 24;
-				var y:int = startY + (int)(i / cols) * 24;
-				blockCounters[i] = new BlockCounter(x, y);
-				add( (BlockCounter)(blockCounters[i]));
-			}
-			updateBlockCounters();
+			guiG.add(levelNameText);
 			
 			/*
 			godModeText = new FlxText(5, 50, 100, "");
@@ -582,6 +635,29 @@ package
 			add(new FlxText(130, 5, 200, "Sokoban Game v0.2\nArrow keys = move\nR = restart\nPgDn/Up = switch levels"));
 			add(new FlxText(5, 35, 250, thisLevel.levelInfo));
 			*/
+		}
+		
+		private function updateLevelGUI():void
+		{
+			var thisLevel:Level = LevelStorage.levels[chapterIndex][levelIndex];
+			
+			levelNumberText.text = (chapterIndex + 1) + "-" + (levelIndex + 1);
+			levelNameText.text = thisLevel.name.toUpperCase();
+			updateMoveText();
+			
+			const startX:int = 170;
+			const startY:int = Main.HEIGHT - 40;
+			const cols:int = 3;
+			if (blockCounters != null) for (var n:int = 0; n < blockCounters.length; n++) guiG.remove(blockCounters[n]);
+			blockCounters = [];
+			for (var i:int = 0; i < goalNumber; i++)
+			{
+				var x:int = startX + (i % cols) * 24;
+				var y:int = startY + (int)(i / cols) * 24;
+				blockCounters[i] = new BlockCounter(x, y);
+				guiG.add( (BlockCounter)(blockCounters[i]));
+			}
+			updateBlockCounters();
 		}
 		
 		private function updateDetected():void
@@ -707,7 +783,9 @@ package
 		
 		private function defeat():void
 		{
-			locked = 90;
+			gameLocked = true;
+			defeated = true;
+			defeatCount = 0;
 			add(new FlxText(182, 100, 150, "Detected!"));
 		}
 		
@@ -722,15 +800,18 @@ package
 			}
 			minMoves.close();
 			
-			clear();
-			add(fadeOverlay);
+			// add gui stuff
 			add(new FlxText(160, 50, 100, "Level Completed"));
-			add(buttonRestart = new Button(40, 100, 0, 0, restart, .75, 1));
-			add(buttonMenu = new Button(140, 100, 0, 0, toMenu, .75, 1));
-			add(buttonNext = new Button(240, 100, 0, 0, nextLevel, .75, 1));
-			add(toMenuText = new FlxText(85, 105, 100, "Restart"));
-			add(toMenuText = new FlxText(175, 105, 100, "Main Menu"));
-			add(nextLevelText = new FlxText(275, 105, 100, "Next Level"));
+			
+			add(buttonMenu = new Button(40, 100, 0, 0, toMenu, .75, 1));
+			add(buttonRestart = new Button(140, 100, 0, 0, restart, .75, 1));
+			if (levelIndex < LevelStorage.chapterLengths[chapterIndex])
+				add(buttonNext = new Button(240, 100, 0, 0, nextLevel, .75, 1));
+			
+			add(toMenuText = new FlxText(85, 105, 100, "Menu"));
+			add(toMenuText = new FlxText(175, 105, 100, "Retry"));
+			if (levelIndex < LevelStorage.chapterLengths[chapterIndex])
+				add(nextLevelText = new FlxText(275, 105, 100, "Next"));
 		}
 		
 		private function updateMoveText():void
@@ -747,12 +828,6 @@ package
 			moveText.text += moveCount;
 		}
 		
-		private function updateTimeText():void
-		{
-			// TODO: this.
-			timeText.text = "asdf";
-		}
-		
 		private function updateBlockCounters():void
 		{
 			for (var i:int = 0; i < blockCounters.length; i++)
@@ -760,7 +835,16 @@ package
 				if (i < goalCount) (BlockCounter)(blockCounters[i]).changeAnimation(true);
 				else (BlockCounter)(blockCounters[i]).changeAnimation(false);
 			}
-			if (goalCount == goalNumber) victory_marker = true;
+			if (goalCount == goalNumber)
+			{
+				teleporting = true;
+				gameLocked = true;
+				teleportCount = 0;
+				portal.startAnimation();
+				portal.x = px * TILESIZE + XOFFSET - 16;
+				portal.y = py * TILESIZE + YOFFSET - 16;
+				add(portal);
+			}
 		}
 		
 		/*private function updateGodModeText():void
@@ -776,17 +860,12 @@ package
 		
 		private function nextLevel():void
 		{
-			// same chapter
-			if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
-				switchLevel(chapterIndex, levelIndex + 1);
-			// swtiching chapters
-			else if (levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1 && chapterIndex < LevelStorage.chapterLengths.length - 1)
-				switchLevel(chapterIndex + 1, 0);
+			scrollLevel(1);
 		}
 		
 		private function restart():void
 		{
-			switchLevel(levelIndex, chapterIndex);
+			fadeLevel(chapterIndex, levelIndex);
 		}
 	}
 

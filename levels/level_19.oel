@@ -1,4 +1,4 @@
-<level width="240" height="192" Name="Guard Duty" Level_Info="">
+<level width="240" height="192" Name="Guard Duty" Level_Info="" Tileset="Storage">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

@@ -8,10 +8,10 @@ package
 	public class Floor extends FlxSprite
 	{
 		
-		public function Floor(x:int, y:int, type:String) 
+		public function Floor(x:int, y:int, type:String, source:Class) 
 		{
 			super(x, y);
-			loadGraphic(Assets.FLOOR, true, false, 16, 16);
+			loadGraphic(source, true, false, 16, 16);
 			createAnimations();
 			
 			play(type);
@@ -19,8 +19,8 @@ package
 		
 		public function createAnimations():void
 		{
-			addAnimation("normal", [0]);
-			addAnimation("goal", [1]);
+			addAnimation("normal", [6]);
+			addAnimation("goal", [7]);
 		}
 	}
 

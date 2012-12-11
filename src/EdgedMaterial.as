@@ -16,7 +16,7 @@ package
 		{
 			super(x, y);
 			this.id = id;
-			if (id == 1) loadGraphic(Assets.WALL, false, false, 8, 8);
+			if (id == 1) loadGraphic(Assets.TILESET_STORAGE, false, false, 8, 8);
 			else if (id == 6) loadGraphic(Assets.WINDOW, false, false, 8, 8);
 			createAnimations();
 			play("center1");
@@ -126,10 +126,10 @@ package
 			addAnimation("insidecorner3", [20]);
 			addAnimation("insidecorner4", [21]);
 			
-			addAnimation("center1", [26]);
-			addAnimation("center2", [27]);
-			addAnimation("center3", [30]);
-			addAnimation("center4", [31]);
+			addAnimation("center1", [18]);
+			addAnimation("center2", [19]);
+			addAnimation("center3", [22]);
+			addAnimation("center4", [23]);
 		}
 		
 		// whether or not we should draw a 

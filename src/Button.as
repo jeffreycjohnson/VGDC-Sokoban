@@ -76,7 +76,7 @@ package
 					else {
 						if (!toggleable || state == "over") state = "off";
 					}
-					play(state);
+					if (state != "up") play(state);
 				}
 			}
 		}

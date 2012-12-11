@@ -1,4 +1,4 @@
-<level width="384" height="192" Name="Precision" Level_Info="You will die.">
+<level width="384" height="192" Name="Precision" Level_Info="You will die." Tileset="Storage">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />
