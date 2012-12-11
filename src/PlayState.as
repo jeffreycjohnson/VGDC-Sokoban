@@ -118,6 +118,9 @@ package
 		private var teleportCount:int;
 		public static const teleportTime:int = 60;
 		
+		// victorying the player
+		private var victoried:Boolean;
+		
 		
 		// TODO: possibly add in parameters for which level to start on?
 		public function PlayState()
@@ -204,6 +207,20 @@ package
 					remove(fadeOverlay);
 				}
 				return;
+			}
+			
+			// Victoried (intercept keyboard shortcut goodness
+			else if (victoried) 
+			{
+				if (FlxG.keys.justReleased("LEFT")) {
+					toMenu();
+				}
+				else if (FlxG.keys.justReleased("UP")) {
+					restart();
+				}
+				else if (FlxG.keys.justReleased("RIGHT")) {
+					nextLevel();
+				}
 			}
 			
 			// Defeated (waiting)
@@ -791,6 +808,9 @@ package
 		
 		private function victory():void
 		{
+			// declare victory
+			victoried = true;
+			
 			// Update the minimum number of moves
 			minMoves = SharedObject.getLocal((chapterIndex * 10 + levelIndex).toString());
 			if (minMoves.data.value == null || minMoves.data.value == 0 || minMoves.data.value > moveCount)
@@ -807,11 +827,11 @@ package
 			add(buttonRestart = new Button(140, 100, 0, 0, restart, .75, 1));
 			if (levelIndex < LevelStorage.chapterLengths[chapterIndex])
 				add(buttonNext = new Button(240, 100, 0, 0, nextLevel, .75, 1));
-			
-			add(toMenuText = new FlxText(85, 105, 100, "Menu"));
-			add(toMenuText = new FlxText(175, 105, 100, "Retry"));
+						
+			add(toMenuText = new FlxText(85, 105, 100, "Menu [<-]"));
+			add(toMenuText = new FlxText(175, 105, 100, "Retry [^]"));
 			if (levelIndex < LevelStorage.chapterLengths[chapterIndex])
-				add(nextLevelText = new FlxText(275, 105, 100, "Next"));
+				add(nextLevelText = new FlxText(275, 105, 100, "Next [->]"));
 		}
 		
 		private function updateMoveText():void
@@ -855,16 +875,19 @@ package
 		
 		private function toMenu():void
 		{
+			victoried = false;
 			FlxG.switchState(new MainMenu);
 		}
 		
 		private function nextLevel():void
 		{
+			victoried = false;
 			scrollLevel(1);
 		}
 		
 		private function restart():void
 		{
+			victoried = false;
 			fadeLevel(chapterIndex, levelIndex);
 		}
 	}
