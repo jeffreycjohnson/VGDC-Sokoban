@@ -11,9 +11,15 @@ package
 		public function Tile(type:String) 
 		{
 			super();
-			if (type == TiledBackground.LEVEL_1)
+			if (type == TiledBackground.TILESET_1)
 			{
 				loadGraphic(Assets.TILESET_STORAGE, false, false, 16, 16);
+				addAnimation("default", [5]);
+				play("default");
+			}
+			else if (type == TiledBackground.TILESET_2)
+			{
+				loadGraphic(Assets.TILESET_FACTORY, false, false, 16, 16);
 				addAnimation("default", [5]);
 				play("default");
 			}

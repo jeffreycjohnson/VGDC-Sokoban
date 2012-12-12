@@ -27,12 +27,12 @@ package
 			}
 			else if (type == "left")
 			{
-				loadRotatedGraphic(Assets.LASER, 4, 1);
+				loadRotatedGraphic(Assets.LASER, 4, 2);
 				_theta = 0 + 3 * Math.PI / 2;
 			}
 			else if (type == "up")
 			{
-				loadRotatedGraphic(Assets.LASER, 4, 2);
+				loadRotatedGraphic(Assets.LASER, 4, 1);
 				_theta = Math.PI / 2 + Math.PI / 2;
 			}
 		}

@@ -323,13 +323,13 @@ package
 					
 					var b:Block = (Block)(entities[x_next2][y_next2]);
 					// now we change the goal count if necessary
-					if (floor[x_next][y_next] == 0 && floor[x_next2][y_next2] == 1)
+					if (b.isCharged() && floor[x_next][y_next] == 0 && floor[x_next2][y_next2] == 1)
 					{
 						goalCount++;
 						updateBlockCounters();
 						b.power(true);
 					}
-					else if (floor[x_next][y_next] == 1 && floor[x_next2][y_next2] == 0)
+					else if (b.isCharged() && floor[x_next][y_next] == 1 && floor[x_next2][y_next2] == 0)
 					{
 						goalCount--;
 						updateBlockCounters();
@@ -466,7 +466,10 @@ package
 			if (YOFFSET % TILESIZE != 0 ) numTilesY++;
 			var startX:int = XOFFSET - numTilesX * TILESIZE;
 			var startY:int = YOFFSET - numTilesY * TILESIZE;
-			curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.LEVEL_1));
+			if (tileset == Assets.TILESET_STORAGE)
+				curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.TILESET_1));
+			else if (tileset == Assets.TILESET_FACTORY)
+				curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.TILESET_2));
 			
 			// cycle through the level data.
 			
@@ -526,20 +529,20 @@ package
 					yAbs = (j - 1)  * TILESIZE / 2 + YOFFSET;
 					if (corners[i][j] == 1)
 					{
-						var guy:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WALL);
+						var guy:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, tileset);
 						guy.updateSprite(corners, i, j);
 						if (guy.needsBacking()) {
-							var guy2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WALL);
+							var guy2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, tileset);
 							guy2.updateSpriteSolid(i, j);
 							curG.add(guy2);
 						}
 						curG.add(guy);
 					}
 					else if (corners[i][j] == 6) {
-						var girl:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
+						var girl:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, Assets.WINDOW);
 						girl.updateSprite(corners, i, j);
 						if (girl.needsBacking()) {
-							var girl2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, EdgedMaterial.WINDOW);
+							var girl2:EdgedMaterial = new EdgedMaterial(xAbs, yAbs, Assets.WINDOW);
 							girl2.updateSpriteSolid(i, j);
 							curG.add(girl2);
 						}

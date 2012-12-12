@@ -1,0 +1,115 @@
+<level width="240" height="112" Name="Column Blocker" Level_Info="" Tileset="Storage">
+  <MainLayer tileset="PlaceholderTileset" exportMode="XML">
+    <tile x="0" y="0" id="1" />
+    <tile x="0" y="1" id="1" />
+    <tile x="0" y="2" id="1" />
+    <tile x="0" y="3" id="1" />
+    <tile x="0" y="4" id="1" />
+    <tile x="0" y="5" id="1" />
+    <tile x="0" y="6" id="1" />
+    <tile x="1" y="0" id="1" />
+    <tile x="1" y="1" id="1" />
+    <tile x="1" y="2" id="1" />
+    <tile x="1" y="3" id="0" />
+    <tile x="1" y="4" id="0" />
+    <tile x="1" y="5" id="0" />
+    <tile x="1" y="6" id="1" />
+    <tile x="2" y="0" id="1" />
+    <tile x="2" y="1" id="1" />
+    <tile x="2" y="2" id="1" />
+    <tile x="2" y="3" id="4" />
+    <tile x="2" y="4" id="2" />
+    <tile x="2" y="5" id="0" />
+    <tile x="2" y="6" id="1" />
+    <tile x="3" y="0" id="1" />
+    <tile x="3" y="1" id="1" />
+    <tile x="3" y="2" id="0" />
+    <tile x="3" y="3" id="0" />
+    <tile x="3" y="4" id="2" />
+    <tile x="3" y="5" id="0" />
+    <tile x="3" y="6" id="1" />
+    <tile x="4" y="0" id="1" />
+    <tile x="4" y="1" id="1" />
+    <tile x="4" y="2" id="0" />
+    <tile x="4" y="3" id="0" />
+    <tile x="4" y="4" id="0" />
+    <tile x="4" y="5" id="0" />
+    <tile x="4" y="6" id="1" />
+    <tile x="5" y="0" id="1" />
+    <tile x="5" y="1" id="1" />
+    <tile x="5" y="2" id="0" />
+    <tile x="5" y="3" id="0" />
+    <tile x="5" y="4" id="0" />
+    <tile x="5" y="5" id="0" />
+    <tile x="5" y="6" id="1" />
+    <tile x="6" y="0" id="1" />
+    <tile x="6" y="1" id="1" />
+    <tile x="6" y="2" id="0" />
+    <tile x="6" y="3" id="0" />
+    <tile x="6" y="4" id="0" />
+    <tile x="6" y="5" id="0" />
+    <tile x="6" y="6" id="1" />
+    <tile x="7" y="0" id="1" />
+    <tile x="7" y="1" id="1" />
+    <tile x="7" y="2" id="0" />
+    <tile x="7" y="3" id="0" />
+    <tile x="7" y="4" id="0" />
+    <tile x="7" y="5" id="0" />
+    <tile x="7" y="6" id="1" />
+    <tile x="8" y="0" id="1" />
+    <tile x="8" y="1" id="1" />
+    <tile x="8" y="2" id="0" />
+    <tile x="8" y="3" id="0" />
+    <tile x="8" y="4" id="0" />
+    <tile x="8" y="5" id="0" />
+    <tile x="8" y="6" id="1" />
+    <tile x="9" y="0" id="1" />
+    <tile x="9" y="1" id="1" />
+    <tile x="9" y="2" id="0" />
+    <tile x="9" y="3" id="0" />
+    <tile x="9" y="4" id="7" />
+    <tile x="9" y="5" id="0" />
+    <tile x="9" y="6" id="1" />
+    <tile x="10" y="0" id="1" />
+    <tile x="10" y="1" id="1" />
+    <tile x="10" y="2" id="1" />
+    <tile x="10" y="3" id="0" />
+    <tile x="10" y="4" id="7" />
+    <tile x="10" y="5" id="0" />
+    <tile x="10" y="6" id="1" />
+    <tile x="11" y="0" id="1" />
+    <tile x="11" y="1" id="1" />
+    <tile x="11" y="2" id="1" />
+    <tile x="11" y="3" id="0" />
+    <tile x="11" y="4" id="3" />
+    <tile x="11" y="5" id="0" />
+    <tile x="11" y="6" id="1" />
+    <tile x="12" y="0" id="1" />
+    <tile x="12" y="1" id="1" />
+    <tile x="12" y="2" id="1" />
+    <tile x="12" y="3" id="0" />
+    <tile x="12" y="4" id="3" />
+    <tile x="12" y="5" id="0" />
+    <tile x="12" y="6" id="1" />
+    <tile x="13" y="0" id="1" />
+    <tile x="13" y="1" id="1" />
+    <tile x="13" y="2" id="1" />
+    <tile x="13" y="3" id="0" />
+    <tile x="13" y="4" id="0" />
+    <tile x="13" y="5" id="0" />
+    <tile x="13" y="6" id="1" />
+    <tile x="14" y="0" id="1" />
+    <tile x="14" y="1" id="1" />
+    <tile x="14" y="2" id="1" />
+    <tile x="14" y="3" id="1" />
+    <tile x="14" y="4" id="1" />
+    <tile x="14" y="5" id="1" />
+    <tile x="14" y="6" id="1" />
+  </MainLayer>
+  <EntityLayer>
+    <Laser id="0" x="80" y="16" Behavior="laser down" />
+    <Laser id="1" x="112" y="16" Behavior="laser down" />
+  </EntityLayer>
+  <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
+  <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />
+</level>

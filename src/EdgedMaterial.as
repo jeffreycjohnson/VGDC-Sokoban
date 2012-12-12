@@ -7,17 +7,16 @@ package
 	 */
 	public class EdgedMaterial extends FlxSprite
 	{
-		private var id:int;
+		private var source:Class;
 		private var _needsBacking:Boolean;
 		public static const WALL:int = 1;
 		public static const WINDOW:int = 6;
 		
-		public function EdgedMaterial(x:int, y:int, id:int) 
+		public function EdgedMaterial(x:int, y:int, source:Class) 
 		{
 			super(x, y);
-			this.id = id;
-			if (id == 1) loadGraphic(Assets.TILESET_STORAGE, false, false, 8, 8);
-			else if (id == 6) loadGraphic(Assets.WINDOW, false, false, 8, 8);
+			this.source = source;
+			loadGraphic(source, false, false, 8, 8);
 			createAnimations();
 			play("center1");
 		}
@@ -25,6 +24,9 @@ package
 		public function updateSprite(corners:Array, xx:int, yy:int):void
 		{
 			var ref:String;
+			var id:int;
+			if (source == Assets.WINDOW) id = WINDOW;
+			else id = WALL;
 			
 			var top:Boolean = corners[xx][yy-1] == id;
 			var bottom:Boolean = corners[xx][yy+1] == id;

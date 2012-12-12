@@ -18,9 +18,11 @@ package
 		
 		[Embed(source = "../levels/level_666.oel", mimeType = "application/octet-stream")] public static const level_10:Class;
 		[Embed(source = "../levels/level_99.oel", mimeType = "application/octet-stream")] public static const level_11:Class;
-		[Embed(source = "../levels/level_graphicstest.oel", mimeType = "application/octet-stream")] public static const level_12:Class;
+		[Embed(source = "../levels/level_roundtrip.oel", mimeType = "application/octet-stream")] public static const level_12:Class;
+		[Embed(source = "../levels/level_columnblocker.oel", mimeType = "application/octet-stream")] public static const level_13:Class;
+		[Embed(source = "../levels/level_graphicstest.oel", mimeType = "application/octet-stream")] public static const level_14:Class;
 		
-		public static var chapterLengths:Array = [7, 3]; // change this manually !!
+		public static var chapterLengths:Array = [7, 5]; // change this manually !!
 		public static var chapterNames:Array = ["Introduction", "Test Chapter2"];
 		public static var levels:Array = [];
 		

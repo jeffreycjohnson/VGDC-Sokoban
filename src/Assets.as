@@ -8,6 +8,7 @@ package
 	{
 		// level layout
 		[Embed(source = "../assets/tileset_storage.png")] public static var TILESET_STORAGE:Class;
+		[Embed(source = "../assets/tileset_factory.png")] public static var TILESET_FACTORY:Class;
 		[Embed(source = "../assets/window.png")] public static var WINDOW:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
 		[Embed(source = "../assets/extratiles_solid.png")] public static var EXTRA_SOLID:Class;

@@ -38,7 +38,7 @@ package
 			levelInfo = xml.@Level_Info;
 			var t:String = xml.@Tileset;
 			if (t == "Storage") tileset = Assets.TILESET_STORAGE;
-			//else if (t == "Silo") tileset = Assets.TILESET_SILO;
+			else if (t == "Factory") tileset = Assets.TILESET_FACTORY;
 			
 			// Load width and height
 			width = xml.@width / PlayState.TILESIZE;
@@ -60,16 +60,16 @@ package
 				var x:int = node.@x;
 				var y:int = node.@y;
 				var id:int = node.@id;
-
+				
 				// by default, load the present value to level and 0 to floor.
 				levelArray[x][y] = id;
 				floorArray[x][y] = 0;
-								
+				
 				// special cases:
 				
 				// block
 				if (id == 2) {
-					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, false));
+					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, true, false));
 				}
 				// goal-floor
 				else if (id == 3) {
@@ -86,8 +86,15 @@ package
 				else if (id == 5) {
 					levelArray[x][y] = 2;
 					floorArray[x][y] = 1;
-					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, true));
+					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, true, true));
 					blocksActive++;
+				}
+				
+				// uncharged block
+				else if (id == 7)
+				{
+					levelArray[x][y] = 2;
+					entitiesArray.push( new Block(x * PlayState.TILESIZE, y * PlayState.TILESIZE, false, false));
 				}
 			}
 			
