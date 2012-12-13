@@ -22,8 +22,13 @@ package
 		[Embed(source = "../levels/level_columnblocker.oel", mimeType = "application/octet-stream")] public static const level_13:Class;
 		[Embed(source = "../levels/level_graphicstest.oel", mimeType = "application/octet-stream")] public static const level_14:Class;
 		
-		public static var chapterLengths:Array = [7, 5]; // change this manually !!
-		public static var chapterNames:Array = ["Introduction", "Test Chapter2"];
+		[Embed(source = "../levels/level_10.oel", mimeType = "application/octet-stream")] public static const level_20:Class;
+		
+		public static var chapterLengths:Array = [7, 5, 1]; // change this manually !!
+		public static var chapterNames:Array = ["Introduction", "Test Chapter2", "Test Chapter3"];
+		public static var minMoves:Array = [[100, 100, 100, 100, 100, 100, 100],
+											[100, 100, 100, 100, 100],
+											[100]];
 		public static var levels:Array = [];
 		
 		public static function getLevelString(x:int, y:int):String

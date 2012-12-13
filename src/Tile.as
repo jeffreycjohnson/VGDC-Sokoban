@@ -23,6 +23,12 @@ package
 				addAnimation("default", [5]);
 				play("default");
 			}
+			else if (type == TiledBackground.TILESET_3)
+			{
+				loadGraphic(Assets.TILESET_OFFICE, false, false, 16, 16);
+				addAnimation("default", [5]);
+				play("default");
+			}
 			else if (type == TiledBackground.MENU_1)
 			{
 				loadGraphic(Assets.GRATE_BG, false, false, 16, 16);

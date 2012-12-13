@@ -9,9 +9,10 @@ package
 	public class TiledBackground extends FlxSprite
 	{
 		public static const TILESET_1:String = "a";
-		public static const TILESET_2:String = "b"
-		public static const MENU_1:String = "c";
-		public static const BORDER_1:String = "d";
+		public static const TILESET_2:String = "b";
+		public static const TILESET_3:String = "c";
+		public static const MENU_1:String = "d";
+		public static const BORDER_1:String = "e";
 		
 		private const TILESIZE:int = PlayState.TILESIZE;
 		

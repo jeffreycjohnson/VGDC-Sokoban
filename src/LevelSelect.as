@@ -88,12 +88,18 @@ package
 				x = (int)(j / 5) * 175 + 65;
 				y = (j % 5) * 38 + 95;
 				add(new FlxText(x, y, 100, (j + 1).toString() + ": " + LevelStorage.levels[chapter][j].name));
+				var medal:Boolean = false;
 				
 				// Add the minimum number of moves
 				PlayState.minMoves = SharedObject.getLocal((chapter * 10 + j).toString());
 				if (PlayState.minMoves.data.value != null && PlayState.minMoves.data.value != 0)
+				{
 					add(new FlxText(x + 95, y, 50, PlayState.minMoves.data.value.toString()));
+					if (PlayState.minMoves.data.value <= (Level(LevelStorage.levels[chapter][j])).minMoves) medal = true;
+				}
 				PlayState.minMoves.close();
+				
+				add(new MovesMedal(x + 113, y - 7, medal));
 			}
 		}
 	}

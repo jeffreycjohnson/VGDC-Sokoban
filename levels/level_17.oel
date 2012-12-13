@@ -1,4 +1,4 @@
-<level width="208" height="208" Name="Move the Blocks" Level_Info="" Tileset="Storage">
+<level width="208" height="208" Name="Move the Blocks" Level_Info="" Tileset="Storage" MinimumMoves="100">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

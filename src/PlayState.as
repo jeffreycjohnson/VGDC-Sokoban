@@ -449,7 +449,10 @@ package
 			var thisLevel:Level = LevelStorage.levels[chapter][index];
 			px = thisLevel.playerX;
 			py = thisLevel.playerY;
-			tileset = thisLevel.tileset;
+			//tileset = thisLevel.tileset;
+			if (chapterIndex == 0) tileset = Assets.TILESET_STORAGE;
+			else if (chapterIndex == 1) tileset = Assets.TILESET_FACTORY;
+			else if (chapterIndex == 2) tileset = Assets.TILESET_OFFICE;
 			goalCount += thisLevel.blocksActive;
 			
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
@@ -470,6 +473,8 @@ package
 				curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.TILESET_1));
 			else if (tileset == Assets.TILESET_FACTORY)
 				curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.TILESET_2));
+			else if (tileset == Assets.TILESET_OFFICE)
+				curG.add(new TiledBackground(startX, startY, numTilesX * 2 + thisLevel.width, numTilesY * 2 + thisLevel.height, TiledBackground.TILESET_3));
 			
 			// cycle through the level data.
 			

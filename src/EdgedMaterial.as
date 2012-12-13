@@ -9,6 +9,7 @@ package
 	{
 		private var source:Class;
 		private var _needsBacking:Boolean;
+		private var _canBeRemoved:Boolean;
 		public static const WALL:int = 1;
 		public static const WINDOW:int = 6;
 		
@@ -83,6 +84,7 @@ package
 			play(ref);
 			
 			_needsBacking = !(ref == "center1" || ref == "center2" || ref == "center3" || ref == "center4");
+			_canBeRemoved = (ref == "center1" || ref == "center2" || ref == "center3" || ref == "center4");
 		}
 		
 		public function updateSpriteSolid(xx:int, yy:int):void
@@ -134,10 +136,16 @@ package
 			addAnimation("center4", [23]);
 		}
 		
-		// whether or not we should draw a 
+		// whether or not we should draw a thing behind this one.
 		public function needsBacking():Boolean
 		{
 			return _needsBacking;
+		}
+		
+		// not used for now
+		public function canBeRemoved():Boolean
+		{
+			return _canBeRemoved;
 		}
 		
 	}

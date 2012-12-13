@@ -9,6 +9,7 @@ package
 		// level layout
 		[Embed(source = "../assets/tileset_storage.png")] public static var TILESET_STORAGE:Class;
 		[Embed(source = "../assets/tileset_factory.png")] public static var TILESET_FACTORY:Class;
+		[Embed(source = "../assets/tileset_office.png")] public static var TILESET_OFFICE:Class;
 		[Embed(source = "../assets/window.png")] public static var WINDOW:Class;
 		[Embed(source = "../assets/block.png")] public static var BLOCK:Class;
 		[Embed(source = "../assets/extratiles_solid.png")] public static var EXTRA_SOLID:Class;
@@ -29,6 +30,7 @@ package
 		[Embed(source = "../assets/blockcounter.png")] public static var BLOCK_COUNTER:Class;
 		[Embed(source = "../assets/border.png")] public static var BORDER:Class;
 		[Embed(source = "../assets/portal2.png")] public static var TELEPORTER:Class;
+		[Embed(source = "../assets/medal.png")] public static var MEDAL:Class;
 		
 		// fonts
 		[Embed(source = "../assets/FreePixel.ttf", fontFamily = "PIXEL", embedAsCFF = "false")] public static var FONT_VISITOR:String;
