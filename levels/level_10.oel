@@ -1,4 +1,4 @@
-<level width="240" height="176" Name="Standard Fare" Level_Info="Push the block on to the goal square." Tileset="Storage" MinimumMoves="100">
+<level width="240" height="176" Name="Standard Fare" Level_Info="Alright agent, you're inside the tech base.|Use the arrow keys to move.|You know what to do." Tileset="Storage" MinimumMoves="100">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

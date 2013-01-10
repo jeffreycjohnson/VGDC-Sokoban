@@ -120,6 +120,27 @@ package
 		// victorying the player
 		private var victoried:Boolean;
 		
+		// displaying text
+		// much of this is done very sloppily and in a roundabout way, but it will probably not
+		// need to be touched again significantly. If it does, I will do it.
+		// the rest of the text code is probably not worth reading, seriously. It's bad.
+		private var texting:Boolean;
+		private var shouldText:Boolean;  // should text as soon as the level officially starts
+		private var writingText:Boolean; // as opposed to finished writing text
+		private var textCount:int;
+		private var textSpeed:int = 3;
+		private var dialogueString:String;
+		private var dialogueStringArray:Array;
+		private var dialogueText:FlxText;
+		private var dialogueTextArray:Array;
+		private var textG:FlxGroup;
+		private var dialogueIndex:int;
+		private var dialogueBox:FlxSprite;
+		private var dialogueEnterText:FlxText;
+		private const textPt:FlxPoint = new FlxPoint(17, 165);
+		private var textFadeVelocity:Number;
+		private const textFadeAccel:Number = -0.005;
+		
 		
 		// TODO: possibly add in parameters for which level to start on?
 		public function PlayState()
@@ -150,7 +171,7 @@ package
 		
 		override public function update():void
 		{
-			/* scrolling, teleporting, fading, defeated */
+			/* scrolling, teleporting, texting, fading, defeated */
 			{
 			
 			// Scrolling between levels
@@ -183,6 +204,67 @@ package
 					remove(portal);
 					victory();
 				}
+			}
+			
+			// Text being written, or waiting for player to press enter
+			else if (texting)
+			{
+				
+				// destroy the text and go to the game.
+				if (FlxG.keys.justPressed("ENTER") && !writingText)
+				{
+					texting = false;
+					dialogueBox.kill();
+					dialogueEnterText.kill();
+					//for (var i:int = 0; i < dialogueTextArray.length; i++)
+					//{
+					//	(FlxBasic)(dialogueTextArray[i]).kill();
+					//}
+					textG.kill();
+				}
+				
+				
+				// write the current string, and switch to next or -press enter- if we need to.
+				// also skip to -press enter- if Enter key is pressed.
+				if (writingText)
+				{
+					textCount++;
+					if (textCount % textSpeed == 0)
+					{
+						dialogueText.text = dialogueString.substr(0, textCount/textSpeed);
+					}
+					
+					if (textCount/textSpeed >= dialogueString.length)
+					{
+						if (dialogueIndex < dialogueStringArray.length-1) addTextNext();
+						else addTextEnter();
+					}
+					
+					if (FlxG.keys.justPressed("ENTER"))
+					{
+						// write out the rest of the text
+						dialogueText.text = dialogueString;
+						dialogueIndex++;
+						while (dialogueIndex < dialogueStringArray.length)
+						{
+							dialogueText = new FlxText(textPt.x, textPt.y + 15 * dialogueIndex, 1000, dialogueStringArray[dialogueIndex]);
+							dialogueText.setFormat("PIXEL", 16, 0xffffffff, "left");
+							curG.add(dialogueText);
+							//dialogueTextArray.concat(dialogueText);
+							textG.add(dialogueText);
+							dialogueIndex++;
+						}
+						addTextEnter();
+					}
+				}
+				// make the -press enter- text flash
+				else
+				{
+					textFadeVelocity += textFadeAccel;
+					dialogueEnterText.alpha += textFadeVelocity;
+					if (dialogueEnterText.alpha == 0) textFadeVelocity *= -1;
+				}
+				return;
 			}
 			
 			// Fading out and in
@@ -232,6 +314,25 @@ package
 					fadeLevel(chapterIndex, levelIndex);
 				}
 				return;
+			}
+			
+			// Start texting now that the level is officially started for the first time
+			if (shouldText)
+			{
+				shouldText = false;
+				texting = true;
+				writingText = true;
+				dialogueIndex = 0;
+				dialogueText = new FlxText(textPt.x, textPt.y, 1000, "");
+				dialogueText.setFormat("PIXEL", 16, 0xffffffff, "left");
+				dialogueBox = new FlxSprite(110, 187, Assets.DIALOGUE_BOX);
+				dialogueBox.scale = new FlxPoint(2.1, 2.1);
+				dialogueTextArray = [];
+				textG = new FlxGroup();
+				//dialogueTextArray.concat(dialogueText);
+				textG.add(dialogueText);
+				curG.add(dialogueBox);
+				curG.add(dialogueText);
 			}
 			
 			}
@@ -454,6 +555,17 @@ package
 			else if (chapterIndex == 1) tileset = Assets.TILESET_FACTORY;
 			else if (chapterIndex == 2) tileset = Assets.TILESET_OFFICE;
 			goalCount += thisLevel.blocksActive;
+			if (thisLevel.levelInfo != "")
+			{
+				shouldText = true;
+				textCount = 0;
+				dialogueStringArray = thisLevel.levelInfo.split("|");
+				for (i = 0; i < dialogueStringArray.length; i++)
+				{
+					dialogueStringArray[i] += "       ";
+				}
+				dialogueString = dialogueStringArray[0];
+			}
 			
 			XOFFSET = (Main.WIDTH - TILESIZE * thisLevel.width) / 2;
 			YOFFSET = ((Main.HEIGHT - TOOLBAR_HEIGHT) - TILESIZE * thisLevel.height) / 2;
@@ -909,6 +1021,30 @@ package
 		{
 			victoried = false;
 			fadeLevel(chapterIndex, levelIndex);
+		}
+		
+		// these two are used in displayin the dialogue text
+		private function addTextNext():void
+		{
+			dialogueIndex++;
+			textCount = 0;
+			dialogueText = new FlxText(textPt.x, textPt.y + 15 * dialogueIndex, 1000, "");
+			dialogueText.setFormat("PIXEL", 16, 0xffffffff, "left");
+			curG.add(dialogueText);
+			//dialogueTextArray.concat(dialogueText);
+			textG.add(dialogueText);
+			dialogueString = dialogueStringArray[dialogueIndex];
+		}
+		
+		private function addTextEnter():void
+		{
+			writingText = false;
+			dialogueEnterText = new FlxText(260, 208, 1000, "- press enter -");
+			dialogueEnterText.setFormat("PIXEL", 16, 0xffffffff, "left");
+			//dialogueTextArray.concat(dialogueEnterText);
+			textG.add(dialogueText);
+			curG.add(dialogueEnterText);
+			textFadeVelocity = 0.05;
 		}
 	}
 

@@ -31,6 +31,7 @@ package
 		[Embed(source = "../assets/border.png")] public static var BORDER:Class;
 		[Embed(source = "../assets/portal2.png")] public static var TELEPORTER:Class;
 		[Embed(source = "../assets/medal.png")] public static var MEDAL:Class;
+		[Embed(source = "../assets/dialoguebox.png")] public static var DIALOGUE_BOX:Class;
 		
 		// fonts
 		[Embed(source = "../assets/FreePixel.ttf", fontFamily = "PIXEL", embedAsCFF = "false")] public static var FONT_VISITOR:String;
