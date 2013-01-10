@@ -33,6 +33,15 @@ package
 		[Embed(source = "../assets/medal.png")] public static var MEDAL:Class;
 		[Embed(source = "../assets/dialoguebox.png")] public static var DIALOGUE_BOX:Class;
 		
+		// title letters
+		[Embed(source = "../assets/title/n.png")] public static var TITLE_N:Class;
+		[Embed(source = "../assets/title/a.png")] public static var TITLE_A:Class;
+		[Embed(source = "../assets/title/b.png")] public static var TITLE_B:Class;
+		[Embed(source = "../assets/title/o.png")] public static var TITLE_O:Class;
+		[Embed(source = "../assets/title/k.png")] public static var TITLE_K:Class;
+		[Embed(source = "../assets/title/s.png")] public static var TITLE_S:Class;
+		public static const TITLE_LETTERS:Array = [TITLE_N,TITLE_A,TITLE_B,TITLE_O,TITLE_K,TITLE_O,TITLE_S];
+		
 		// fonts
 		[Embed(source = "../assets/FreePixel.ttf", fontFamily = "PIXEL", embedAsCFF = "false")] public static var FONT_VISITOR:String;
 	}
