@@ -17,14 +17,14 @@
     <tile x="2" y="0" id="1" />
     <tile x="2" y="1" id="1" />
     <tile x="2" y="2" id="1" />
-    <tile x="2" y="3" id="4" />
-    <tile x="2" y="4" id="2" />
+    <tile x="2" y="3" id="0" />
+    <tile x="2" y="4" id="0" />
     <tile x="2" y="5" id="0" />
     <tile x="2" y="6" id="1" />
     <tile x="3" y="0" id="1" />
     <tile x="3" y="1" id="1" />
     <tile x="3" y="2" id="0" />
-    <tile x="3" y="3" id="0" />
+    <tile x="3" y="3" id="4" />
     <tile x="3" y="4" id="2" />
     <tile x="3" y="5" id="0" />
     <tile x="3" y="6" id="1" />
@@ -32,7 +32,7 @@
     <tile x="4" y="1" id="1" />
     <tile x="4" y="2" id="0" />
     <tile x="4" y="3" id="0" />
-    <tile x="4" y="4" id="0" />
+    <tile x="4" y="4" id="2" />
     <tile x="4" y="5" id="0" />
     <tile x="4" y="6" id="1" />
     <tile x="5" y="0" id="1" />
@@ -67,21 +67,21 @@
     <tile x="9" y="1" id="1" />
     <tile x="9" y="2" id="0" />
     <tile x="9" y="3" id="0" />
-    <tile x="9" y="4" id="7" />
+    <tile x="9" y="4" id="0" />
     <tile x="9" y="5" id="0" />
     <tile x="9" y="6" id="1" />
     <tile x="10" y="0" id="1" />
     <tile x="10" y="1" id="1" />
-    <tile x="10" y="2" id="1" />
+    <tile x="10" y="2" id="0" />
     <tile x="10" y="3" id="0" />
     <tile x="10" y="4" id="7" />
     <tile x="10" y="5" id="0" />
     <tile x="10" y="6" id="1" />
     <tile x="11" y="0" id="1" />
     <tile x="11" y="1" id="1" />
-    <tile x="11" y="2" id="1" />
+    <tile x="11" y="2" id="0" />
     <tile x="11" y="3" id="0" />
-    <tile x="11" y="4" id="3" />
+    <tile x="11" y="4" id="7" />
     <tile x="11" y="5" id="0" />
     <tile x="11" y="6" id="1" />
     <tile x="12" y="0" id="1" />
@@ -95,7 +95,7 @@
     <tile x="13" y="1" id="1" />
     <tile x="13" y="2" id="1" />
     <tile x="13" y="3" id="0" />
-    <tile x="13" y="4" id="0" />
+    <tile x="13" y="4" id="3" />
     <tile x="13" y="5" id="0" />
     <tile x="13" y="6" id="1" />
     <tile x="14" y="0" id="1" />
@@ -107,8 +107,8 @@
     <tile x="14" y="6" id="1" />
   </MainLayer>
   <EntityLayer>
-    <Laser id="0" x="80" y="16" Behavior="laser down" />
-    <Laser id="1" x="112" y="16" Behavior="laser down" />
+    <Laser id="0" x="96" y="16" Behavior="laser down" />
+    <Laser id="1" x="128" y="16" Behavior="laser down" />
   </EntityLayer>
   <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
   <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />

@@ -554,6 +554,7 @@ package
 			if (chapterIndex == 0) tileset = Assets.TILESET_STORAGE;
 			else if (chapterIndex == 1) tileset = Assets.TILESET_FACTORY;
 			else if (chapterIndex == 2) tileset = Assets.TILESET_OFFICE;
+			else if (chapterIndex == 3) tileset = Assets.TILESET_FACTORY;
 			goalCount += thisLevel.blocksActive;
 			if (thisLevel.levelInfo != "")
 			{
@@ -854,7 +855,7 @@ package
 				// cone vision (the basic type we should mostly use). Could reorganize this section later.
 				if (guy.visionType == "cone")
 				{
-					var lineAngle:Number = 0.15; // radians between lines
+					var lineAngle:Number = 0.1; // radians between lines
 					var pointDist:Number = 8; // distance between points
 					var extraPoints:int = 12 / pointDist;
 					
@@ -913,7 +914,7 @@ package
 							}
 							
 							// kill the player if he is detected
-							if (gridX == px && gridY == py && det.alive && !godMode && !player.isMoving() && !victoried) defeatNext = true;
+							if (gridX == px && gridY == py && det.alive && !godMode && !player.isMoving() && !victoried && !fading && !scrolling) defeatNext = true;
 						}
 					}
 				}
