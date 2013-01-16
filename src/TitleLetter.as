@@ -41,6 +41,11 @@ package
 				alpha += fadeRate;
 				actionCount++;
 			}
+			if (actionCount == actionTime)
+			{
+				FlxG.play(Assets.SOUND_TITLE);
+				actionCount++;
+			}
 		}
 		
 	}

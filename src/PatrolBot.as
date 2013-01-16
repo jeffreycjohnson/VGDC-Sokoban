@@ -80,6 +80,7 @@ package
 				if (turnCount >= turnTime)
 				{
 					turning = false;
+					FlxG.play(Assets.SOUND_ROBOTSTEP);
 				}
 			}
 			
@@ -144,6 +145,8 @@ package
 			_lastXo = 0;
 			_lastYo = 0;
 			
+			FlxG.play(Assets.SOUND_ROBOTSTEP);
+			
 		}
 		
 		protected function tick():void { }
@@ -153,6 +156,7 @@ package
 			super.move(xo, yo);
 			_lastXo = xo;
 			_lastYo = yo;
+			FlxG.play(Assets.SOUND_ROBOTSTEP);
 		}
 		
 		protected function createAnimations():void

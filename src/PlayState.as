@@ -213,6 +213,7 @@ package
 				// destroy the text and go to the game.
 				if (FlxG.keys.justPressed("ENTER") && !writingText)
 				{
+					FlxG.play(Assets.SOUND_TEXT);
 					texting = false;
 					dialogueBox.kill();
 					dialogueEnterText.kill();
@@ -231,7 +232,8 @@ package
 					textCount++;
 					if (textCount % textSpeed == 0)
 					{
-						dialogueText.text = dialogueString.substr(0, textCount/textSpeed);
+						dialogueText.text = dialogueString.substr(0, textCount / textSpeed);
+						if (dialogueText.text.charAt(dialogueText.text.length - 1) != " ") FlxG.play(Assets.SOUND_TEXT);
 					}
 					
 					if (textCount/textSpeed >= dialogueString.length)
@@ -400,6 +402,7 @@ package
 					py += yo;
 					
 					player.move(xo, yo);
+					FlxG.play(Assets.SOUND_STEP);
 					
 					moveCount++;
 					updateMoveText();
@@ -418,6 +421,7 @@ package
 					
 					entities[x_next][y_next].move(xo, yo);
 					player.move(xo, yo);
+					FlxG.play(Assets.SOUND_MOVEBLOCK);
 					
 					moveCount++;
 					updateMoveText();
@@ -914,7 +918,7 @@ package
 							}
 							
 							// kill the player if he is detected
-							if (gridX == px && gridY == py && det.alive && !godMode && !player.isMoving() && !victoried && !fading && !scrolling) defeatNext = true;
+							if (gridX == px && gridY == py && det.alive && !godMode && !player.isMoving() && !victoried && !fading && !scrolling && !teleporting) defeatNext = true;
 						}
 					}
 				}
@@ -927,6 +931,7 @@ package
 			defeated = true;
 			defeatCount = 0;
 			add(new FlxText(182, 100, 150, "Detected!"));
+			FlxG.play(Assets.SOUND_DETECTED);
 		}
 		
 		private function victory():void
@@ -980,6 +985,7 @@ package
 			}
 			if (goalCount == goalNumber)
 			{
+				FlxG.play(Assets.SOUND_TELEPORT);
 				teleporting = true;
 				gameLocked = true;
 				teleportCount = 0;

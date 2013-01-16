@@ -242,7 +242,7 @@
     <tile x="19" y="11" id="1" />
   </MainLayer>
   <EntityLayer>
-    <RotatingBot id="0" x="144" y="64" RotateSpeed="0.03" VisionRadius="40" VisionAngle="0.8" InitialAngle="0" />
+    <RotatingBot id="0" x="144" y="64" RotateSpeed="0.02" VisionRadius="40" VisionAngle="1.4" InitialAngle="0" />
   </EntityLayer>
   <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
   <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />

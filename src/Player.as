@@ -72,7 +72,6 @@ package
 			addAnimation("walk_left", [9, 9], 30);
 		}
 		
-		
 	}
 
 }

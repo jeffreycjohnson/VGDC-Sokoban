@@ -1,4 +1,4 @@
-<level width="192" height="192" Name="Lasers!" Level_Info="You can block lasers with blocks." Tileset="Storage" MinimumMoves="100">
+<level width="192" height="192" Name="Unnamed Level" Level_Info="" Tileset="Storage" MinimumMoves="100">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />
@@ -13,124 +13,124 @@
     <tile x="0" y="10" id="1" />
     <tile x="0" y="11" id="1" />
     <tile x="1" y="0" id="1" />
-    <tile x="1" y="1" id="4" />
-    <tile x="1" y="2" id="0" />
-    <tile x="1" y="3" id="0" />
-    <tile x="1" y="4" id="0" />
-    <tile x="1" y="5" id="0" />
-    <tile x="1" y="6" id="0" />
+    <tile x="1" y="1" id="1" />
+    <tile x="1" y="2" id="1" />
+    <tile x="1" y="3" id="1" />
+    <tile x="1" y="4" id="1" />
+    <tile x="1" y="5" id="1" />
+    <tile x="1" y="6" id="1" />
     <tile x="1" y="7" id="1" />
-    <tile x="1" y="8" id="0" />
+    <tile x="1" y="8" id="1" />
     <tile x="1" y="9" id="1" />
     <tile x="1" y="10" id="1" />
     <tile x="1" y="11" id="1" />
     <tile x="2" y="0" id="1" />
-    <tile x="2" y="1" id="0" />
-    <tile x="2" y="2" id="0" />
-    <tile x="2" y="3" id="2" />
+    <tile x="2" y="1" id="1" />
+    <tile x="2" y="2" id="1" />
+    <tile x="2" y="3" id="1" />
     <tile x="2" y="4" id="1" />
-    <tile x="2" y="5" id="0" />
-    <tile x="2" y="6" id="0" />
-    <tile x="2" y="7" id="0" />
-    <tile x="2" y="8" id="0" />
-    <tile x="2" y="9" id="0" />
-    <tile x="2" y="10" id="0" />
+    <tile x="2" y="5" id="1" />
+    <tile x="2" y="6" id="1" />
+    <tile x="2" y="7" id="1" />
+    <tile x="2" y="8" id="1" />
+    <tile x="2" y="9" id="1" />
+    <tile x="2" y="10" id="1" />
     <tile x="2" y="11" id="1" />
     <tile x="3" y="0" id="1" />
-    <tile x="3" y="1" id="0" />
-    <tile x="3" y="2" id="2" />
-    <tile x="3" y="3" id="2" />
-    <tile x="3" y="4" id="0" />
-    <tile x="3" y="5" id="0" />
+    <tile x="3" y="1" id="1" />
+    <tile x="3" y="2" id="0" />
+    <tile x="3" y="3" id="0" />
+    <tile x="3" y="4" id="3" />
+    <tile x="3" y="5" id="1" />
     <tile x="3" y="6" id="0" />
     <tile x="3" y="7" id="0" />
     <tile x="3" y="8" id="0" />
     <tile x="3" y="9" id="0" />
-    <tile x="3" y="10" id="0" />
+    <tile x="3" y="10" id="1" />
     <tile x="3" y="11" id="1" />
     <tile x="4" y="0" id="1" />
-    <tile x="4" y="1" id="0" />
+    <tile x="4" y="1" id="1" />
     <tile x="4" y="2" id="0" />
     <tile x="4" y="3" id="0" />
-    <tile x="4" y="4" id="7" />
-    <tile x="4" y="5" id="0" />
+    <tile x="4" y="4" id="0" />
+    <tile x="4" y="5" id="1" />
     <tile x="4" y="6" id="0" />
-    <tile x="4" y="7" id="0" />
-    <tile x="4" y="8" id="0" />
+    <tile x="4" y="7" id="2" />
+    <tile x="4" y="8" id="2" />
     <tile x="4" y="9" id="0" />
-    <tile x="4" y="10" id="0" />
+    <tile x="4" y="10" id="1" />
     <tile x="4" y="11" id="1" />
     <tile x="5" y="0" id="1" />
     <tile x="5" y="1" id="1" />
-    <tile x="5" y="2" id="0" />
+    <tile x="5" y="2" id="3" />
     <tile x="5" y="3" id="0" />
-    <tile x="5" y="4" id="0" />
-    <tile x="5" y="5" id="7" />
+    <tile x="5" y="4" id="3" />
+    <tile x="5" y="5" id="1" />
     <tile x="5" y="6" id="0" />
-    <tile x="5" y="7" id="0" />
-    <tile x="5" y="8" id="0" />
-    <tile x="5" y="9" id="0" />
-    <tile x="5" y="10" id="0" />
+    <tile x="5" y="7" id="4" />
+    <tile x="5" y="8" id="2" />
+    <tile x="5" y="9" id="1" />
+    <tile x="5" y="10" id="1" />
     <tile x="5" y="11" id="1" />
     <tile x="6" y="0" id="1" />
-    <tile x="6" y="1" id="0" />
-    <tile x="6" y="2" id="0" />
+    <tile x="6" y="1" id="1" />
+    <tile x="6" y="2" id="1" />
     <tile x="6" y="3" id="0" />
-    <tile x="6" y="4" id="0" />
-    <tile x="6" y="5" id="0" />
+    <tile x="6" y="4" id="1" />
+    <tile x="6" y="5" id="1" />
     <tile x="6" y="6" id="0" />
-    <tile x="6" y="7" id="1" />
+    <tile x="6" y="7" id="0" />
     <tile x="6" y="8" id="0" />
     <tile x="6" y="9" id="1" />
     <tile x="6" y="10" id="1" />
     <tile x="6" y="11" id="1" />
     <tile x="7" y="0" id="1" />
     <tile x="7" y="1" id="1" />
-    <tile x="7" y="2" id="0" />
+    <tile x="7" y="2" id="1" />
     <tile x="7" y="3" id="0" />
     <tile x="7" y="4" id="0" />
     <tile x="7" y="5" id="0" />
     <tile x="7" y="6" id="0" />
     <tile x="7" y="7" id="0" />
-    <tile x="7" y="8" id="0" />
-    <tile x="7" y="9" id="0" />
-    <tile x="7" y="10" id="0" />
+    <tile x="7" y="8" id="1" />
+    <tile x="7" y="9" id="1" />
+    <tile x="7" y="10" id="1" />
     <tile x="7" y="11" id="1" />
     <tile x="8" y="0" id="1" />
-    <tile x="8" y="1" id="0" />
-    <tile x="8" y="2" id="0" />
+    <tile x="8" y="1" id="1" />
+    <tile x="8" y="2" id="1" />
     <tile x="8" y="3" id="0" />
     <tile x="8" y="4" id="0" />
-    <tile x="8" y="5" id="0" />
-    <tile x="8" y="6" id="0" />
+    <tile x="8" y="5" id="1" />
+    <tile x="8" y="6" id="1" />
     <tile x="8" y="7" id="1" />
-    <tile x="8" y="8" id="0" />
+    <tile x="8" y="8" id="1" />
     <tile x="8" y="9" id="1" />
     <tile x="8" y="10" id="1" />
     <tile x="8" y="11" id="1" />
     <tile x="9" y="0" id="1" />
-    <tile x="9" y="1" id="0" />
-    <tile x="9" y="2" id="0" />
-    <tile x="9" y="3" id="0" />
-    <tile x="9" y="4" id="0" />
-    <tile x="9" y="5" id="0" />
-    <tile x="9" y="6" id="0" />
-    <tile x="9" y="7" id="0" />
-    <tile x="9" y="8" id="0" />
-    <tile x="9" y="9" id="0" />
-    <tile x="9" y="10" id="3" />
+    <tile x="9" y="1" id="1" />
+    <tile x="9" y="2" id="1" />
+    <tile x="9" y="3" id="1" />
+    <tile x="9" y="4" id="1" />
+    <tile x="9" y="5" id="1" />
+    <tile x="9" y="6" id="1" />
+    <tile x="9" y="7" id="1" />
+    <tile x="9" y="8" id="1" />
+    <tile x="9" y="9" id="1" />
+    <tile x="9" y="10" id="1" />
     <tile x="9" y="11" id="1" />
     <tile x="10" y="0" id="1" />
     <tile x="10" y="1" id="1" />
     <tile x="10" y="2" id="1" />
-    <tile x="10" y="3" id="0" />
+    <tile x="10" y="3" id="1" />
     <tile x="10" y="4" id="1" />
-    <tile x="10" y="5" id="0" />
-    <tile x="10" y="6" id="0" />
-    <tile x="10" y="7" id="0" />
-    <tile x="10" y="8" id="0" />
-    <tile x="10" y="9" id="3" />
-    <tile x="10" y="10" id="3" />
+    <tile x="10" y="5" id="1" />
+    <tile x="10" y="6" id="1" />
+    <tile x="10" y="7" id="1" />
+    <tile x="10" y="8" id="1" />
+    <tile x="10" y="9" id="1" />
+    <tile x="10" y="10" id="1" />
     <tile x="10" y="11" id="1" />
     <tile x="11" y="0" id="1" />
     <tile x="11" y="1" id="1" />
@@ -145,12 +145,7 @@
     <tile x="11" y="10" id="1" />
     <tile x="11" y="11" id="1" />
   </MainLayer>
-  <EntityLayer>
-    <Laser id="1" x="112" y="160" Behavior="laser up" />
-    <Laser id="2" x="96" y="16" Behavior="laser down" />
-    <Laser id="3" x="160" y="48" Behavior="laser left" />
-    <Laser id="0" x="16" y="128" Behavior="laser right" />
-  </EntityLayer>
+  <EntityLayer />
   <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
   <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />
 </level>

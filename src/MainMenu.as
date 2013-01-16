@@ -47,7 +47,6 @@ package
 				{
 					add(letters[letterIndex]);
 					letterIndex++;
-					trace("adding");
 				}
 			}
 			

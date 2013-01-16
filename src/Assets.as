@@ -44,6 +44,15 @@ package
 		
 		// fonts
 		[Embed(source = "../assets/FreePixel.ttf", fontFamily = "PIXEL", embedAsCFF = "false")] public static var FONT_VISITOR:String;
+		
+		// sounds
+		[Embed(source = "../assets/sound/step.mp3")] public static var SOUND_STEP:Class;
+		[Embed(source = "../assets/sound/step.mp3")] public static var SOUND_ROBOTSTEP:Class;
+		[Embed(source = "../assets/sound/moveblock.mp3")] public static var SOUND_MOVEBLOCK:Class;
+		[Embed(source = "../assets/sound/text.mp3")] public static var SOUND_TEXT:Class;
+		[Embed(source = "../assets/sound/title.mp3")] public static var SOUND_TITLE:Class;
+		[Embed(source = "../assets/sound/teleport.mp3")] public static var SOUND_TELEPORT:Class;
+		[Embed(source = "../assets/sound/detected.mp3")] public static var SOUND_DETECTED:Class;
 	}
 
 }

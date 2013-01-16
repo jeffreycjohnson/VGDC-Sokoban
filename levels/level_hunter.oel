@@ -326,8 +326,8 @@
     <tile x="17" y="17" id="1" />
   </MainLayer>
   <EntityLayer>
-    <PatrolBot id="0" x="96" y="80" Behavior="pace vertical" MoveSpeed="25" VisionAngle="0.7" VisionRadius="300" VisionType="cone" />
-    <PatrolBot id="1" x="176" y="240" Behavior="pace vertical" MoveSpeed="25" VisionAngle="0.7" VisionRadius="300" VisionType="cone" />
+    <PatrolBot id="0" x="96" y="80" Behavior="pace vertical" MoveSpeed="25" VisionAngle="0.1" VisionRadius="300" VisionType="cone" />
+    <PatrolBot id="1" x="176" y="240" Behavior="pace vertical" MoveSpeed="25" VisionAngle="0.1" VisionRadius="300" VisionType="cone" />
   </EntityLayer>
   <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
   <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />
