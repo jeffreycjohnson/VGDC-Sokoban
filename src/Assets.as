@@ -32,6 +32,8 @@ package
 		[Embed(source = "../assets/portal2.png")] public static var TELEPORTER:Class;
 		[Embed(source = "../assets/medal.png")] public static var MEDAL:Class;
 		[Embed(source = "../assets/dialoguebox.png")] public static var DIALOGUE_BOX:Class;
+		[Embed(source = "../assets/levelcompletebox.png")] public static var COMPLETE_BOX:Class;
+		[Embed(source = "../assets/detectedbox.png")] public static var DETECTED_BOX:Class;
 		
 		// title letters
 		[Embed(source = "../assets/title/n.png")] public static var TITLE_N:Class;

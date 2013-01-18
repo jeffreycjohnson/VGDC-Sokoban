@@ -301,7 +301,7 @@ package
 				else if (FlxG.keys.justReleased("UP")) {
 					restart();
 				}
-				else if (FlxG.keys.justReleased("RIGHT")) {
+				else if (FlxG.keys.justReleased("RIGHT") && levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1) {
 					nextLevel();
 				}
 			}
@@ -370,7 +370,7 @@ package
 			// Toggle GodMode
 			if (FlxG.keys.justPressed("G"))
 			{
-				godMode = !godMode;
+				//godMode = !godMode;
 				//updateGodModeText();
 			}
 			
@@ -786,18 +786,21 @@ package
 			var thisLevel:Level = LevelStorage.levels[chapterIndex][levelIndex];
 			
 			levelNumberText.text = (chapterIndex + 1) + "-" + (levelIndex + 1);
-			levelNameText.text = thisLevel.name.toUpperCase();
+			//levelNameText.text = thisLevel.name.toUpperCase();
+			levelNameText.text = thisLevel.name;
 			updateMoveText();
+			levelNameText.x = 5;
+			if (levelNameText.text.length < 15) levelNameText.x += (15 - levelNameText.text.length) * 3.7;
 			
 			const startX:int = 170;
-			const startY:int = Main.HEIGHT - 40;
+			const startY:int = Main.HEIGHT - 42;
 			const cols:int = 3;
 			if (blockCounters != null) for (var n:int = 0; n < blockCounters.length; n++) guiG.remove(blockCounters[n]);
 			blockCounters = [];
 			for (var i:int = 0; i < goalNumber; i++)
 			{
 				var x:int = startX + (i % cols) * 24;
-				var y:int = startY + (int)(i / cols) * 24;
+				var y:int = startY + (int)(i / cols) * 20;
 				blockCounters[i] = new BlockCounter(x, y);
 				guiG.add( (BlockCounter)(blockCounters[i]));
 			}
@@ -922,6 +925,29 @@ package
 						}
 					}
 				}
+				else if (guy.visionType == "line")
+				{
+					var angle:Number = int((guy.theta + 0.1) / (Math.PI / 2));
+					trace(angle);
+					var xvel:int = 0;
+					var yvel:int = 0;
+					if (angle == 0 || angle == 4) yvel = 1;
+					else if (angle == 1) xvel = 1;
+					else if (angle == 2) yvel = -1;
+					else if (angle == 3) xvel = -1;
+					x = guy.getGridX;
+					y = guy.getGridY;
+					x + xvel;
+					y += yvel;
+					while (level[x][y] == 0 || level[x][y] == 6 || level[x][y] == 4)
+					{
+						Detected(detected[x][y]).revive();
+						x += xvel;
+						y += yvel;
+						// kill the player if he is detected
+							if (level[x][y] == 4 && !godMode && !player.isMoving() && !victoried && !fading && !scrolling && !teleporting) defeatNext = true;
+					}
+				}
 			}
 		}
 		
@@ -930,7 +956,10 @@ package
 			gameLocked = true;
 			defeated = true;
 			defeatCount = 0;
-			add(new FlxText(182, 100, 150, "Detected!"));
+			var detBox:FlxSprite = new FlxSprite(168, 97, Assets.DETECTED_BOX);
+			detBox.scale = new FlxPoint(1.6, 1.6);
+			add(detBox);
+			add(new FlxText(175, 100, 150, "Detected!"));
 			FlxG.play(Assets.SOUND_DETECTED);
 		}
 		
@@ -949,7 +978,12 @@ package
 			minMoves.close();
 			
 			// add gui stuff
-			add(new FlxText(160, 50, 100, "Level Completed"));
+			var completeBox:FlxSprite = new FlxSprite(120, 65, Assets.COMPLETE_BOX);
+			completeBox.scale = new FlxPoint(2.1, 2.1);
+			add(completeBox);
+			
+			add(new FlxText(160, 50, 100, "Level Completed!"));
+			if (levelIndex == LevelStorage.chapterLengths[chapterIndex]-1) add(new FlxText(160, 60, 100, "Chapter Completed!! :D"));
 			
 			add(buttonMenu = new Button(40, 100, 0, 0, toMenu, .75, 1));
 			add(buttonRestart = new Button(140, 100, 0, 0, restart, .75, 1));

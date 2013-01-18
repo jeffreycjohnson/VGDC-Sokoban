@@ -1,4 +1,4 @@
-<level width="192" height="192" Name="Two Best Friends" Level_Info="" Tileset="Storage" MinimumMoves="100">
+<level width="288" height="192" Name="Best Friends" Level_Info="" Tileset="Storage" MinimumMoves="100">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />
@@ -39,9 +39,9 @@
     <tile x="3" y="0" id="1" />
     <tile x="3" y="1" id="1" />
     <tile x="3" y="2" id="1" />
-    <tile x="3" y="3" id="0" />
-    <tile x="3" y="4" id="0" />
-    <tile x="3" y="5" id="0" />
+    <tile x="3" y="3" id="1" />
+    <tile x="3" y="4" id="1" />
+    <tile x="3" y="5" id="1" />
     <tile x="3" y="6" id="1" />
     <tile x="3" y="7" id="1" />
     <tile x="3" y="8" id="1" />
@@ -52,10 +52,10 @@
     <tile x="4" y="1" id="1" />
     <tile x="4" y="2" id="1" />
     <tile x="4" y="3" id="0" />
-    <tile x="4" y="4" id="4" />
-    <tile x="4" y="5" id="2" />
-    <tile x="4" y="6" id="3" />
-    <tile x="4" y="7" id="0" />
+    <tile x="4" y="4" id="0" />
+    <tile x="4" y="5" id="0" />
+    <tile x="4" y="6" id="1" />
+    <tile x="4" y="7" id="1" />
     <tile x="4" y="8" id="1" />
     <tile x="4" y="9" id="1" />
     <tile x="4" y="10" id="1" />
@@ -64,9 +64,9 @@
     <tile x="5" y="1" id="1" />
     <tile x="5" y="2" id="1" />
     <tile x="5" y="3" id="0" />
-    <tile x="5" y="4" id="0" />
+    <tile x="5" y="4" id="4" />
     <tile x="5" y="5" id="2" />
-    <tile x="5" y="6" id="0" />
+    <tile x="5" y="6" id="3" />
     <tile x="5" y="7" id="0" />
     <tile x="5" y="8" id="1" />
     <tile x="5" y="9" id="1" />
@@ -75,10 +75,10 @@
     <tile x="6" y="0" id="1" />
     <tile x="6" y="1" id="1" />
     <tile x="6" y="2" id="1" />
-    <tile x="6" y="3" id="1" />
-    <tile x="6" y="4" id="1" />
-    <tile x="6" y="5" id="1" />
-    <tile x="6" y="6" id="3" />
+    <tile x="6" y="3" id="0" />
+    <tile x="6" y="4" id="0" />
+    <tile x="6" y="5" id="2" />
+    <tile x="6" y="6" id="0" />
     <tile x="6" y="7" id="0" />
     <tile x="6" y="8" id="1" />
     <tile x="6" y="9" id="1" />
@@ -90,7 +90,7 @@
     <tile x="7" y="3" id="1" />
     <tile x="7" y="4" id="1" />
     <tile x="7" y="5" id="1" />
-    <tile x="7" y="6" id="0" />
+    <tile x="7" y="6" id="3" />
     <tile x="7" y="7" id="0" />
     <tile x="7" y="8" id="1" />
     <tile x="7" y="9" id="1" />
@@ -102,8 +102,8 @@
     <tile x="8" y="3" id="1" />
     <tile x="8" y="4" id="1" />
     <tile x="8" y="5" id="1" />
-    <tile x="8" y="6" id="1" />
-    <tile x="8" y="7" id="1" />
+    <tile x="8" y="6" id="0" />
+    <tile x="8" y="7" id="0" />
     <tile x="8" y="8" id="1" />
     <tile x="8" y="9" id="1" />
     <tile x="8" y="10" id="1" />
@@ -144,8 +144,82 @@
     <tile x="11" y="9" id="1" />
     <tile x="11" y="10" id="1" />
     <tile x="11" y="11" id="1" />
+    <tile x="12" y="0" id="1" />
+    <tile x="12" y="1" id="1" />
+    <tile x="12" y="2" id="1" />
+    <tile x="12" y="3" id="1" />
+    <tile x="12" y="4" id="1" />
+    <tile x="12" y="5" id="1" />
+    <tile x="12" y="6" id="1" />
+    <tile x="12" y="7" id="1" />
+    <tile x="12" y="8" id="1" />
+    <tile x="12" y="9" id="1" />
+    <tile x="12" y="10" id="1" />
+    <tile x="12" y="11" id="1" />
+    <tile x="13" y="0" id="1" />
+    <tile x="13" y="1" id="1" />
+    <tile x="13" y="2" id="1" />
+    <tile x="13" y="3" id="1" />
+    <tile x="13" y="4" id="1" />
+    <tile x="13" y="5" id="1" />
+    <tile x="13" y="6" id="1" />
+    <tile x="13" y="7" id="1" />
+    <tile x="13" y="8" id="1" />
+    <tile x="13" y="9" id="1" />
+    <tile x="13" y="10" id="1" />
+    <tile x="13" y="11" id="1" />
+    <tile x="14" y="0" id="1" />
+    <tile x="14" y="1" id="1" />
+    <tile x="14" y="2" id="1" />
+    <tile x="14" y="3" id="1" />
+    <tile x="14" y="4" id="1" />
+    <tile x="14" y="5" id="0" />
+    <tile x="14" y="6" id="0" />
+    <tile x="14" y="7" id="0" />
+    <tile x="14" y="8" id="0" />
+    <tile x="14" y="9" id="1" />
+    <tile x="14" y="10" id="1" />
+    <tile x="14" y="11" id="1" />
+    <tile x="15" y="0" id="1" />
+    <tile x="15" y="1" id="1" />
+    <tile x="15" y="2" id="1" />
+    <tile x="15" y="3" id="1" />
+    <tile x="15" y="4" id="0" />
+    <tile x="15" y="5" id="0" />
+    <tile x="15" y="6" id="0" />
+    <tile x="15" y="7" id="0" />
+    <tile x="15" y="8" id="0" />
+    <tile x="15" y="9" id="1" />
+    <tile x="15" y="10" id="1" />
+    <tile x="15" y="11" id="1" />
+    <tile x="16" y="0" id="1" />
+    <tile x="16" y="1" id="1" />
+    <tile x="16" y="2" id="1" />
+    <tile x="16" y="3" id="1" />
+    <tile x="16" y="4" id="0" />
+    <tile x="16" y="5" id="0" />
+    <tile x="16" y="6" id="0" />
+    <tile x="16" y="7" id="0" />
+    <tile x="16" y="8" id="1" />
+    <tile x="16" y="9" id="1" />
+    <tile x="16" y="10" id="1" />
+    <tile x="16" y="11" id="1" />
+    <tile x="17" y="0" id="1" />
+    <tile x="17" y="1" id="1" />
+    <tile x="17" y="2" id="1" />
+    <tile x="17" y="3" id="1" />
+    <tile x="17" y="4" id="1" />
+    <tile x="17" y="5" id="1" />
+    <tile x="17" y="6" id="1" />
+    <tile x="17" y="7" id="1" />
+    <tile x="17" y="8" id="1" />
+    <tile x="17" y="9" id="1" />
+    <tile x="17" y="10" id="1" />
+    <tile x="17" y="11" id="1" />
   </MainLayer>
-  <EntityLayer />
+  <EntityLayer>
+    <PatrolBot id="0" x="240" y="80" Behavior="pace vertical" MoveSpeed="30" VisionAngle="1.05" VisionRadius="100" VisionType="cone" />
+  </EntityLayer>
   <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
   <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />
 </level>

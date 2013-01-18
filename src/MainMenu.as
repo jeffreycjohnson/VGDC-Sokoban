@@ -85,27 +85,26 @@ package
 			// add appropriate elements to each FlxGroup
 			
 			title.add(new Button(Main.WIDTH / 2 - 66, 100, 0, 0, play, .75, .75));
-			title.add(new Button(Main.WIDTH / 2 - 66, 150, 0, 0, createControls, .75, .75));
-			title.add(new Button(Main.WIDTH / 2 - 66, 200, 0, 0, levelsDisplay, .75, .75));
+			title.add(new Button(Main.WIDTH / 2 - 66, 150, 0, 0, levelsDisplay, .75, .75));
+			title.add(new Button(Main.WIDTH / 2 - 66, 200, 0, 0, createControls, .75, .75));
 			title.add(new Button(Main.WIDTH / 2 - 66, 250, 0, 0, createCredits, .75, .75));
 			title.add(new FlxText(Main.WIDTH / 2 - 16, 105, 100, "Play"));
-			title.add(new FlxText(Main.WIDTH / 2 - 24, 155, 100, "Controls"));
-			title.add(new FlxText(Main.WIDTH / 2 - 20, 205, 100, "Levels"));
+			title.add(new FlxText(Main.WIDTH / 2 - 20, 155, 100, "Levels"));
+			title.add(new FlxText(Main.WIDTH / 2 - 24, 205, 100, "Controls"));
 			title.add(new FlxText(Main.WIDTH / 2 - 22, 255, 100, "Credits"));
 			
 			// controls
-			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Use the Arrow Keys to Move."));
-			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Next Level: Page Up"));
-			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Previous Level: Page Down"));
-			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Reset Level: R"));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Use the Arrow Keys to Move."));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Reset Level: R"));
+			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Switch Levels: PgUp / PgDown"));
 			controls.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
 			
 			// credits
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 50, 250, "Patrick Traynor"));
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Jeffrey Johnson"));
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Jason Lo"));
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Patrick Shin"));
-			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Press Escape to Return to the Main Menu."));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 30, 250, "Patrick Traynor"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 - 10, 250, "Jeffrey Johnson"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 10, 250, "Jason Lo"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 30, 250, "Patrick Shin"));
+			credits.add(new FlxText(Main.WIDTH / 2 - 100, Main.HEIGHT / 2 + 50, 250, "Press Escape to Return to the Main Menu."));
 			
 			// add letters of NABOKOS to the array
 			for (var i:int = 0; i < "NABOKOS".length; i++) {
