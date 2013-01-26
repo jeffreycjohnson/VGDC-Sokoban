@@ -12,8 +12,7 @@ package
 	 */
 	public class PlayState extends FlxState
 	{	
-		
-		
+				
 		/* Data structures */
 		
 		// holds the values of what kind of stuff we have at each grid space
