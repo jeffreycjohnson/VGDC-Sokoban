@@ -566,7 +566,7 @@ package
 				dialogueStringArray = thisLevel.levelInfo.split("|");
 				for (i = 0; i < dialogueStringArray.length; i++)
 				{
-					dialogueStringArray[i] += "       ";
+					dialogueStringArray[i] += "    ";
 				}
 				dialogueString = dialogueStringArray[0];
 			}

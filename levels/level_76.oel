@@ -1,4 +1,4 @@
-<level width="192" height="192" Name="Figure Eight" Level_Info="" Tileset="Storage" MinimumMoves="100">
+<level width="192" height="192" Name="Figure Eight" Level_Info="Our intel shows that this room is eerily|similar to another, much older facility.|How quaint. " Tileset="Storage" MinimumMoves="100">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

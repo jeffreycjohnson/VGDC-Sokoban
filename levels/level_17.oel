@@ -1,4 +1,4 @@
-<level width="208" height="208" Name="Move the Blocks" Level_Info="" Tileset="Storage" MinimumMoves="100">
+<level width="208" height="208" Name="Move the Blocks" Level_Info="Oddly enough, many of our prior agents|were captured here. Not sure how, seeing|as it's just a lobby." Tileset="Storage" MinimumMoves="100">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />
@@ -171,4 +171,6 @@
     <tile x="12" y="12" id="1" />
   </MainLayer>
   <EntityLayer />
+  <SolidTileLayer tileset="PlaceholderTileset" exportMode="XML" />
+  <TransparentTileLayer tileset="PlaceholderTileset" exportMode="XML" />
 </level>
