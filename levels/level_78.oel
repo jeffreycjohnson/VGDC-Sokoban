@@ -1,4 +1,4 @@
-<level width="288" height="192" Name="Best Friends" Level_Info="" Tileset="Storage" MinimumMoves="100">
+<level width="288" height="192" Name="Best Friends" Level_Info="" Tileset="Storage" MinimumMoves="33">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

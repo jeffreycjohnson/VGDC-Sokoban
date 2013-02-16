@@ -1,4 +1,4 @@
-<level width="320" height="144" Name="Legion" Level_Info="" Tileset="Storage" MinimumMoves="100">
+<level width="320" height="144" Name="Legion" Level_Info="" Tileset="Storage" MinimumMoves="40">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

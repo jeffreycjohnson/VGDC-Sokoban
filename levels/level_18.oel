@@ -1,4 +1,4 @@
-<level width="176" height="176" Name="Three of a Kind" Level_Info="" Tileset="Storage" MinimumMoves="100">
+<level width="176" height="176" Name="Three of a Kind" Level_Info="" Tileset="Storage" MinimumMoves="147">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />

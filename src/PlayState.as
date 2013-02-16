@@ -475,7 +475,6 @@ package
 			}
 			trace();
 			*/
-			
 		}
 		
 		// fade to black, then fade in to the next level

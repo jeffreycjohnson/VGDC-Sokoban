@@ -100,6 +100,10 @@ package
 				PlayState.minMoves.close();
 				
 				add(new MovesMedal(x + 113, y - 7, medal));
+				var text:FlxText = new FlxText(x + 117, y - 4, 100, String(Level(LevelStorage.levels[chapter][j]).minMoves));
+				text.color = 0xff202000;
+				text.alpha = 0.7;
+				if (!medal) add(text);
 			}
 		}
 	}

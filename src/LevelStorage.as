@@ -37,13 +37,10 @@ package
 		[Embed(source = "../levels/level_graphicstest.oel", mimeType = "application/octet-stream")] public static const level_31:Class;
 		[Embed(source = "../levels/level_75.oel", mimeType = "application/octet-stream")] public static const level_32:Class;
 		[Embed(source = "../levels/level_77.oel", mimeType = "application/octet-stream")] public static const level_33:Class;
+		[Embed(source = "../levels/level_labor.oel", mimeType = "application/octet-stream")] public static const level_34:Class;
 		
-		public static var chapterLengths:Array = [10, 6, 6, 4]; // change this manually !!
+		public static var chapterLengths:Array = [10, 6, 6, 5]; // change this manually !!
 		public static var chapterNames:Array = ["Underground Silo", "Development Lab", "Headquarters", "Extra Levels"];
-		public static var minMoves:Array = [[100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-											[100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-											[100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-											[100, 100, 100, 100, 100, 100, 100, 100, 100, 100]];
 		public static var levels:Array = [];
 		
 		public static function getLevelString(x:int, y:int):String

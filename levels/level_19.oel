@@ -1,4 +1,4 @@
-<level width="240" height="192" Name="Guard Duty" Level_Info="Keep on your toes agent.|Do not be caught by security cameras|if you can help it." Tileset="Storage" MinimumMoves="100">
+<level width="240" height="192" Name="Guard Duty" Level_Info="Keep on your toes agent.|Do not be caught by security cameras|if you can help it." Tileset="Storage" MinimumMoves="45">
   <MainLayer tileset="PlaceholderTileset" exportMode="XML">
     <tile x="0" y="0" id="1" />
     <tile x="0" y="1" id="1" />
