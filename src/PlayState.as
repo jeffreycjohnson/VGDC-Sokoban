@@ -12,8 +12,7 @@ package
 	 */
 	public class PlayState extends FlxState
 	{	
-		
-		
+				
 		/* Data structures */
 		
 		// holds the values of what kind of stuff we have at each grid space
@@ -566,7 +565,7 @@ package
 				dialogueStringArray = thisLevel.levelInfo.split("|");
 				for (i = 0; i < dialogueStringArray.length; i++)
 				{
-					dialogueStringArray[i] += "       ";
+					dialogueStringArray[i] += "    ";
 				}
 				dialogueString = dialogueStringArray[0];
 			}
