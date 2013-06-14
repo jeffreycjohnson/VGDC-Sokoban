@@ -17,7 +17,7 @@ package
 		public function Main()
 		{
 			super(WIDTH, HEIGHT, MainMenu, PIXEL, 60, 60, true);
-			forceDebugger = true;
+			forceDebugger = false;
 		}
 	}
 
