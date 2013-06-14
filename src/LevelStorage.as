@@ -16,8 +16,6 @@ package
 		[Embed(source = "../levels/level_17.oel", mimeType = "application/octet-stream")] public static const level_05:Class;
 		[Embed(source = "../levels/level_76.oel", mimeType = "application/octet-stream")] public static const level_06:Class;
 		[Embed(source = "../levels/level_18.oel", mimeType = "application/octet-stream")] public static const level_07:Class;
-		[Embed(source = "../levels/level_79.oel", mimeType = "application/octet-stream")] public static const level_08:Class;
-		[Embed(source = "../levels/level_80.oel", mimeType = "application/octet-stream")] public static const level_09:Class;
 		
 		[Embed(source = "../levels/level_19.oel", mimeType = "application/octet-stream")] public static const level_10:Class;
 		[Embed(source = "../levels/level_roundtrip.oel", mimeType = "application/octet-stream")] public static const level_11:Class;
@@ -38,8 +36,10 @@ package
 		[Embed(source = "../levels/level_75.oel", mimeType = "application/octet-stream")] public static const level_32:Class;
 		[Embed(source = "../levels/level_77.oel", mimeType = "application/octet-stream")] public static const level_33:Class;
 		[Embed(source = "../levels/level_labor.oel", mimeType = "application/octet-stream")] public static const level_34:Class;
+		[Embed(source = "../levels/level_jeff.oel", mimeType = "application/octet-stream")] public static const level_35:Class;
 		
-		public static var chapterLengths:Array = [10, 6, 6, 5]; // change this manually !!
+		
+		public static var chapterLengths:Array = [8, 6, 6, 6]; // change this manually !!
 		public static var chapterNames:Array = ["Underground Silo", "Development Lab", "Headquarters", "Extra Levels"];
 		public static var levels:Array = [];
 		

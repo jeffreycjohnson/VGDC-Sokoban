@@ -324,6 +324,7 @@ package
 				texting = true;
 				writingText = true;
 				dialogueIndex = 0;
+				textCount = 0;
 				dialogueText = new FlxText(textPt.x, textPt.y, 1000, "");
 				dialogueText.setFormat("PIXEL", 16, 0xffffffff, "left");
 				dialogueBox = new FlxSprite(110, 187, Assets.DIALOGUE_BOX);
@@ -344,6 +345,24 @@ package
 			{
 				fadeLevel(chapterIndex, levelIndex);
 			}
+			// switching between chapters
+			else if (FlxG.keys.justPressed("PAGEUP")
+					 && levelIndex == LevelStorage.chapterLengths[chapterIndex] - 1
+					 && chapterIndex != LevelStorage.chapterLengths.length - 1)
+			{
+				chapterIndex++;
+				levelIndex = -1;
+				nextLevel();
+			}
+			else if (FlxG.keys.justPressed("PAGEDOWN")
+					 && levelIndex == 0
+					 && chapterIndex != 0)
+			{
+				chapterIndex--;
+				levelIndex = LevelStorage.chapterLengths[chapterIndex];
+				prevLevel();
+			}
+			// switching within the same chapter
 			else if (FlxG.keys.justPressed("PAGEUP") && (Main.debug || chapterIndex * 10 + levelIndex > maxLevel.data.value))
 			{
 				if (levelIndex < LevelStorage.chapterLengths[chapterIndex] - 1)
